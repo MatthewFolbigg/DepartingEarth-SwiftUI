@@ -1,0 +1,469 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1F09CF3626B841DB009FBD32 /* Departing_Earth.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2026B841DB009FBD32 /* Departing_Earth.xcdatamodeld */; };
+		1F09CF3726B841DB009FBD32 /* Departing_Earth.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2026B841DB009FBD32 /* Departing_Earth.xcdatamodeld */; };
+		1F09CF3826B841DB009FBD32 /* Departing_EarthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2226B841DB009FBD32 /* Departing_EarthApp.swift */; };
+		1F09CF3926B841DB009FBD32 /* Departing_EarthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2226B841DB009FBD32 /* Departing_EarthApp.swift */; };
+		1F09CF3A26B841DB009FBD32 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2326B841DB009FBD32 /* ContentView.swift */; };
+		1F09CF3B26B841DB009FBD32 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2326B841DB009FBD32 /* ContentView.swift */; };
+		1F09CF3C26B841DB009FBD32 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2426B841DB009FBD32 /* Persistence.swift */; };
+		1F09CF3D26B841DB009FBD32 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2426B841DB009FBD32 /* Persistence.swift */; };
+		1F09CF3E26B841DB009FBD32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F09CF2526B841DB009FBD32 /* Assets.xcassets */; };
+		1F09CF3F26B841DB009FBD32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F09CF2526B841DB009FBD32 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1F09CF2126B841DB009FBD32 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
+		1F09CF2226B841DB009FBD32 /* Departing_EarthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Departing_EarthApp.swift; sourceTree = "<group>"; };
+		1F09CF2326B841DB009FBD32 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		1F09CF2426B841DB009FBD32 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		1F09CF2526B841DB009FBD32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1F09CF2A26B841DB009FBD32 /* Departing Earth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Departing Earth.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F09CF2D26B841DB009FBD32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1F09CF3226B841DB009FBD32 /* Departing Earth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Departing Earth.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F09CF3426B841DB009FBD32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1F09CF3526B841DB009FBD32 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1F09CF2726B841DB009FBD32 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F09CF2F26B841DB009FBD32 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1F09CF1A26B841DA009FBD32 = {
+			isa = PBXGroup;
+			children = (
+				1F09CF1F26B841DB009FBD32 /* Shared */,
+				1F09CF2C26B841DB009FBD32 /* iOS */,
+				1F09CF3326B841DB009FBD32 /* macOS */,
+				1F09CF2B26B841DB009FBD32 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1F09CF1F26B841DB009FBD32 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				1F09CF2226B841DB009FBD32 /* Departing_EarthApp.swift */,
+				1F09CF2326B841DB009FBD32 /* ContentView.swift */,
+				1F09CF2426B841DB009FBD32 /* Persistence.swift */,
+				1F09CF2526B841DB009FBD32 /* Assets.xcassets */,
+				1F09CF2026B841DB009FBD32 /* Departing_Earth.xcdatamodeld */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		1F09CF2B26B841DB009FBD32 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1F09CF2A26B841DB009FBD32 /* Departing Earth.app */,
+				1F09CF3226B841DB009FBD32 /* Departing Earth.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1F09CF2C26B841DB009FBD32 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				1F09CF2D26B841DB009FBD32 /* Info.plist */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		1F09CF3326B841DB009FBD32 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				1F09CF3426B841DB009FBD32 /* Info.plist */,
+				1F09CF3526B841DB009FBD32 /* macOS.entitlements */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1F09CF2926B841DB009FBD32 /* Departing Earth (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F09CF4226B841DB009FBD32 /* Build configuration list for PBXNativeTarget "Departing Earth (iOS)" */;
+			buildPhases = (
+				1F09CF2626B841DB009FBD32 /* Sources */,
+				1F09CF2726B841DB009FBD32 /* Frameworks */,
+				1F09CF2826B841DB009FBD32 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Departing Earth (iOS)";
+			productName = "Departing Earth (iOS)";
+			productReference = 1F09CF2A26B841DB009FBD32 /* Departing Earth.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1F09CF3126B841DB009FBD32 /* Departing Earth (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F09CF4526B841DB009FBD32 /* Build configuration list for PBXNativeTarget "Departing Earth (macOS)" */;
+			buildPhases = (
+				1F09CF2E26B841DB009FBD32 /* Sources */,
+				1F09CF2F26B841DB009FBD32 /* Frameworks */,
+				1F09CF3026B841DB009FBD32 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Departing Earth (macOS)";
+			productName = "Departing Earth (macOS)";
+			productReference = 1F09CF3226B841DB009FBD32 /* Departing Earth.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1F09CF1B26B841DA009FBD32 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				TargetAttributes = {
+					1F09CF2926B841DB009FBD32 = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+					1F09CF3126B841DB009FBD32 = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+				};
+			};
+			buildConfigurationList = 1F09CF1E26B841DA009FBD32 /* Build configuration list for PBXProject "Departing Earth" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1F09CF1A26B841DA009FBD32;
+			productRefGroup = 1F09CF2B26B841DB009FBD32 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1F09CF2926B841DB009FBD32 /* Departing Earth (iOS) */,
+				1F09CF3126B841DB009FBD32 /* Departing Earth (macOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1F09CF2826B841DB009FBD32 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F09CF3E26B841DB009FBD32 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F09CF3026B841DB009FBD32 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F09CF3F26B841DB009FBD32 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1F09CF2626B841DB009FBD32 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F09CF3626B841DB009FBD32 /* Departing_Earth.xcdatamodeld in Sources */,
+				1F09CF3C26B841DB009FBD32 /* Persistence.swift in Sources */,
+				1F09CF3826B841DB009FBD32 /* Departing_EarthApp.swift in Sources */,
+				1F09CF3A26B841DB009FBD32 /* ContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F09CF2E26B841DB009FBD32 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F09CF3726B841DB009FBD32 /* Departing_Earth.xcdatamodeld in Sources */,
+				1F09CF3D26B841DB009FBD32 /* Persistence.swift in Sources */,
+				1F09CF3926B841DB009FBD32 /* Departing_EarthApp.swift in Sources */,
+				1F09CF3B26B841DB009FBD32 /* ContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1F09CF4026B841DB009FBD32 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1F09CF4126B841DB009FBD32 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		1F09CF4326B841DB009FBD32 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MVA5U2HB2L;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = iOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matthewfolbigg.Departing-Earth";
+				PRODUCT_NAME = "Departing Earth";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1F09CF4426B841DB009FBD32 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MVA5U2HB2L;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = iOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matthewfolbigg.Departing-Earth";
+				PRODUCT_NAME = "Departing Earth";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1F09CF4626B841DB009FBD32 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = MVA5U2HB2L;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matthewfolbigg.Departing-Earth";
+				PRODUCT_NAME = "Departing Earth";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		1F09CF4726B841DB009FBD32 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = MVA5U2HB2L;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matthewfolbigg.Departing-Earth";
+				PRODUCT_NAME = "Departing Earth";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1F09CF1E26B841DA009FBD32 /* Build configuration list for PBXProject "Departing Earth" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F09CF4026B841DB009FBD32 /* Debug */,
+				1F09CF4126B841DB009FBD32 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1F09CF4226B841DB009FBD32 /* Build configuration list for PBXNativeTarget "Departing Earth (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F09CF4326B841DB009FBD32 /* Debug */,
+				1F09CF4426B841DB009FBD32 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1F09CF4526B841DB009FBD32 /* Build configuration list for PBXNativeTarget "Departing Earth (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F09CF4626B841DB009FBD32 /* Debug */,
+				1F09CF4726B841DB009FBD32 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1F09CF2026B841DB009FBD32 /* Departing_Earth.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1F09CF2126B841DB009FBD32 /* Shared.xcdatamodel */,
+			);
+			currentVersion = 1F09CF2126B841DB009FBD32 /* Shared.xcdatamodel */;
+			path = Departing_Earth.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 1F09CF1B26B841DA009FBD32 /* Project object */;
+}
