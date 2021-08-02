@@ -9,11 +9,13 @@ import SwiftUI
 
 @main
 struct Departing_EarthApp: App {
+    
     let persistenceController = PersistenceController.shared
-
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let LaunchLibraryClient = LaunchLibraryApiClient(context: persistenceController.container.viewContext)
+            UpcomingLaunchesListView(LaunchLibraryClient)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

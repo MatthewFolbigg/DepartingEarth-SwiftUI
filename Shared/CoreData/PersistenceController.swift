@@ -8,15 +8,20 @@
 import CoreData
 
 struct PersistenceController {
+    let container: NSPersistentContainer
     static let shared = PersistenceController()
 
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
+        
+        //MARK:- Test Data
         for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+            let newItem = Launch(context: viewContext)
+            newItem.provider = "Rocket Company X"
+            newItem.name = "Big Fx Rocket"
         }
+        
         do {
             try viewContext.save()
         } catch {
@@ -27,8 +32,6 @@ struct PersistenceController {
         }
         return result
     }()
-
-    let container: NSPersistentContainer
 
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "Departing_Earth")
