@@ -11,17 +11,27 @@ import CoreData
 
 class LaunchLibraryApiClient: ObservableObject {
     //API Documentation: https://thespacedevs.com/llapi
-    private static var developerMode: Bool = false
-    //MARK: -
+    
+    @Published var fetchStatus: FetchStatus = .idle
     private var context: NSManagedObjectContext
+    private static var developerMode: Bool = true
     
     init(context: NSManagedObjectContext) {
         self.context = context
     }
-    //MARK: - Published
-    @Published var fetchStatus: FetchStatus = .idle
+    
     
     //MARK: - Endpoints
+    private static var baseUrl: String { developerMode ?
+        "https://lldev.thespacedevs.com/2.0.0/" : "https://ll.thespacedevs.com/2.0.0/"
+    }
+    private static let inJson = "?format=json"
+    private static let detailed = "?mode=detailed"
+    private static let upcomingLaunches = "launch/upcoming/"
+    private static let agencies = "agencies/"
+    private static let first30 = "&limit=80&offset=0"
+    
+    private static var upcomingLaunchesURL: String { baseUrl + upcomingLaunches + detailed + "&" + inJson + first30 }
     enum Endpoint {
         case upcomingLaunches
         
@@ -31,26 +41,14 @@ class LaunchLibraryApiClient: ObservableObject {
             }
         }
     }
-    
-    private static var baseUrl: String { developerMode ?
-        "https://lldev.thespacedevs.com/2.0.0/" :
-        "https://ll.thespacedevs.com/2.0.0/"  //Provides acctual data but throttled.
-    }
-    private static let inJson = "?format=json"
-    private static let detailed = "?mode=detailed"
-    private static let upcomingLaunches = "launch/upcoming/"
-    private static let agencies = "agencies/"
-    private static let first30 = "&limit=80&offset=0"
-    private static var upcomingLaunchesURL: String { baseUrl + upcomingLaunches + detailed + "&" + inJson + first30 }
-    
     //MARK: - Requests
+    private var launchDataFetchCancellable: AnyCancellable?
+    
     enum FetchStatus {
         case idle
         case fetching
     }
-    
-    private var launchDataFetchCancellable: AnyCancellable?
-    
+
     func fetchData(_ endpoint: Endpoint) {
         fetchStatus = .fetching
         launchDataFetchCancellable?.cancel()
@@ -63,16 +61,10 @@ class LaunchLibraryApiClient: ObservableObject {
         launchDataFetchCancellable = publisher
             .sink(receiveValue: { [weak self] data in
                 self?.fetchStatus = .idle
-                //TODO: Refactor creation of launches to somewhere else
                 for info in data.results {
-                    print(info.name)
-                    let newLaunch = Launch(context: self!.context)
-                    newLaunch.name = info.name
-                    newLaunch.provider = info.launchServiceProvider.name
-                    try? self?.context.save()
-                    //Create Core Data Object
+                    Launch.create(from: info, context: self!.context)
                 }
-                //Completion, set coredata object?
             })
     }
 }
+

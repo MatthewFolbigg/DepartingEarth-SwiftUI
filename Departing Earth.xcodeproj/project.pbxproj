@@ -21,6 +21,8 @@
 		1F09CF4C26B849B0009FBD32 /* LaunchLibraryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF4A26B849B0009FBD32 /* LaunchLibraryClient.swift */; };
 		1F09CF5126B857AB009FBD32 /* LaunchLibraryResponseTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5026B857AB009FBD32 /* LaunchLibraryResponseTypes.swift */; };
 		1F09CF5226B857AB009FBD32 /* LaunchLibraryResponseTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5026B857AB009FBD32 /* LaunchLibraryResponseTypes.swift */; };
+		1F09CF5626B87294009FBD32 /* Launch+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5526B87294009FBD32 /* Launch+.swift */; };
+		1F09CF5726B87294009FBD32 /* Launch+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5526B87294009FBD32 /* Launch+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,7 @@
 		1F09CF3526B841DB009FBD32 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		1F09CF4A26B849B0009FBD32 /* LaunchLibraryClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchLibraryClient.swift; sourceTree = "<group>"; };
 		1F09CF5026B857AB009FBD32 /* LaunchLibraryResponseTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchLibraryResponseTypes.swift; sourceTree = "<group>"; };
+		1F09CF5526B87294009FBD32 /* Launch+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Launch+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +112,7 @@
 			children = (
 				1F09CF2026B841DB009FBD32 /* Departing_Earth.xcdatamodeld */,
 				1F09CF2426B841DB009FBD32 /* PersistenceController.swift */,
+				1F09CF5526B87294009FBD32 /* Launch+.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -231,6 +235,7 @@
 				1F09CF3C26B841DB009FBD32 /* PersistenceController.swift in Sources */,
 				1F09CF3826B841DB009FBD32 /* Departing_EarthApp.swift in Sources */,
 				1F09CF4B26B849B0009FBD32 /* LaunchLibraryClient.swift in Sources */,
+				1F09CF5626B87294009FBD32 /* Launch+.swift in Sources */,
 				1F09CF5126B857AB009FBD32 /* LaunchLibraryResponseTypes.swift in Sources */,
 				1F09CF3A26B841DB009FBD32 /* UpcomingLaunchesListView.swift in Sources */,
 			);
@@ -244,6 +249,7 @@
 				1F09CF3D26B841DB009FBD32 /* PersistenceController.swift in Sources */,
 				1F09CF3926B841DB009FBD32 /* Departing_EarthApp.swift in Sources */,
 				1F09CF4C26B849B0009FBD32 /* LaunchLibraryClient.swift in Sources */,
+				1F09CF5726B87294009FBD32 /* Launch+.swift in Sources */,
 				1F09CF5226B857AB009FBD32 /* LaunchLibraryResponseTypes.swift in Sources */,
 				1F09CF3B26B841DB009FBD32 /* UpcomingLaunchesListView.swift in Sources */,
 			);

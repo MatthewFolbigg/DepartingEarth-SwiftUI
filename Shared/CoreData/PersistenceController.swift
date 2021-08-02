@@ -11,28 +11,6 @@ struct PersistenceController {
     let container: NSPersistentContainer
     static let shared = PersistenceController()
 
-    static var preview: PersistenceController = {
-        let result = PersistenceController(inMemory: true)
-        let viewContext = result.container.viewContext
-        
-        //MARK:- Test Data
-        for _ in 0..<10 {
-            let newItem = Launch(context: viewContext)
-            newItem.provider = "Rocket Company X"
-            newItem.name = "Big Fx Rocket"
-        }
-        
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-        return result
-    }()
-
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "Departing_Earth")
         if inMemory {
@@ -54,5 +32,49 @@ struct PersistenceController {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
+    
+    //MARK: - Helper Methods
+    static func deleteAll(entityName: String, from context: NSManagedObjectContext) {
+        let request: NSFetchRequest<NSFetchRequestResult>
+        request = NSFetchRequest(entityName: entityName)
+        let batchDelete = NSBatchDeleteRequest(fetchRequest: request)
+        batchDelete.resultType = .resultTypeObjectIDs
+        do {
+            let delete = try context.execute(batchDelete) as? NSBatchDeleteResult
+            if let deleteResult = delete?.result as? [NSManagedObjectID] {
+                let changes: [AnyHashable: Any] = [NSDeletedObjectsKey : deleteResult]
+                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [context])
+            }
+        } catch {
+            //TODO: Handle Error
+            print("Error Deleting Launches")
+        }
+    }
+    
+    //MARK:- Preview Controller
+    static var preview: PersistenceController = {
+        let result = PersistenceController(inMemory: true)
+        let viewContext = result.container.viewContext
+        
+        //Test Data
+        for _ in 0..<10 {
+            let newItem = Launch(context: viewContext)
+            newItem.provider = "Rocket Company X"
+            newItem.name = "Big Fx Rocket"
+        }
+        
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+        return result
+    }()
+    //MARK:-
+
 }

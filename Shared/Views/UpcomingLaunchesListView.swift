@@ -13,31 +13,33 @@ struct UpcomingLaunchesListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     //MARK: -
-    @ObservedObject var LaunchLibrary: LaunchLibraryApiClient
-    
+    @ObservedObject var launchLibrary: LaunchLibraryApiClient
     @FetchRequest var launches: FetchedResults<Launch>
+    
     init(_ client: LaunchLibraryApiClient) {
         let request = NSFetchRequest<Launch>(entityName: "Launch")
         request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         _launches = FetchRequest(fetchRequest: request)
-        self.LaunchLibrary = client
+        self.launchLibrary = client
     }
    
     //MARK: - Main Body
     var body: some View {
         VStack {
-            if LaunchLibrary.fetchStatus == .fetching {
+            if launchLibrary.fetchStatus == .fetching {
                 ProgressView()
             }
-            List {
+            List() {
                 ForEach(launches) { launch in
-                    Text("\(launch.name!) - \(launch.provider!)")
+                    VStack(alignment: .leading) {
+                        Text("\(launch.provider!)")
+                        Text("\(launch.name!)")
+                            .fontWeight(.thin)
+                    }
                 }
             }
-        }
-        .onAppear() {
-            print("Appear")
-            LaunchLibrary.fetchData(.upcomingLaunches)
+            Button(action: { launchLibrary.fetchData(.upcomingLaunches) }, label: { Text("Get Launches") })
+            Button(action: { Launch.deleteAll(from: viewContext) }, label: { Text("Delete") })
         }
     }
     
