@@ -11,6 +11,7 @@ import CoreData
 
 class LaunchLibraryApiClient: ObservableObject {
     //API Documentation: https://thespacedevs.com/llapi
+    static var shared = LaunchLibraryApiClient(context: PersistenceController.shared.container.viewContext)
     
     @Published var fetchStatus: FetchStatus = .idle
     private var context: NSManagedObjectContext
@@ -23,7 +24,7 @@ class LaunchLibraryApiClient: ObservableObject {
     
     //MARK: - Endpoints
     private static var baseUrl: String { developerMode ?
-        "https://lldev.thespacedevs.com/2.0.0/" : "https://ll.thespacedevs.com/2.0.0/"
+        "https://lldev.thespacedevs.com/2.2.0/" : "https://ll.thespacedevs.com/2.0.0/"
     }
     private static let inJson = "?format=json"
     private static let detailed = "?mode=detailed"
@@ -50,6 +51,7 @@ class LaunchLibraryApiClient: ObservableObject {
     }
 
     func fetchData(_ endpoint: Endpoint) {
+        print(endpoint.url)
         fetchStatus = .fetching
         launchDataFetchCancellable?.cancel()
         let session = URLSession.shared
@@ -63,6 +65,7 @@ class LaunchLibraryApiClient: ObservableObject {
                 self?.fetchStatus = .idle
                 for info in data.results {
                     Launch.create(from: info, context: self!.context)
+                    try? self?.context.save()
                 }
             })
     }

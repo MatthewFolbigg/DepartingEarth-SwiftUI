@@ -27,6 +27,7 @@ struct LaunchInfo: Codable {
     let rocket: RocketInfo
     let mission: MissionInfo?
     let pad: PadInfo
+    let probability: Int? // -1 = no weather data, positive is a percentage Int
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -43,6 +44,7 @@ struct LaunchInfo: Codable {
         case rocket = "rocket"
         case mission = "mission"
         case pad = "pad"
+        case probability = "probability"
     }
 }
 
@@ -50,6 +52,14 @@ struct LaunchInfo: Codable {
 struct LaunchStatus: Codable {
     let id: Int
     let name: String
+    let description: String
+    
+    //Status ID Codes
+    // 1 - Go - Current T-0 confirmed by official or reliable sources.
+    // 2 - To Be Determined - Current date is a 'No Earlier Than' estimation based on unreliable or interpreted sources.
+    // 3 - Launch Successful - The launch vehicle successfully inserted its payload(s) into the target orbit(s).
+    // 4 - Launch Failure - Either the launch vehicle did not reach orbit, or the payload(s) failed to separate.
+    // 8 - To Be Confirmed - Awaiting official confirmation, current date is known with some certainty.
 }
 
 //MARK: Launch Provider

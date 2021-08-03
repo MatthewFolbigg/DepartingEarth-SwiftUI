@@ -11,8 +11,8 @@
 		1F09CF3726B841DB009FBD32 /* Departing_Earth.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2026B841DB009FBD32 /* Departing_Earth.xcdatamodeld */; };
 		1F09CF3826B841DB009FBD32 /* Departing_EarthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2226B841DB009FBD32 /* Departing_EarthApp.swift */; };
 		1F09CF3926B841DB009FBD32 /* Departing_EarthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2226B841DB009FBD32 /* Departing_EarthApp.swift */; };
-		1F09CF3A26B841DB009FBD32 /* UpcomingLaunchesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2326B841DB009FBD32 /* UpcomingLaunchesListView.swift */; };
-		1F09CF3B26B841DB009FBD32 /* UpcomingLaunchesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2326B841DB009FBD32 /* UpcomingLaunchesListView.swift */; };
+		1F09CF3A26B841DB009FBD32 /* UpcomingLaunchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2326B841DB009FBD32 /* UpcomingLaunchesView.swift */; };
+		1F09CF3B26B841DB009FBD32 /* UpcomingLaunchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2326B841DB009FBD32 /* UpcomingLaunchesView.swift */; };
 		1F09CF3C26B841DB009FBD32 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2426B841DB009FBD32 /* PersistenceController.swift */; };
 		1F09CF3D26B841DB009FBD32 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2426B841DB009FBD32 /* PersistenceController.swift */; };
 		1F09CF3E26B841DB009FBD32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F09CF2526B841DB009FBD32 /* Assets.xcassets */; };
@@ -23,16 +23,18 @@
 		1F09CF5226B857AB009FBD32 /* LaunchLibraryResponseTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5026B857AB009FBD32 /* LaunchLibraryResponseTypes.swift */; };
 		1F09CF5626B87294009FBD32 /* Launch+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5526B87294009FBD32 /* Launch+.swift */; };
 		1F09CF5726B87294009FBD32 /* Launch+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5526B87294009FBD32 /* Launch+.swift */; };
-		1F09CF5926B95A7F009FBD32 /* UpcomingLaunchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5826B95A7F009FBD32 /* UpcomingLaunchList.swift */; };
-		1F09CF5A26B95A7F009FBD32 /* UpcomingLaunchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5826B95A7F009FBD32 /* UpcomingLaunchList.swift */; };
 		1F09CF5C26B9765E009FBD32 /* LaunchListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5B26B9765E009FBD32 /* LaunchListItem.swift */; };
 		1F09CF5D26B9765E009FBD32 /* LaunchListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5B26B9765E009FBD32 /* LaunchListItem.swift */; };
+		1F09CF5F26B98AB4009FBD32 /* Provider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5E26B98AB4009FBD32 /* Provider+.swift */; };
+		1F09CF6026B98AB4009FBD32 /* Provider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5E26B98AB4009FBD32 /* Provider+.swift */; };
+		1F09CF6226B99A26009FBD32 /* LaunchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF6126B99A26009FBD32 /* LaunchListView.swift */; };
+		1F09CF6326B99A26009FBD32 /* LaunchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF6126B99A26009FBD32 /* LaunchListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1F09CF2126B841DB009FBD32 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		1F09CF2226B841DB009FBD32 /* Departing_EarthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Departing_EarthApp.swift; sourceTree = "<group>"; };
-		1F09CF2326B841DB009FBD32 /* UpcomingLaunchesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingLaunchesListView.swift; sourceTree = "<group>"; };
+		1F09CF2326B841DB009FBD32 /* UpcomingLaunchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingLaunchesView.swift; sourceTree = "<group>"; };
 		1F09CF2426B841DB009FBD32 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		1F09CF2526B841DB009FBD32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F09CF2A26B841DB009FBD32 /* Departing Earth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Departing Earth.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -43,8 +45,9 @@
 		1F09CF4A26B849B0009FBD32 /* LaunchLibraryClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchLibraryClient.swift; sourceTree = "<group>"; };
 		1F09CF5026B857AB009FBD32 /* LaunchLibraryResponseTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchLibraryResponseTypes.swift; sourceTree = "<group>"; };
 		1F09CF5526B87294009FBD32 /* Launch+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Launch+.swift"; sourceTree = "<group>"; };
-		1F09CF5826B95A7F009FBD32 /* UpcomingLaunchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingLaunchList.swift; sourceTree = "<group>"; };
 		1F09CF5B26B9765E009FBD32 /* LaunchListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchListItem.swift; sourceTree = "<group>"; };
+		1F09CF5E26B98AB4009FBD32 /* Provider+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Provider+.swift"; sourceTree = "<group>"; };
+		1F09CF6126B99A26009FBD32 /* LaunchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +82,6 @@
 			isa = PBXGroup;
 			children = (
 				1F09CF2226B841DB009FBD32 /* Departing_EarthApp.swift */,
-				1F09CF5826B95A7F009FBD32 /* UpcomingLaunchList.swift */,
 				1F09CF5326B86755009FBD32 /* Views */,
 				1F09CF5426B8675D009FBD32 /* LaunchLibrary */,
 				1F09CF4926B8497F009FBD32 /* CoreData */,
@@ -120,6 +122,7 @@
 				1F09CF2026B841DB009FBD32 /* Departing_Earth.xcdatamodeld */,
 				1F09CF2426B841DB009FBD32 /* PersistenceController.swift */,
 				1F09CF5526B87294009FBD32 /* Launch+.swift */,
+				1F09CF5E26B98AB4009FBD32 /* Provider+.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -127,7 +130,8 @@
 		1F09CF5326B86755009FBD32 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1F09CF2326B841DB009FBD32 /* UpcomingLaunchesListView.swift */,
+				1F09CF2326B841DB009FBD32 /* UpcomingLaunchesView.swift */,
+				1F09CF6126B99A26009FBD32 /* LaunchListView.swift */,
 				1F09CF5B26B9765E009FBD32 /* LaunchListItem.swift */,
 			);
 			path = Views;
@@ -240,14 +244,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F09CF3626B841DB009FBD32 /* Departing_Earth.xcdatamodeld in Sources */,
+				1F09CF6226B99A26009FBD32 /* LaunchListView.swift in Sources */,
 				1F09CF3C26B841DB009FBD32 /* PersistenceController.swift in Sources */,
 				1F09CF5C26B9765E009FBD32 /* LaunchListItem.swift in Sources */,
 				1F09CF3826B841DB009FBD32 /* Departing_EarthApp.swift in Sources */,
+				1F09CF5F26B98AB4009FBD32 /* Provider+.swift in Sources */,
 				1F09CF4B26B849B0009FBD32 /* LaunchLibraryClient.swift in Sources */,
-				1F09CF5926B95A7F009FBD32 /* UpcomingLaunchList.swift in Sources */,
 				1F09CF5626B87294009FBD32 /* Launch+.swift in Sources */,
 				1F09CF5126B857AB009FBD32 /* LaunchLibraryResponseTypes.swift in Sources */,
-				1F09CF3A26B841DB009FBD32 /* UpcomingLaunchesListView.swift in Sources */,
+				1F09CF3A26B841DB009FBD32 /* UpcomingLaunchesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,14 +261,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F09CF3726B841DB009FBD32 /* Departing_Earth.xcdatamodeld in Sources */,
+				1F09CF6326B99A26009FBD32 /* LaunchListView.swift in Sources */,
 				1F09CF3D26B841DB009FBD32 /* PersistenceController.swift in Sources */,
 				1F09CF5D26B9765E009FBD32 /* LaunchListItem.swift in Sources */,
 				1F09CF3926B841DB009FBD32 /* Departing_EarthApp.swift in Sources */,
+				1F09CF6026B98AB4009FBD32 /* Provider+.swift in Sources */,
 				1F09CF4C26B849B0009FBD32 /* LaunchLibraryClient.swift in Sources */,
-				1F09CF5A26B95A7F009FBD32 /* UpcomingLaunchList.swift in Sources */,
 				1F09CF5726B87294009FBD32 /* Launch+.swift in Sources */,
 				1F09CF5226B857AB009FBD32 /* LaunchLibraryResponseTypes.swift in Sources */,
-				1F09CF3B26B841DB009FBD32 /* UpcomingLaunchesListView.swift in Sources */,
+				1F09CF3B26B841DB009FBD32 /* UpcomingLaunchesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

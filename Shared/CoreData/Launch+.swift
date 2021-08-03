@@ -10,6 +10,11 @@ import CoreData
 
 extension Launch {
     
+    //MARK: - Convienience Varibales
+    var name: String {
+        get { self.name_ ?? "" }
+        set { self.name_ = newValue }
+    }
     var date: Date {
         get {
             let dateFormatter = ISO8601DateFormatter()
@@ -25,19 +30,18 @@ extension Launch {
         }
     }
     
-    
+    //MARK: - Helper Methods
     enum SortOption: String {
-        case name = "name"
+        case name = "name_"
         case date = "dateISO"
     }
     
     static func create(from info: LaunchInfo, context: NSManagedObjectContext) {
         let launch = Launch(context: context)
         launch.launchID = info.id
-        launch.name = info.name
+        launch.name_ = info.name
         launch.dateISO = info.noEarlierThan
-        launch.provider = info.launchServiceProvider.name
-        try? context.save()
+        launch.provider = Provider.create(from: info.launchServiceProvider, context: context)
     }
     
     static func deleteAll(from context: NSManagedObjectContext) {

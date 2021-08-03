@@ -14,9 +14,7 @@ struct Departing_EarthApp: App {
     
     var body: some Scene {
         WindowGroup {
-            let LaunchLibraryClient = LaunchLibraryApiClient()
-            
-            UpcomingLaunchesListView(LaunchLibraryClient)
+            UpcomingLaunchesView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

@@ -13,8 +13,8 @@ struct LaunchListItem: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("\(launch.provider!)")
-            Text("\(launch.name!)")
+            Text("\(launch.provider!.name!)")
+            Text("\(launch.name)")
                 .fontWeight(.thin)
                 .foregroundColor(.red)
             Text(string(for: launch.date))
