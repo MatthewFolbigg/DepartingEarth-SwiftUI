@@ -16,7 +16,7 @@ class LaunchLibraryApiClient: ObservableObject {
     private var context: NSManagedObjectContext
     private static var developerMode: Bool = true
     
-    init(context: NSManagedObjectContext) {
+    init(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
         self.context = context
     }
     
