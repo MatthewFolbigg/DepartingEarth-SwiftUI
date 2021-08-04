@@ -27,11 +27,13 @@ struct LaunchListItemView: View {
                     .fontWeight(.semibold)
                     .truncationMode(.tail)
                     .foregroundColor(.orange)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
                 Text(launch.provider?.type ?? "")
                     .font(.system(.caption, design: .default))
                     .fontWeight(.light)
                 Spacer()
-                CountdownView(toDate: launch.date)
+//                CountdownView(toDate: launch.date)
             }
             Spacer()
             VStack(alignment: .trailing, spacing: 5) {

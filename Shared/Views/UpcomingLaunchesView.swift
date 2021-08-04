@@ -15,6 +15,7 @@ struct UpcomingLaunchesView: View {
     @ObservedObject var launchLibrary = LaunchLibraryApiClient.shared
     @State var providerFilter: Provider? = nil
     @State var statusFilter: Status? = nil
+    var isFiltered: Bool { providerFilter != nil || statusFilter != nil }
     @State var sortAscending: Bool = true
     
     init() {
@@ -29,6 +30,9 @@ struct UpcomingLaunchesView: View {
         NavigationView {
             ZStack {
                 VStack {
+                    if isFiltered {
+                        filterIndicatorBar
+                    }
                     LaunchListView(provider: providerFilter, status: statusFilter, sortAscending: sortAscending)
                     deleteAllButton
                 }
@@ -64,6 +68,29 @@ struct UpcomingLaunchesView: View {
                 .opacity(0.9)
         )
         .clipShape(RoundedRectangle(cornerRadius: 20))
+    }
+    
+    //MARK: - Views
+    var filterIndicatorBar: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .center, spacing: 3) {
+                Text("Provider:")
+                    .fontWeight(.thin)
+                Text(providerFilter != nil ? "\(providerFilter?.compactName ?? "")" : "All")
+                    .fontWeight(.regular)
+                Spacer()
+            }
+            HStack(alignment: .center, spacing: 5) {
+                Text("Status:")
+                    .fontWeight(.thin)
+                Text(statusFilter != nil ? "\(statusFilter?.abbreviation ?? "")" : "All")
+                    .fontWeight(.regular)
+                Spacer()
+            }
+            Divider()
+        }
+        .font(.caption2)
+        .padding(.horizontal)
     }
     
     //MARK: - Menu

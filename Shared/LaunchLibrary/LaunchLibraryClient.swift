@@ -15,7 +15,7 @@ class LaunchLibraryApiClient: ObservableObject {
     
     @Published var fetchStatus: FetchStatus = .idle
     private var context: NSManagedObjectContext
-    private static var developerMode: Bool = false
+    private static var developerMode: Bool = true
     
     init(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
         self.context = context
