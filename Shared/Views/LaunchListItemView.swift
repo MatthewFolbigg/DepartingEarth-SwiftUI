@@ -9,28 +9,54 @@ import SwiftUI
 
 struct LaunchListItemView: View {
     
-    let launch: Launch
+    @State var launch: Launch
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text("\(launch.provider!.name!)")
-            Text("\(launch.name)")
-                .fontWeight(.thin)
-                .foregroundColor(.red)
-            Text(string(for: launch.date))
-                .fontWeight(.thin)
-            Text(launch.status?.name ?? "")
-                .fontWeight(.thin)
-        }
+    init(launch: Launch) {
+        self.launch = launch
     }
     
-    //TODO: remove this function and make one accessible to other views
-    func string(for date: Date) -> String {
-        let calendar = Calendar.current
-        let dayInt = calendar.component(.day, from: date)
-        let yearInt = calendar.component(.year, from: date)
-        let monthInt = calendar.component(.month, from: date)
-        return "\(dayInt) / \(monthInt) / \(yearInt)"
+    var body: some View {
+        HStack(alignment: .bottom) {
+            VStack(alignment: .leading, spacing: 5) {
+                Text(launch.provider?.compactName ?? "")
+                    .font(.system(.headline, design: .monospaced))
+                    .fontWeight(.semibold)
+                Text(launch.rocket?.name ?? "")
+                    .font(.system(.subheadline, design: .monospaced))
+                    .fontWeight(.semibold)
+                    .truncationMode(.tail)
+                    .foregroundColor(.orange)
+                Text(launch.provider?.type ?? "")
+                    .font(.system(.caption, design: .default))
+                    .fontWeight(.light)
+                Spacer()
+                CountdownView(toDate: launch.date)
+            }
+            Spacer()
+            VStack(alignment: .trailing, spacing: 5) {
+                Text(launch.status?.abbreviation ?? "")
+                Text(LaunchDateFormatter.longString(for: launch.date))
+                    .font(.system(.caption, design: .default))
+                    .fontWeight(.light)
+            }
+        }
+        .padding(.vertical)
     }
     
 }
+
+struct LaunchListItemView_Previews: PreviewProvider {
+    static var previews: some View {
+        let context = PersistenceController.shared.container.viewContext
+        let launch = PersistenceController.testData(context: context)
+        List {
+            LaunchListItemView(launch: launch)
+            LaunchListItemView(launch: launch)
+            LaunchListItemView(launch: launch)
+            LaunchListItemView(launch: launch)
+        }
+            .previewDevice("iPhone 12")
+    }
+}
+

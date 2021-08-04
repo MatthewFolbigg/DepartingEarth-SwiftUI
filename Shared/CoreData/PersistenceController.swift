@@ -74,6 +74,51 @@ struct PersistenceController {
 //        }
 //        return result
 //    }()
-    //MARK:-
+    
+    //MARK:- Test Data
+    static func testData(context: NSManagedObjectContext) -> Launch {
+        let info = LaunchInfo(
+            id: "testLaunchID",
+            name: "A Big Rocket",
+            launchStatus: LaunchStatus(
+                id: 2,
+                name: "To Be Determined",
+                abbrev: "TBD",
+                description: "Current date is a 'No Earlier Than' estimation based on unreliable or interpreted sources."),
+            noEarlierThan: "2021-09-30T00:00:00Z",
+            windowStart: "2021-09-30T00:00:00Z",
+            windowEnd: "2021-09-30T00:00:00Z",
+            inhold: false,
+            tbdtime: true,
+            tbddate: true,
+            holdreason: "No Hold Reason",
+            failreason: "No Fail Reason",
+            launchServiceProvider: providerInfo(
+                id: 10,
+                name: "Rocket Company",
+                abbreviation: "Rckt Cmpny",
+                logoUrl: nil,
+                type: "Test Company",
+                countryCode: "UK",
+                description: "A company that makes very large rockets"),
+            rocket: RocketInfo(
+                id: 10,
+                configuration: ConfigurationInfo(
+                    id: 10,
+                    name: "A Big Rocket",
+                    family: "The Biggens",
+                    variant: "Big",
+                    description: "A very large rocket")),
+            mission: nil,
+            pad: PadInfo(
+                id: 10,
+                name: "A remote pad",
+                latitude: "100",
+                longitude: "100",
+                location: PadLocationInfo(name: "United Kingdom")),
+            probability: 50)
+        return Launch.create(from: info, context: context)
+    }
+
 
 }

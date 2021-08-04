@@ -74,17 +74,21 @@ struct UpcomingLaunchesView: View {
             providerPicker
             statusPicker
             if statusFilter != nil || providerFilter != nil {
-                Button {
-                    providerFilter = nil
-                    statusFilter = nil
-                } label: {
-                    Label("Clear Filters", systemImage: "xmark.circle")
-                }
+                clearAllFiltersButton
             }
         } label: {
-            Label("Filter", systemImage: "ellipsis.circle")
-                .imageScale(.large)
+            Label("Filter", systemImage: "ellipsis.circle").imageScale(.large)
         }
+    }
+    
+    var clearAllFiltersButton: some View {
+        Button(
+            action: {
+                providerFilter = nil
+                statusFilter = nil
+            },
+            label: { Label("Clear Filters", systemImage: "xmark.circle") }
+        )
     }
     
     var sortOrderMenuButton: some View {

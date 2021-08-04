@@ -30,13 +30,18 @@ extension Launch {
         }
     }
     
+    var countdownComponents: CountdownComponentStrings {
+        get{ LaunchDateFormatter.countdownComponents(untill: date) }
+    }
+    
     //MARK: - Helper Methods
     enum SortOption: String {
         case name = "name_"
         case date = "dateISO"
     }
     
-    static func create(from info: LaunchInfo, context: NSManagedObjectContext) {
+    @discardableResult
+    static func create(from info: LaunchInfo, context: NSManagedObjectContext) -> Launch {
         let launch = Launch(context: context)
         launch.launchID = info.id
         launch.name_ = info.name
@@ -52,6 +57,7 @@ extension Launch {
         launch.provider = Provider.create(from: info.launchServiceProvider, context: context)
         launch.rocket = Rocket.create(from: info.rocket, context: context)
         launch.status = Status.create(from: info.launchStatus, context: context)
+        return launch
     }
     
     static func deleteAll(from context: NSManagedObjectContext) {
@@ -70,5 +76,5 @@ extension Launch {
         request.predicate = NSPredicate(format: "launchID == %@", id)
         return request
     }
-    
+        
 }

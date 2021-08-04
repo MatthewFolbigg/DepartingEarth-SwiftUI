@@ -26,7 +26,7 @@ struct LaunchDetailView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 200, height: 150)
-                    .background(Color.green)
+                    .background(Color.primary)
                     .clipShape(RoundedRectangle(cornerRadius: 20.0))
             } else {
                 Color.clear
@@ -72,9 +72,7 @@ struct LaunchDetailView: View {
         .multilineTextAlignment(.center)
         .padding()
     }
-    
-    //TODO: Move this to the API Client?
-    
+        
 }
 
 
