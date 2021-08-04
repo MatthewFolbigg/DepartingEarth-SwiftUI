@@ -69,6 +69,8 @@ struct UpcomingLaunchesView: View {
     //MARK: - Menu
     var filterMenu: some View {
         Menu {
+            sortOrderMenuButton
+            Divider()
             providerPicker
             statusPicker
             if statusFilter != nil || providerFilter != nil {
@@ -76,45 +78,30 @@ struct UpcomingLaunchesView: View {
                     providerFilter = nil
                     statusFilter = nil
                 } label: {
-                    Label(
-                        title: { Text("Clear Filters") },
-                        icon: { Image(systemName: "xmark.circle") }
-                    )
+                    Label("Clear Filters", systemImage: "xmark.circle")
                 }
             }
-            Divider()
-            sortOrderMenuButton
         } label: {
-            Image(systemName: "ellipsis.circle").imageScale(.large)
+            Label("Filter", systemImage: "ellipsis.circle")
+                .imageScale(.large)
         }
     }
     
     var sortOrderMenuButton: some View {
-        Button(action: {
-            sortAscending.toggle()
-        }, label: {
-            Label(
-                title: { Text("\(sortAscending ? "Latest" : "Earliest") first") },
-                icon: { Image(systemName: "arrow.up.arrow.down") }
-            )
-        })
+        Button(
+            action: { sortAscending.toggle() },
+            label: { Label("\(sortAscending ? "Latest" : "Earliest") first", systemImage: "arrow.up.arrow.down") }
+        )
     }
 
     var providerPicker: some View {
         Picker(
             selection: $providerFilter,
-            label:
-                Label(
-                    title: { Text("Launch Provider") },
-                    icon: { Image(systemName: "line.horizontal.3.decrease") }
-            ),
+            label: Label("Launch Provider", systemImage: "line.horizontal.3.decrease"),
             content: {
                     if providerFilter != nil {
                         let tag: Provider? = nil
-                        Label(
-                            title: { Text("All Providers") },
-                            icon: { Image(systemName: "xmark.circle") }
-                        ).tag(tag)
+                        Label("All Providers", systemImage: "xmark.circle").tag(tag)
                         Divider()
                     }
                     ForEach(providers, id: \.self) { provider in
@@ -122,50 +109,43 @@ struct UpcomingLaunchesView: View {
                         Text(provider.compactName!).tag(tag)
                     }
                }
-        ).pickerStyle(MenuPickerStyle())
+        )
+        .pickerStyle(MenuPickerStyle())
     }
     
     var statusPicker: some View {
         Picker(
             selection: $statusFilter,
-            label:
-                Label(
-                    title: { Text("Status") },
-                    icon: { Image(systemName: "line.horizontal.3.decrease") }
-            ),
+            label: Label("Status", systemImage: "line.horizontal.3.decrease"),
             content: {
-                    if statusFilter != nil {
-                        let tag: Status? = nil
-                        Label(
-                            title: { Text("Any Status") },
-                            icon: { Image(systemName: "xmark.circle") }
-                        ).tag(tag)
-                        Divider()
-                    }
-                    ForEach(statuses, id: \.self) { status in
-                        let tag: Status? = status
-                        Text(status.name!).tag(tag)
-                    }
-               }
-        ).pickerStyle(MenuPickerStyle())
+                if statusFilter != nil {
+                    let tag: Status? = nil
+                    Label("Any Status", systemImage: "xmark.circle").tag(tag)
+                }
+                Divider()
+                ForEach(statuses, id: \.self) { status in
+                    let tag: Status? = status
+                    Text(status.abbreviation ?? status.name!).tag(tag)
+                }
+            }
+        )
+        .pickerStyle(MenuPickerStyle())
     }
     
     //MARK: - Buttons
     var refreshButton: some View {
-        Button {
-            launchLibrary.fetchData(.upcomingLaunches)
-            
-        } label: {
-            Label(
-                title: { Text("Refresh") },
-                icon: { Image(systemName: "arrow.clockwise.circle") }
-            )
-        }
+        Button(
+            action: { launchLibrary.fetchData(.upcomingLaunches) },
+            label: { Label("Refresh", systemImage: "arrow.clockwise.circle") }
+        )
     }
     
     var deleteAllButton: some View {
-        Button(action: { Launch.deleteAll(from: viewContext) }, label: { Text("Delete") })
-            .foregroundColor(.red)
+        Button(
+            action: { Launch.deleteAll(from: viewContext) },
+            label: { Text("Delete") }
+        )
+        .foregroundColor(.red)
     }
 }
 

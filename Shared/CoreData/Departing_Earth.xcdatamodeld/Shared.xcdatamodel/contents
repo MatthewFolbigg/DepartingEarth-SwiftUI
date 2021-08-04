@@ -2,9 +2,17 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Launch" representedClassName="Launch" syncable="YES" codeGenerationType="class">
         <attribute name="dateISO" optional="YES" attributeType="String"/>
+        <attribute name="hold" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="holdReason" optional="YES" attributeType="String"/>
         <attribute name="launchID" optional="YES" attributeType="String"/>
         <attribute name="name_" optional="YES" attributeType="String"/>
+        <attribute name="tbdDate" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="tbdTime" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="weatherProbability" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="windowEnd" optional="YES" attributeType="String"/>
+        <attribute name="windowStart" optional="YES" attributeType="String"/>
         <relationship name="provider" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Provider" inverseName="launches" inverseEntity="Provider"/>
+        <relationship name="rocket" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Rocket" inverseName="launches" inverseEntity="Rocket"/>
         <relationship name="status" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Status" inverseName="launches" inverseEntity="Status"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -14,6 +22,8 @@
     </entity>
     <entity name="Provider" representedClassName="Provider" syncable="YES" codeGenerationType="class">
         <attribute name="abbreviation" optional="YES" attributeType="String"/>
+        <attribute name="countryCode" optional="YES" attributeType="String"/>
+        <attribute name="infoText" optional="YES" attributeType="String"/>
         <attribute name="logoUrl" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="providerID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -25,10 +35,28 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="Rocket" representedClassName="Rocket" syncable="YES" codeGenerationType="class">
+        <attribute name="configurationID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="family" optional="YES" attributeType="String"/>
+        <attribute name="infoText" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="rocketID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="variant" optional="YES" attributeType="String"/>
+        <relationship name="launches" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Launch" inverseName="rocket" inverseEntity="Launch"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="configurationID"/>
+            </uniquenessConstraint>
+            <uniquenessConstraint>
+                <constraint value="rocketID"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
     <entity name="Status" representedClassName="Status" syncable="YES" codeGenerationType="class">
+        <attribute name="abbreviation" optional="YES" attributeType="String"/>
+        <attribute name="infoText" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="statusID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="text" optional="YES" attributeType="String"/>
         <relationship name="launches" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Launch" inverseName="status" inverseEntity="Launch"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -37,8 +65,9 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Launch" positionX="-1892.6875" positionY="-618.625" width="128" height="118"/>
-        <element name="Provider" positionX="-1592.4609375" positionY="-650.73046875" width="128" height="133"/>
-        <element name="Status" positionX="-1596.01171875" positionY="-467.296875" width="128" height="103"/>
+        <element name="Launch" positionX="-1954.0234375" positionY="-645.82421875" width="128" height="238"/>
+        <element name="Provider" positionX="-1592.4609375" positionY="-650.73046875" width="128" height="149"/>
+        <element name="Status" positionX="-1573.1796875" positionY="-309.6953125" width="128" height="118"/>
+        <element name="Rocket" positionX="-1575.15234375" positionY="-471.32421875" width="128" height="134"/>
     </elements>
 </model>

@@ -54,26 +54,26 @@ struct PersistenceController {
     }
     
     //MARK:- Preview Controller
-    static var preview: PersistenceController = {
-        let result = PersistenceController(inMemory: true)
-        let viewContext = result.container.viewContext
-        
-        //Test Data
-        for i in 0..<15 {
-            let info = LaunchInfo(id: String(i), name: "Launching A Rocket \(i)", launchStatus: LaunchStatus(id: 1, name: "Go", description: "Status Des"), noEarlierThan: "\(i)-0\(i)-0\(i)0\(i)T0\(i):0\(i):0\(i)Z", windowStart: "Window Start", windowEnd: "Window End", inhold: false, tbdtime: false, tbddate: false, holdreason: "Holding Reason", launchServiceProvider: providerInfo(id: i, name: "Rocket Company X", abbreviation: "RCX", logoUrl: nil, type: nil), rocket: RocketInfo(configuration: ConfigurationInfo(name: "Big Fx Rocket", family: "Big Rockets", variant: "Fx")), mission: nil, pad: PadInfo(id: i, name: "A Pad", latitude: "Lat", longitude: "Long", location: PadLocationInfo(name: "Pad Loc Name")), probability: 50)
-            Launch.create(from: info, context: viewContext)
-        }
-        
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-        return result
-    }()
+//    static var preview: PersistenceController = {
+//        let result = PersistenceController(inMemory: true)
+//        let viewContext = result.container.viewContext
+//        
+//        //Test Data
+//        for i in 0..<15 {
+//            let info = LaunchInfo(id: String(i), name: "Launching A Rocket \(i)", launchStatus: LaunchStatus(id: 1, name: "Go", description: "Status Des"), noEarlierThan: "\(i)-0\(i)-0\(i)0\(i)T0\(i):0\(i):0\(i)Z", windowStart: "Window Start", windowEnd: "Window End", inhold: false, tbdtime: false, tbddate: false, holdreason: "Holding Reason", failreason: "Fail", launchServiceProvider: providerInfo(id: i, name: "Rocket Company X", abbreviation: "RCX", logoUrl: nil, type: nil, countryCode: "USA", description: "Info"), rocket: RocketInfo(configuration: ConfigurationInfo(name: "Big Fx Rocket", family: "Big Rockets", variant: "Fx")), mission: nil, pad: PadInfo(id: i, name: "A Pad", latitude: "Lat", longitude: "Long", location: PadLocationInfo(name: "Pad Loc Name")), probability: 50)
+//            Launch.create(from: info, context: viewContext)
+//        }
+//        
+//        do {
+//            try viewContext.save()
+//        } catch {
+//            // Replace this implementation with code to handle the error appropriately.
+//            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//            let nsError = error as NSError
+//            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+//        }
+//        return result
+//    }()
     //MARK:-
 
 }

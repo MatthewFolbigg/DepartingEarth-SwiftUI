@@ -13,7 +13,8 @@ extension Status {
         let status = Status(context: context)
         status.statusID = Int16(info.id)
         status.name = info.name
-        status.text = info.description
+        status.abbreviation = info.abbrev
+        status.infoText = info.description
         return status
     }
     

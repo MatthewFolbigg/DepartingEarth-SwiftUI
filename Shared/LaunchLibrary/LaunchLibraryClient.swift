@@ -5,7 +5,7 @@
 //  Created by Matthew Folbigg on 02/08/2021.
 //
 
-import Foundation
+import SwiftUI
 import Combine
 import CoreData
 
@@ -68,6 +68,22 @@ class LaunchLibraryApiClient: ObservableObject {
                     try? self?.context.save()
                 }
             })
+    }
+    
+    func fetchImageData(url: URL?, cancellable: Binding<AnyCancellable?>, completion: @escaping (UIImage?) -> Void) {
+        if let url = url {
+            cancellable.wrappedValue?.cancel()
+            let session = URLSession.shared
+            let publisher = session.dataTaskPublisher(for: url)
+                .map { (data, urlResponse) in UIImage(data: data) }
+                .replaceError(with: nil)
+                .receive(on: DispatchQueue.main)
+            cancellable.wrappedValue = publisher
+                .sink(receiveValue: { image in
+                    completion(image)
+                }
+            )
+        }
     }
 }
 

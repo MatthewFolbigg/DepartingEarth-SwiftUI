@@ -29,7 +29,9 @@ struct LaunchListView: View {
     
     var body: some View {
         List(launches) { launch in
-            LaunchListItem(launch: launch)
+            NavigationLink(destination: LaunchDetailView(launch: launch)) {
+                LaunchListItemView(launch: launch)
+            }
         }
         .listStyle(PlainListStyle())
         .onAppear {
@@ -37,7 +39,7 @@ struct LaunchListView: View {
                 print("Data Downloaded")
                 launchLibrary.fetchData(.upcomingLaunches)
             } else {
-                //Check for stale Date
+                //TODO: Check for stale Date
                 print("Data Loaded")
             }
         }

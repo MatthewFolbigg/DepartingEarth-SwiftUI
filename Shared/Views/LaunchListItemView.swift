@@ -1,5 +1,5 @@
 //
-//  LaunchListItem.swift
+//  LaunchListItemView.swift
 //  Departing Earth
 //
 //  Created by Matthew Folbigg on 03/08/2021.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LaunchListItem: View {
+struct LaunchListItemView: View {
     
     let launch: Launch
     
@@ -24,6 +24,7 @@ struct LaunchListItem: View {
         }
     }
     
+    //TODO: remove this function and make one accessible to other views
     func string(for date: Date) -> String {
         let calendar = Calendar.current
         let dayInt = calendar.component(.day, from: date)

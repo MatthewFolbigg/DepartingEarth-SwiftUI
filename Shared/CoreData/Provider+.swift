@@ -24,6 +24,8 @@ extension Provider {
         provider.abbreviation = info.abbreviation
         provider.type = info.type
         provider.logoUrl = info.logoUrl
+        provider.countryCode = info.countryCode
+        provider.infoText = info.description
         return provider
     }
     

@@ -41,7 +41,16 @@ extension Launch {
         launch.launchID = info.id
         launch.name_ = info.name
         launch.dateISO = info.noEarlierThan
+        launch.windowStart = info.windowStart
+        launch.windowEnd = info.windowEnd
+        launch.weatherProbability = Int16(info.probability ?? -1)
+        launch.hold = info.inhold
+        launch.holdReason = info.holdreason
+        launch.tbdTime = info.tbdtime
+        launch.tbdDate = info.tbddate
+        
         launch.provider = Provider.create(from: info.launchServiceProvider, context: context)
+        launch.rocket = Rocket.create(from: info.rocket, context: context)
         launch.status = Status.create(from: info.launchStatus, context: context)
     }
     
@@ -52,6 +61,13 @@ extension Launch {
     static func requestForAll(sortBy: SortOption, ascending: Bool = true) -> NSFetchRequest<Launch> {
         let request = NSFetchRequest<Launch>(entityName: "Launch")
         request.sortDescriptors = [NSSortDescriptor(key: sortBy.rawValue, ascending: ascending)]
+        return request
+    }
+    
+    static func requestForLaunch(withID id: String) -> NSFetchRequest<Launch> {
+        let request = NSFetchRequest<Launch>(entityName: "Launch")
+        request.sortDescriptors = [NSSortDescriptor(key: SortOption.name.rawValue, ascending: true)]
+        request.predicate = NSPredicate(format: "launchID == %@", id)
         return request
     }
     
