@@ -53,7 +53,6 @@ struct LaunchStatus: Codable {
     let id: Int
     let name: String
     let description: String
-    
     //Status ID Codes
     // 1 - Go - Current T-0 confirmed by official or reliable sources.
     // 2 - To Be Determined - Current date is a 'No Earlier Than' estimation based on unreliable or interpreted sources.

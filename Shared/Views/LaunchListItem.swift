@@ -19,6 +19,8 @@ struct LaunchListItem: View {
                 .foregroundColor(.red)
             Text(string(for: launch.date))
                 .fontWeight(.thin)
+            Text(launch.status?.name ?? "")
+                .fontWeight(.thin)
         }
     }
     

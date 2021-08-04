@@ -42,6 +42,7 @@ extension Launch {
         launch.name_ = info.name
         launch.dateISO = info.noEarlierThan
         launch.provider = Provider.create(from: info.launchServiceProvider, context: context)
+        launch.status = Status.create(from: info.launchStatus, context: context)
     }
     
     static func deleteAll(from context: NSManagedObjectContext) {

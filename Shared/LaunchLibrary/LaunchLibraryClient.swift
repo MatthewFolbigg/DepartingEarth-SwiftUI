@@ -24,7 +24,7 @@ class LaunchLibraryApiClient: ObservableObject {
     
     //MARK: - Endpoints
     private static var baseUrl: String { developerMode ?
-        "https://lldev.thespacedevs.com/2.2.0/" : "https://ll.thespacedevs.com/2.0.0/"
+        "https://lldev.thespacedevs.com/2.1.0/" : "https://ll.thespacedevs.com/2.1.0/"
     }
     private static let inJson = "?format=json"
     private static let detailed = "?mode=detailed"

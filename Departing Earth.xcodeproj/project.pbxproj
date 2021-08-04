@@ -29,6 +29,8 @@
 		1F09CF6026B98AB4009FBD32 /* Provider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5E26B98AB4009FBD32 /* Provider+.swift */; };
 		1F09CF6226B99A26009FBD32 /* LaunchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF6126B99A26009FBD32 /* LaunchListView.swift */; };
 		1F09CF6326B99A26009FBD32 /* LaunchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF6126B99A26009FBD32 /* LaunchListView.swift */; };
+		1F09CF6526BA104A009FBD32 /* Status+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF6426BA104A009FBD32 /* Status+.swift */; };
+		1F09CF6626BA104A009FBD32 /* Status+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF6426BA104A009FBD32 /* Status+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,7 @@
 		1F09CF5B26B9765E009FBD32 /* LaunchListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchListItem.swift; sourceTree = "<group>"; };
 		1F09CF5E26B98AB4009FBD32 /* Provider+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Provider+.swift"; sourceTree = "<group>"; };
 		1F09CF6126B99A26009FBD32 /* LaunchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchListView.swift; sourceTree = "<group>"; };
+		1F09CF6426BA104A009FBD32 /* Status+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Status+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +126,7 @@
 				1F09CF2426B841DB009FBD32 /* PersistenceController.swift */,
 				1F09CF5526B87294009FBD32 /* Launch+.swift */,
 				1F09CF5E26B98AB4009FBD32 /* Provider+.swift */,
+				1F09CF6426BA104A009FBD32 /* Status+.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -252,6 +256,7 @@
 				1F09CF4B26B849B0009FBD32 /* LaunchLibraryClient.swift in Sources */,
 				1F09CF5626B87294009FBD32 /* Launch+.swift in Sources */,
 				1F09CF5126B857AB009FBD32 /* LaunchLibraryResponseTypes.swift in Sources */,
+				1F09CF6526BA104A009FBD32 /* Status+.swift in Sources */,
 				1F09CF3A26B841DB009FBD32 /* UpcomingLaunchesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,6 +274,7 @@
 				1F09CF4C26B849B0009FBD32 /* LaunchLibraryClient.swift in Sources */,
 				1F09CF5726B87294009FBD32 /* Launch+.swift in Sources */,
 				1F09CF5226B857AB009FBD32 /* LaunchLibraryResponseTypes.swift in Sources */,
+				1F09CF6626BA104A009FBD32 /* Status+.swift in Sources */,
 				1F09CF3B26B841DB009FBD32 /* UpcomingLaunchesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

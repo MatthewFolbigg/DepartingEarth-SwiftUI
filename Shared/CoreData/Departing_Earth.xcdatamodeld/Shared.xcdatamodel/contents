@@ -5,6 +5,7 @@
         <attribute name="launchID" optional="YES" attributeType="String"/>
         <attribute name="name_" optional="YES" attributeType="String"/>
         <relationship name="provider" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Provider" inverseName="launches" inverseEntity="Provider"/>
+        <relationship name="status" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Status" inverseName="launches" inverseEntity="Status"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="launchID"/>
@@ -24,8 +25,20 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="Status" representedClassName="Status" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="statusID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <relationship name="launches" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Launch" inverseName="status" inverseEntity="Launch"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="statusID"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
     <elements>
-        <element name="Launch" positionX="-1893.57421875" positionY="-638.50390625" width="128" height="103"/>
-        <element name="Provider" positionX="-1599.93359375" positionY="-622.4375" width="128" height="133"/>
+        <element name="Launch" positionX="-1892.6875" positionY="-618.625" width="128" height="118"/>
+        <element name="Provider" positionX="-1592.4609375" positionY="-650.73046875" width="128" height="133"/>
+        <element name="Status" positionX="-1596.01171875" positionY="-467.296875" width="128" height="103"/>
     </elements>
 </model>

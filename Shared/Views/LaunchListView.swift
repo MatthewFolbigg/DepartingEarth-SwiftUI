@@ -12,12 +12,18 @@ struct LaunchListView: View {
     @FetchRequest var launches: FetchedResults<Launch>
     @ObservedObject var launchLibrary = LaunchLibraryApiClient.shared
     
-    init(filter: Provider? = nil) {
-        let launchRequest = Launch.requestForAll(sortBy: .date)
-        if let filter = filter {
-            let predicate = NSPredicate(format: "provider.name == %@", filter.name ?? "")
-            launchRequest.predicate = predicate
+    init(provider: Provider? = nil, status: Status? = nil, sortAscending: Bool = true) {
+        let launchRequest = Launch.requestForAll(sortBy: .date, ascending: sortAscending)
+        var predicates: [NSPredicate] = []
+        if let provider = provider {
+            let providerPredicate = NSPredicate(format: "provider.name == %@", provider.name ?? "")
+            predicates.append(providerPredicate)
         }
+        if let status = status {
+            let statusPredicate = NSPredicate(format: "status.name == %@", status.name ?? "")
+            predicates.append(statusPredicate)
+        }
+        launchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         _launches = FetchRequest(fetchRequest: launchRequest)
     }
     
