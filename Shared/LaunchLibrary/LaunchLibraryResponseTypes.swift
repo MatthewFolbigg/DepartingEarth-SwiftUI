@@ -19,9 +19,9 @@ struct LaunchInfo: Codable {
     let noEarlierThan: String
     let windowStart: String
     let windowEnd: String
-    let inhold: Bool
-    let tbdtime: Bool
-    let tbddate: Bool
+//    let inhold: Bool
+//    let tbdtime: Bool?
+//    let tbddate: Bool?
     let holdreason: String?
     let failreason: String?
     let launchServiceProvider: providerInfo
@@ -37,9 +37,6 @@ struct LaunchInfo: Codable {
         case noEarlierThan = "net"
         case windowStart = "window_start"
         case windowEnd = "window_end"
-        case inhold = "inhold"
-        case tbdtime = "tbdtime"
-        case tbddate = "tbddate"
         case holdreason = "holdreason"
         case failreason = "failreason"
         case launchServiceProvider = "launch_service_provider"

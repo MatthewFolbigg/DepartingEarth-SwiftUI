@@ -49,10 +49,7 @@ extension Launch {
         launch.windowStart = info.windowStart
         launch.windowEnd = info.windowEnd
         launch.weatherProbability = Int16(info.probability ?? -1)
-        launch.hold = info.inhold
         launch.holdReason = info.holdreason
-        launch.tbdTime = info.tbdtime
-        launch.tbdDate = info.tbddate
         
         launch.provider = Provider.create(from: info.launchServiceProvider, context: context)
         launch.rocket = Rocket.create(from: info.rocket, context: context)

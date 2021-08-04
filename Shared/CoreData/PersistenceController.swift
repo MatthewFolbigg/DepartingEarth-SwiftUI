@@ -88,9 +88,6 @@ struct PersistenceController {
             noEarlierThan: "2021-09-30T00:00:00Z",
             windowStart: "2021-09-30T00:00:00Z",
             windowEnd: "2021-09-30T00:00:00Z",
-            inhold: false,
-            tbdtime: true,
-            tbddate: true,
             holdreason: "No Hold Reason",
             failreason: "No Fail Reason",
             launchServiceProvider: providerInfo(
