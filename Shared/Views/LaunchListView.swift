@@ -13,10 +13,13 @@ struct LaunchListView: View {
     @ObservedObject var launchLibrary = LaunchLibraryApiClient.shared
     @Binding var provider: Provider?
     @Binding var status: Status?
+    @Binding var orbit: Orbit?
+    var isFiltered: Bool { provider != nil || status != nil || orbit != nil }
     
-    init(provider: Binding<Provider?>, status: Binding<Status?>, sortAscending: Bool = true) {
+    init(provider: Binding<Provider?>, status: Binding<Status?>, orbit: Binding<Orbit?>, sortAscending: Bool = true) {
         self._provider = provider
         self._status = status
+        self._orbit = orbit
         let launchRequest = Launch.requestForAll(sortBy: .date, ascending: sortAscending)
         var predicates: [NSPredicate] = []
         if provider.wrappedValue != nil {
@@ -27,15 +30,35 @@ struct LaunchListView: View {
             let statusPredicate = NSPredicate(format: "status.name == %@", status.wrappedValue?.name ?? "")
             predicates.append(statusPredicate)
         }
+        if orbit.wrappedValue != nil {
+            let orbitPredicate = NSPredicate(format: "mission.orbit.name == %@", orbit.wrappedValue?.name ?? "")
+            predicates.append(orbitPredicate)
+        }
         launchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         _launches = FetchRequest(fetchRequest: launchRequest)
     }
     
     var body: some View {
-        List(launches) { launch in
-            ZStack {
-                LaunchListItemView(launch: launch)
-                NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.hidden()
+        List {
+            if launches.count == 0 && isFiltered {
+                HStack {
+                    Spacer()
+                    VStack(alignment: .center) {
+                        Text("No Launches")
+                            .font(.system(.caption, design: .monospaced))
+                        Button(
+                            action: { orbit = nil; status = nil; provider = nil },
+                            label: { Label("Clear Filters", systemImage: "arrow.clockwise.circle") }
+                        )
+                    }
+                    Spacer()
+                }
+            }
+            ForEach(launches) { launch in
+                ZStack {
+                    LaunchListItemView(launch: launch)
+                    NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.hidden()
+                }
             }
         }
         .listStyle(PlainListStyle())

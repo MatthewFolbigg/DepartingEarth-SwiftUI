@@ -37,10 +37,12 @@ struct LaunchListItemView: View {
             }
             Spacer()
             VStack(alignment: .trailing, spacing: 5) {
+                Spacer()
                 Text(launch.status?.abbreviation ?? "")
                 Text(LaunchDateFormatter.longString(for: launch.date))
                     .font(.system(.caption, design: .default))
                     .fontWeight(.light)
+                Spacer()
             }
         }
         .padding(.vertical, 5)

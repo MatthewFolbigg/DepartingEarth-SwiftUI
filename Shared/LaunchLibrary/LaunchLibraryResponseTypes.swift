@@ -125,6 +125,12 @@ struct PadInfo: Codable {
 
 struct PadLocationInfo: Codable {
     let name: String
+    let countryCode: String
+    
+    enum CodingKeys: String, CodingKey {
+        case name = "name"
+        case countryCode = "country_code"
+    }
 }
 
 //MARK: Program

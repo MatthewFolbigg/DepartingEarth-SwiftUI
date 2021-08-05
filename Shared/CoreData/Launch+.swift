@@ -43,6 +43,7 @@ extension Launch {
     @discardableResult
     static func create(from info: LaunchInfo, context: NSManagedObjectContext) -> Launch {
         let launch = Launch(context: context)
+        //Attributes
         launch.launchID = info.id
         launch.name_ = info.name
         launch.dateISO = info.noEarlierThan
@@ -51,9 +52,12 @@ extension Launch {
         launch.weatherProbability = Int16(info.probability ?? -1)
         launch.holdReason = info.holdreason
         
+        //Relationships
         launch.provider = Provider.create(from: info.launchServiceProvider, context: context)
         launch.rocket = Rocket.create(from: info.rocket, context: context)
         launch.status = Status.create(from: info.launchStatus, context: context)
+        launch.pad = Pad.create(from: info.pad, context: context)
+        if let missionInfo = info.mission { launch.mission = Mission.create(from: missionInfo, context: context) }
         return launch
     }
     

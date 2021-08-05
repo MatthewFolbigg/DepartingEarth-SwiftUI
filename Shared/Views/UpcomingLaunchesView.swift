@@ -12,10 +12,12 @@ struct UpcomingLaunchesView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest var providers: FetchedResults<Provider>
     @FetchRequest var statuses: FetchedResults<Status>
+    @FetchRequest var orbits: FetchedResults<Orbit>
     @ObservedObject var launchLibrary = LaunchLibraryApiClient.shared
     @State var providerFilter: Provider? = nil
     @State var statusFilter: Status? = nil
-    var isFiltered: Bool { providerFilter != nil || statusFilter != nil }
+    @State var orbitFilter: Orbit? = nil
+    var isFiltered: Bool { providerFilter != nil || statusFilter != nil || orbitFilter != nil }
     @State var sortAscending: Bool = true
     
     init() {
@@ -23,6 +25,8 @@ struct UpcomingLaunchesView: View {
         _providers = FetchRequest(fetchRequest: providerRequest)
         let statusRequest = Status.requestForAll()
         _statuses = FetchRequest(fetchRequest: statusRequest)
+        let orbitRequest = Orbit.requestForAll()
+        _orbits = FetchRequest(fetchRequest: orbitRequest)
     }
 
     //MARK: - Main Body
@@ -30,7 +34,7 @@ struct UpcomingLaunchesView: View {
         NavigationView {
             VStack {
                 ZStack {
-                    LaunchListView(provider: $providerFilter, status: $statusFilter, sortAscending: sortAscending)
+                    LaunchListView(provider: $providerFilter, status: $statusFilter, orbit: $orbitFilter, sortAscending: sortAscending)
                     if launchLibrary.fetchStatus == .fetching {
                         launchLibraryActivityIndicator
                     }
@@ -79,10 +83,17 @@ struct UpcomingLaunchesView: View {
                     .fontWeight(.regular)
                 Spacer()
             }
-            HStack(alignment: .center, spacing: 5) {
+            HStack(alignment: .center, spacing: 3) {
                 Text("Status:")
                     .fontWeight(.thin)
                 Text(statusFilter != nil ? "\(statusFilter?.abbreviation ?? "")" : "All")
+                    .fontWeight(.regular)
+                Spacer()
+            }
+            HStack(alignment: .center, spacing: 3) {
+                Text("Orbit:")
+                    .fontWeight(.thin)
+                Text(orbitFilter != nil ? "\(orbitFilter?.abbreviation ?? "")" : "All")
                     .fontWeight(.regular)
                 Spacer()
             }
@@ -97,7 +108,8 @@ struct UpcomingLaunchesView: View {
             Divider()
             providerPicker
             statusPicker
-            if statusFilter != nil || providerFilter != nil {
+            orbitPicker
+            if isFiltered {
                 clearAllFiltersButton
             }
         } label: {
@@ -110,6 +122,7 @@ struct UpcomingLaunchesView: View {
             action: {
                 providerFilter = nil
                 statusFilter = nil
+                orbitFilter = nil
             },
             label: { Label("Clear Filters", systemImage: "xmark.circle") }
         )
@@ -154,6 +167,25 @@ struct UpcomingLaunchesView: View {
                 ForEach(statuses, id: \.self) { status in
                     let tag: Status? = status
                     Text(status.abbreviation ?? status.name!).tag(tag)
+                }
+            }
+        )
+        .pickerStyle(MenuPickerStyle())
+    }
+    
+    var orbitPicker: some View {
+        Picker(
+            selection: $orbitFilter,
+            label: Label("Orbit", systemImage: "line.horizontal.3.decrease"),
+            content: {
+                if statusFilter != nil {
+                    let tag: Status? = nil
+                    Label("Any Orbit", systemImage: "xmark.circle").tag(tag)
+                }
+                Divider()
+                ForEach(orbits, id: \.self) { orbit in
+                    let tag: Orbit? = orbit
+                    Text(orbit.name!).tag(tag)
                 }
             }
         )
