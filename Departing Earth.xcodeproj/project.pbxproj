@@ -47,6 +47,8 @@
 		1F689C4A26BBF8A000087665 /* Pad+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C4826BBF8A000087665 /* Pad+.swift */; };
 		1F689C4C26BC0CFC00087665 /* Countdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C4B26BC0CFC00087665 /* Countdown.swift */; };
 		1F689C4D26BC0CFC00087665 /* Countdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C4B26BC0CFC00087665 /* Countdown.swift */; };
+		1F689C4F26BC44B300087665 /* UpcomingLaunchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C4E26BC44B300087665 /* UpcomingLaunchList.swift */; };
+		1F689C5026BC44B300087665 /* UpcomingLaunchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C4E26BC44B300087665 /* UpcomingLaunchList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +77,7 @@
 		1F689C4526BBF89500087665 /* Orbit+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Orbit+.swift"; sourceTree = "<group>"; };
 		1F689C4826BBF8A000087665 /* Pad+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pad+.swift"; sourceTree = "<group>"; };
 		1F689C4B26BC0CFC00087665 /* Countdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countdown.swift; sourceTree = "<group>"; };
+		1F689C4E26BC44B300087665 /* UpcomingLaunchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingLaunchList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +114,7 @@
 				1F09CF2226B841DB009FBD32 /* Departing_EarthApp.swift */,
 				1F689C3C26BAD5A800087665 /* LaunchDateFormatter.swift */,
 				1F689C4B26BC0CFC00087665 /* Countdown.swift */,
+				1F689C4E26BC44B300087665 /* UpcomingLaunchList.swift */,
 				1F09CF5326B86755009FBD32 /* Views */,
 				1F09CF5426B8675D009FBD32 /* LaunchLibrary */,
 				1F09CF4926B8497F009FBD32 /* CoreData */,
@@ -289,6 +293,7 @@
 				1F689C3D26BAD5A800087665 /* LaunchDateFormatter.swift in Sources */,
 				1F689C4326BBF87800087665 /* Mission+.swift in Sources */,
 				1F689C4026BAE8BB00087665 /* CountdownView.swift in Sources */,
+				1F689C4F26BC44B300087665 /* UpcomingLaunchList.swift in Sources */,
 				1F09CF3826B841DB009FBD32 /* Departing_EarthApp.swift in Sources */,
 				1F09CF5F26B98AB4009FBD32 /* Provider+.swift in Sources */,
 				1F689C3726BA959100087665 /* LaunchDetailView.swift in Sources */,
@@ -315,6 +320,7 @@
 				1F689C3E26BAD5A800087665 /* LaunchDateFormatter.swift in Sources */,
 				1F689C4426BBF87800087665 /* Mission+.swift in Sources */,
 				1F689C4126BAE8BB00087665 /* CountdownView.swift in Sources */,
+				1F689C5026BC44B300087665 /* UpcomingLaunchList.swift in Sources */,
 				1F09CF3926B841DB009FBD32 /* Departing_EarthApp.swift in Sources */,
 				1F09CF6026B98AB4009FBD32 /* Provider+.swift in Sources */,
 				1F689C3826BA959100087665 /* LaunchDetailView.swift in Sources */,

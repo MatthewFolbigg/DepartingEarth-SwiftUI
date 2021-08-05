@@ -10,36 +10,31 @@ import CoreData
 
 struct UpcomingLaunchesView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    
+    @ObservedObject var launchList: UpcomingLaunchList
+    @ObservedObject var launchLibraryClient = LaunchLibraryApiClient.shared
     @FetchRequest var providers: FetchedResults<Provider>
     @FetchRequest var statuses: FetchedResults<Status>
     @FetchRequest var orbits: FetchedResults<Orbit>
-    @ObservedObject var launchLibrary = LaunchLibraryApiClient.shared
-    @State var providerFilter: Provider? = nil
-    @State var statusFilter: Status? = nil
-    @State var orbitFilter: Orbit? = nil
-    var isFiltered: Bool { providerFilter != nil || statusFilter != nil || orbitFilter != nil }
-    @State var sortAscending: Bool = true
+    var isDownloading: Bool { launchLibraryClient.fetchStatus == .fetching ? true : false }
     
-    init() {
-        let providerRequest = Provider.requestForAll()
-        _providers = FetchRequest(fetchRequest: providerRequest)
-        let statusRequest = Status.requestForAll()
-        _statuses = FetchRequest(fetchRequest: statusRequest)
-        let orbitRequest = Orbit.requestForAll()
-        _orbits = FetchRequest(fetchRequest: orbitRequest)
+    init(launchList: UpcomingLaunchList) {
+        self.launchList = launchList
+        _providers = FetchRequest(fetchRequest: Provider.requestForAll())
+        _statuses = FetchRequest(fetchRequest: Status.requestForAll())
+        _orbits = FetchRequest(fetchRequest: Orbit.requestForAll())
     }
 
     //MARK: - Main Body
     var body: some View {
         NavigationView {
             VStack {
+                
                 ZStack {
-                    LaunchListView(provider: $providerFilter, status: $statusFilter, orbit: $orbitFilter, sortAscending: sortAscending)
-                    if launchLibrary.fetchStatus == .fetching {
-                        launchLibraryActivityIndicator
-                    }
+                    LaunchListView(request: launchList.filteredLaunchRequest())
+                    if isDownloading { launchLibraryActivityIndicator }
                 }
-                if isFiltered {
+                if launchList.isFiltered {
                     filterIndicatorBar
                         .padding(.horizontal)
                 }
@@ -79,21 +74,21 @@ struct UpcomingLaunchesView: View {
             HStack(alignment: .center, spacing: 3) {
                 Text("Provider:")
                     .fontWeight(.thin)
-                Text(providerFilter != nil ? "\(providerFilter?.compactName ?? "")" : "All")
+                Text(launchList.providerFilter != nil ? "\(launchList.providerFilter?.compactName ?? "")" : "All")
                     .fontWeight(.regular)
                 Spacer()
             }
             HStack(alignment: .center, spacing: 3) {
                 Text("Status:")
                     .fontWeight(.thin)
-                Text(statusFilter != nil ? "\(statusFilter?.abbreviation ?? "")" : "All")
+                Text(launchList.statusFilter != nil ? "\(launchList.statusFilter?.abbreviation ?? "")" : "All")
                     .fontWeight(.regular)
                 Spacer()
             }
             HStack(alignment: .center, spacing: 3) {
                 Text("Orbit:")
                     .fontWeight(.thin)
-                Text(orbitFilter != nil ? "\(orbitFilter?.abbreviation ?? "")" : "All")
+                Text(launchList.orbitFilter != nil ? "\(launchList.orbitFilter?.abbreviation ?? "")" : "All")
                     .fontWeight(.regular)
                 Spacer()
             }
@@ -109,7 +104,7 @@ struct UpcomingLaunchesView: View {
             providerPicker
             statusPicker
             orbitPicker
-            if isFiltered {
+            if launchList.isFiltered {
                 clearAllFiltersButton
             }
         } label: {
@@ -120,9 +115,7 @@ struct UpcomingLaunchesView: View {
     var clearAllFiltersButton: some View {
         Button(
             action: {
-                providerFilter = nil
-                statusFilter = nil
-                orbitFilter = nil
+                launchList.removeAllFilters()
             },
             label: { Label("Clear Filters", systemImage: "xmark.circle") }
         )
@@ -130,17 +123,19 @@ struct UpcomingLaunchesView: View {
     
     var sortOrderMenuButton: some View {
         Button(
-            action: { sortAscending.toggle() },
-            label: { Label("\(sortAscending ? "Latest" : "Earliest") first", systemImage: "arrow.up.arrow.down") }
+            action: {
+                launchList.sortAscending.toggle()
+            },
+            label: { Label("\(launchList.sortAscending ? "Latest" : "Earliest") first", systemImage: "arrow.up.arrow.down") }
         )
     }
 
     var providerPicker: some View {
         Picker(
-            selection: $providerFilter,
+            selection: $launchList.providerFilter,
             label: Label("Launch Provider", systemImage: "person.2"),
             content: {
-                    if providerFilter != nil {
+                if launchList.providerFilter != nil {
                         let tag: Provider? = nil
                         Label("All Providers", systemImage: "xmark.circle").tag(tag)
                         Divider()
@@ -156,10 +151,10 @@ struct UpcomingLaunchesView: View {
     
     var statusPicker: some View {
         Picker(
-            selection: $statusFilter,
+            selection: $launchList.statusFilter,
             label: Label("Status", systemImage: "calendar"),
             content: {
-                if statusFilter != nil {
+                if launchList.statusFilter != nil {
                     let tag: Status? = nil
                     Label("Any Status", systemImage: "xmark.circle").tag(tag)
                 }
@@ -175,10 +170,10 @@ struct UpcomingLaunchesView: View {
     
     var orbitPicker: some View {
         Picker(
-            selection: $orbitFilter,
+            selection: $launchList.orbitFilter,
             label: Label("Orbit", systemImage: "circle.dashed"),
             content: {
-                if statusFilter != nil {
+                if launchList.statusFilter != nil {
                     let tag: Status? = nil
                     Label("Any Orbit", systemImage: "xmark.circle").tag(tag)
                 }
@@ -197,7 +192,7 @@ struct UpcomingLaunchesView: View {
         Button(
             action: {
                 Launch.deleteAll(from: viewContext)
-                launchLibrary.fetchData(.upcomingLaunches)
+                launchLibraryClient.fetchData(.upcomingLaunches)
             },
             label: { Label("Refresh", systemImage: "arrow.clockwise.circle") }
         )
@@ -218,6 +213,6 @@ struct UpcomingLaunchesView: View {
 //MARK: Previews
 struct UpcomingLaunchesListView_Previews: PreviewProvider {
     static var previews: some View {
-        UpcomingLaunchesView()
+        UpcomingLaunchesView(launchList: UpcomingLaunchList())
     }
 }
