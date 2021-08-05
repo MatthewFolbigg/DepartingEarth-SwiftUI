@@ -28,16 +28,16 @@ struct UpcomingLaunchesView: View {
     //MARK: - Main Body
     var body: some View {
         NavigationView {
-            ZStack {
-                VStack {
-                    if isFiltered {
-                        filterIndicatorBar
+            VStack {
+                ZStack {
+                    LaunchListView(provider: $providerFilter, status: $statusFilter, sortAscending: sortAscending)
+                    if launchLibrary.fetchStatus == .fetching {
+                        launchLibraryActivityIndicator
                     }
-                    LaunchListView(provider: providerFilter, status: statusFilter, sortAscending: sortAscending)
-                    deleteAllButton
                 }
-                if launchLibrary.fetchStatus == .fetching {
-                    launchLibraryActivityIndicator
+                if isFiltered {
+                    filterIndicatorBar
+                        .padding(.horizontal)
                 }
             }
             .navigationTitle("Departing Soon")
@@ -70,7 +70,6 @@ struct UpcomingLaunchesView: View {
         .clipShape(RoundedRectangle(cornerRadius: 20))
     }
     
-    //MARK: - Views
     var filterIndicatorBar: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .center, spacing: 3) {
@@ -87,10 +86,8 @@ struct UpcomingLaunchesView: View {
                     .fontWeight(.regular)
                 Spacer()
             }
-            Divider()
         }
         .font(.caption2)
-        .padding(.horizontal)
     }
     
     //MARK: - Menu

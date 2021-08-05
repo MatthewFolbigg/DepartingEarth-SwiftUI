@@ -32,7 +32,7 @@ struct LaunchListItemView: View {
                 Text(launch.provider?.type ?? "")
                     .font(.system(.caption, design: .default))
                     .fontWeight(.light)
-                Spacer()
+//                Spacer()
 //                CountdownView(toDate: launch.date)
             }
             Spacer()
@@ -43,7 +43,7 @@ struct LaunchListItemView: View {
                     .fontWeight(.light)
             }
         }
-        .padding(.vertical)
+        .padding(.vertical, 5)
     }
     
 }

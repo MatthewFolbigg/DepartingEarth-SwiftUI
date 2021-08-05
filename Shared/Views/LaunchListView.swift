@@ -11,16 +11,20 @@ struct LaunchListView: View {
     
     @FetchRequest var launches: FetchedResults<Launch>
     @ObservedObject var launchLibrary = LaunchLibraryApiClient.shared
+    @Binding var provider: Provider?
+    @Binding var status: Status?
     
-    init(provider: Provider? = nil, status: Status? = nil, sortAscending: Bool = true) {
+    init(provider: Binding<Provider?>, status: Binding<Status?>, sortAscending: Bool = true) {
+        self._provider = provider
+        self._status = status
         let launchRequest = Launch.requestForAll(sortBy: .date, ascending: sortAscending)
         var predicates: [NSPredicate] = []
-        if let provider = provider {
-            let providerPredicate = NSPredicate(format: "provider.name == %@", provider.name ?? "")
+        if provider.wrappedValue != nil {
+            let providerPredicate = NSPredicate(format: "provider.name == %@", provider.wrappedValue?.name ?? "")
             predicates.append(providerPredicate)
         }
-        if let status = status {
-            let statusPredicate = NSPredicate(format: "status.name == %@", status.name ?? "")
+        if status.wrappedValue != nil {
+            let statusPredicate = NSPredicate(format: "status.name == %@", status.wrappedValue?.name ?? "")
             predicates.append(statusPredicate)
         }
         launchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
@@ -29,8 +33,9 @@ struct LaunchListView: View {
     
     var body: some View {
         List(launches) { launch in
-            NavigationLink(destination: LaunchDetailView(launch: launch)) {
+            ZStack {
                 LaunchListItemView(launch: launch)
+                NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.hidden()
             }
         }
         .listStyle(PlainListStyle())
@@ -44,11 +49,17 @@ struct LaunchListView: View {
             }
         }
     }
+    
 }
 
-struct LaunchListView_Previews: PreviewProvider {
-    static var previews: some View {
-        let context = PersistenceController.shared.container.viewContext
-        LaunchListView().environment(\.managedObjectContext, context)
-    }
-}
+
+
+
+
+
+//struct LaunchListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let context = PersistenceController.shared.container.viewContext
+//        LaunchListView().environment(\.managedObjectContext, context)
+//    }
+//}
