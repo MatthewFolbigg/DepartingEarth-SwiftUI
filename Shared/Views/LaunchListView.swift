@@ -31,7 +31,7 @@ struct LaunchListView: View {
             predicates.append(statusPredicate)
         }
         if orbit.wrappedValue != nil {
-            let orbitPredicate = NSPredicate(format: "mission.orbit.name == %@", orbit.wrappedValue?.name ?? "")
+            let orbitPredicate = NSPredicate(format: "mission.orbit.abbreviation == %@", orbit.wrappedValue?.abbreviation ?? "")
             predicates.append(orbitPredicate)
         }
         launchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)

@@ -101,7 +101,7 @@ struct LaunchDateFormatter {
         let formatter = NumberFormatter()
         formatter.minimumIntegerDigits = 2
         
-        let minus = launchDate.timeIntervalSinceNow <= 0 ? false : true
+        let minus = launchDate.timeIntervalSinceNow <= 0 ? "+" : "-"
         let days = formatter.string(from: NSNumber(value: intComponents.days)) ?? ""
         let hours = formatter.string(from: NSNumber(value: intComponents.hours)) ?? ""
         let minutes = formatter.string(from: NSNumber(value: intComponents.minutes)) ?? ""
@@ -125,5 +125,5 @@ struct CountdownComponentStrings {
     var hours: String
     var minutes: String
     var seconds: String
-    var minus: Bool
+    var minus: String
 }

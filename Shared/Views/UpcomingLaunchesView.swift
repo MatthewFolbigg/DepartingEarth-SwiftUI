@@ -138,7 +138,7 @@ struct UpcomingLaunchesView: View {
     var providerPicker: some View {
         Picker(
             selection: $providerFilter,
-            label: Label("Launch Provider", systemImage: "line.horizontal.3.decrease"),
+            label: Label("Launch Provider", systemImage: "person.2"),
             content: {
                     if providerFilter != nil {
                         let tag: Provider? = nil
@@ -157,7 +157,7 @@ struct UpcomingLaunchesView: View {
     var statusPicker: some View {
         Picker(
             selection: $statusFilter,
-            label: Label("Status", systemImage: "line.horizontal.3.decrease"),
+            label: Label("Status", systemImage: "calendar"),
             content: {
                 if statusFilter != nil {
                     let tag: Status? = nil
@@ -176,7 +176,7 @@ struct UpcomingLaunchesView: View {
     var orbitPicker: some View {
         Picker(
             selection: $orbitFilter,
-            label: Label("Orbit", systemImage: "line.horizontal.3.decrease"),
+            label: Label("Orbit", systemImage: "circle.dashed"),
             content: {
                 if statusFilter != nil {
                     let tag: Status? = nil
@@ -195,7 +195,10 @@ struct UpcomingLaunchesView: View {
     //MARK: - Buttons
     var refreshButton: some View {
         Button(
-            action: { launchLibrary.fetchData(.upcomingLaunches) },
+            action: {
+                Launch.deleteAll(from: viewContext)
+                launchLibrary.fetchData(.upcomingLaunches)
+            },
             label: { Label("Refresh", systemImage: "arrow.clockwise.circle") }
         )
     }

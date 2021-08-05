@@ -76,7 +76,9 @@ struct PersistenceController {
 //    }()
     
     //MARK:- Test Data
-    static func testData(context: NSManagedObjectContext) -> Launch {
+    private static let testContext = PersistenceController().container.viewContext
+    static func testData(context: NSManagedObjectContext = testContext) -> Launch {
+        let context = self.testContext
         let info = LaunchInfo(
             id: "testLaunchID",
             name: "A Big Rocket",

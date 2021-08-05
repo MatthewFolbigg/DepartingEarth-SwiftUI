@@ -32,8 +32,9 @@ struct LaunchListItemView: View {
                 Text(launch.provider?.type ?? "")
                     .font(.system(.caption, design: .default))
                     .fontWeight(.light)
-//                Spacer()
-//                CountdownView(toDate: launch.date)
+                Spacer()
+                CountdownView(countdown: Countdown(to: launch.date))
+                    .frame(maxHeight: 30)
             }
             Spacer()
             VStack(alignment: .trailing, spacing: 5) {
@@ -52,8 +53,7 @@ struct LaunchListItemView: View {
 
 struct LaunchListItemView_Previews: PreviewProvider {
     static var previews: some View {
-        let context = PersistenceController.shared.container.viewContext
-        let launch = PersistenceController.testData(context: context)
+        let launch = PersistenceController.testData()
         List {
             LaunchListItemView(launch: launch)
             LaunchListItemView(launch: launch)

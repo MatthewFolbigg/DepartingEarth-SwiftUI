@@ -45,6 +45,8 @@
 		1F689C4726BBF89500087665 /* Orbit+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C4526BBF89500087665 /* Orbit+.swift */; };
 		1F689C4926BBF8A000087665 /* Pad+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C4826BBF8A000087665 /* Pad+.swift */; };
 		1F689C4A26BBF8A000087665 /* Pad+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C4826BBF8A000087665 /* Pad+.swift */; };
+		1F689C4C26BC0CFC00087665 /* Countdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C4B26BC0CFC00087665 /* Countdown.swift */; };
+		1F689C4D26BC0CFC00087665 /* Countdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C4B26BC0CFC00087665 /* Countdown.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +74,7 @@
 		1F689C4226BBF87800087665 /* Mission+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mission+.swift"; sourceTree = "<group>"; };
 		1F689C4526BBF89500087665 /* Orbit+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Orbit+.swift"; sourceTree = "<group>"; };
 		1F689C4826BBF8A000087665 /* Pad+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pad+.swift"; sourceTree = "<group>"; };
+		1F689C4B26BC0CFC00087665 /* Countdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countdown.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +110,7 @@
 			children = (
 				1F09CF2226B841DB009FBD32 /* Departing_EarthApp.swift */,
 				1F689C3C26BAD5A800087665 /* LaunchDateFormatter.swift */,
+				1F689C4B26BC0CFC00087665 /* Countdown.swift */,
 				1F09CF5326B86755009FBD32 /* Views */,
 				1F09CF5426B8675D009FBD32 /* LaunchLibrary */,
 				1F09CF4926B8497F009FBD32 /* CoreData */,
@@ -280,6 +284,7 @@
 				1F09CF6226B99A26009FBD32 /* LaunchListView.swift in Sources */,
 				1F09CF3C26B841DB009FBD32 /* PersistenceController.swift in Sources */,
 				1F09CF5C26B9765E009FBD32 /* LaunchListItemView.swift in Sources */,
+				1F689C4C26BC0CFC00087665 /* Countdown.swift in Sources */,
 				1F689C4926BBF8A000087665 /* Pad+.swift in Sources */,
 				1F689C3D26BAD5A800087665 /* LaunchDateFormatter.swift in Sources */,
 				1F689C4326BBF87800087665 /* Mission+.swift in Sources */,
@@ -305,6 +310,7 @@
 				1F09CF6326B99A26009FBD32 /* LaunchListView.swift in Sources */,
 				1F09CF3D26B841DB009FBD32 /* PersistenceController.swift in Sources */,
 				1F09CF5D26B9765E009FBD32 /* LaunchListItemView.swift in Sources */,
+				1F689C4D26BC0CFC00087665 /* Countdown.swift in Sources */,
 				1F689C4A26BBF8A000087665 /* Pad+.swift in Sources */,
 				1F689C3E26BAD5A800087665 /* LaunchDateFormatter.swift in Sources */,
 				1F689C4426BBF87800087665 /* Mission+.swift in Sources */,

@@ -8,39 +8,60 @@
 import SwiftUI
 
 struct CountdownView: View {
-    var date: Date
-    @State var countdown: CountdownComponentStrings? = nil
+    
+    @ObservedObject var countdown: Countdown
+    
+    init(countdown: Countdown) {
+        self.countdown = countdown
+    }
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
-    init(toDate: Date) {
-        self.date = toDate
-        self.countdown = LaunchDateFormatter.countdownComponents(untill: toDate)
+    var body: some View {
+        
+        HStack(alignment: .top , spacing: 5) {
+            
+            componentView(component: countdown.days, label: "Day")
+            componentView(component: countdown.hours, label: "Hour")
+            componentView(component: countdown.minutes, label: "Minute")
+            componentView(component: countdown.seconds, label: "Second")
+        }
+        .onReceive(timer) { _ in
+            countdown.updateComponents()
+        }
+
     }
     
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 10)
-                .frame(width: 150, height: 25, alignment: .center)
-                .foregroundColor(.gray)
-            HStack {
-                if let countdown = countdown {
-                    Text(countdown.minus ? "-" : "+")
-                    Text(countdown.days)
-                    Text(countdown.hours)
-                    Text(countdown.minutes)
-                    Text(countdown.seconds)
+    @ViewBuilder
+    func componentView(component: String, label: String = "") -> some View {
+        GeometryReader { geo in
+            let minAxis = min(geo.size.width, geo.size.height)
+            let height = min(geo.size.height , geo.size.width/1.8)
+            VStack(alignment: .center, spacing: 1) {
+                ZStack {
+                    Color.gray.clipShape(RoundedRectangle(cornerRadius: minAxis * 0.08))
+                        .frame(width: geo.size.width, height: height, alignment: .center)
+                        
+                        Text(component)
+                            .font(.system(size: height * 0.8, weight: .semibold, design: .monospaced))
+                            .lineLimit(1)
+                            .foregroundColor(.white)
+                }
+                if let label = label {
+                    Text(label)
+                        .font(.system(size: height * 0.35, weight: .thin, design: .rounded))
+                        .lineLimit(1)
                 }
             }
-            .foregroundColor(.white)
-            .onReceive(timer) { _ in
-                self.countdown = LaunchDateFormatter.countdownComponents(untill: date)
-            }
         }
+        .aspectRatio(1.2, contentMode: .fit)
+        .frame(maxHeight: 100)
     }
 }
 
 struct CountdownView_Previews: PreviewProvider {
     static var previews: some View {
-        CountdownView(toDate: Date.distantFuture)
+        CountdownView(countdown: Countdown(to: Date.distantFuture))
+            .previewDevice("iPad Pro (12.9-inch) (5th generation)")
+            .previewLayout(.device)
     }
 }
