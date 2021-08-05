@@ -18,36 +18,36 @@ struct LaunchListView: View {
     }
     
     var body: some View {
-        List {
-            if launches.isEmpty {
+        VStack {
+            if launches.count == 0 {
+                Spacer()
                 Text("No Launches")
-                    .fontWeight(.thin)
                     .foregroundColor(.gray)
-                    .padding()
-            }
-            ForEach(launches) { launch in
-                ZStack {
-                    LaunchListItemView(launch: launch)
-                    NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.hidden()
+                    .fontWeight(.thin)
+                Spacer()
+            } else {
+                List {
+                    ForEach(launches) { launch in
+                        ZStack {
+                            LaunchListItemView(launch: launch)
+                            NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.hidden()
+                        }
+                    }
+                    .listRowInsets(EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20))
+                }
+                .listStyle(PlainListStyle())
+                .onAppear {
+                    if launches.isEmpty {
+                        print("Data Downloaded")
+                        LaunchLibraryApiClient.shared.fetchData(.upcomingLaunches)
+                    } else {
+                        //TODO: Check for stale Date
+                        print("Data Loaded")
+                    }
                 }
             }
-        }
-        .listStyle(PlainListStyle())
-        .onAppear {
-            if launches.isEmpty {
-                print("Data Downloaded")
-                LaunchLibraryApiClient.shared.fetchData(.upcomingLaunches)
-            } else {
-                //TODO: Check for stale Date
-                print("Data Loaded")
-            }
-        }
-    }
-    
-    
+        }}
 }
-
-
 
 
 

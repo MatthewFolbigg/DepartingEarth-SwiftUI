@@ -108,7 +108,12 @@ struct PersistenceController {
                     family: "The Biggens",
                     variant: "Big",
                     description: "A very large rocket")),
-            mission: nil,
+            mission: MissionInfo(
+                    id: 10,
+                    name: "Complex Proceedure type 2a Uncrewed 10",
+                    description: "A very long and arduous mission",
+                    type: "Resupply",
+                    orbit: OrbitInfo(id: 10, name: "Low Earth Orbit", abbrev: "LTO")),
             pad: PadInfo(
                 id: 10,
                 name: "A remote pad",

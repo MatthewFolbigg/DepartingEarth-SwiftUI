@@ -56,18 +56,18 @@ struct LaunchDateFormatter {
         }
     }
     
-    static func longString(for date: Date) -> String {
+    static func dateStringWithMonthText(for date: Date, compact: Bool) -> String {
         let dayInt = calendar.component(.day, from: date)
         let yearInt = calendar.component(.year, from: date)
         let monthInt = calendar.component(.month, from: date)
         if let month = Month(rawValue: monthInt) {
-            return "\(dayInt) \(month.string) \(yearInt)"
+            return "\(dayInt) \(compact ? month.abbreviation : month.string) \(yearInt)"
         } else {
             return ""
         }
     }
     
-    static func digitSting(for date: Date, seperator: Seperator = .forwardSlash) -> String {
+    static func dateStringWithMonthDigit(for date: Date, seperator: Seperator = .forwardSlash) -> String {
         let dayInt = calendar.component(.day, from: date)
         let yearInt = calendar.component(.year, from: date)
         let monthInt = calendar.component(.month, from: date)
@@ -75,11 +75,15 @@ struct LaunchDateFormatter {
         return "\(dayInt)\(sep)\(monthInt)\(sep)\(yearInt)"
     }
     
-    static func shortTime(for date: Date, withSeconds: Bool) -> String {
-        let hours = calendar.component(.hour, from: date)
-        let minutes = calendar.component(.minute, from: date)
-        let seconds = calendar.component(.second, from: date)
-        return "\(hours):\(minutes)\(withSeconds ? String(seconds) : "")"
+    static func timeString(for date: Date, withSeconds: Bool) -> String {
+        //TODO: Handle this dont just return 00s
+        let formatter = NumberFormatter()
+        formatter.minimumIntegerDigits = 2
+        let hours = formatter.string(from:NSNumber(value: calendar.component(.hour, from: date))) ?? "00"
+        let minutes = formatter.string(from:NSNumber(value: calendar.component(.minute, from: date))) ?? "00"
+        let seconds = formatter.string(from:NSNumber(value: calendar.component(.second, from: date))) ?? "00"
+        
+        return "\(hours):\(minutes)\(withSeconds ? seconds : "")"
     }
     
     static func countdownComponents(untill launchDate: Date) -> CountdownComponentInts {

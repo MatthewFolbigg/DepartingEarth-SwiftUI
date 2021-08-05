@@ -35,10 +35,11 @@ struct CountdownView: View {
     func componentView(component: String, label: String = "") -> some View {
         GeometryReader { geo in
             let minAxis = min(geo.size.width, geo.size.height)
-            let height = min(geo.size.height , geo.size.width/1.8)
+            let height = min(geo.size.height , geo.size.width/1.5)
+            let radius = minAxis * 0.15
             VStack(alignment: .center, spacing: 1) {
                 ZStack {
-                    Color.gray.clipShape(RoundedRectangle(cornerRadius: minAxis * 0.08))
+                    Color.gray.clipShape(RoundedRectangle(cornerRadius: radius))
                         .frame(width: geo.size.width, height: height, alignment: .center)
                         
                         Text(component)
@@ -53,7 +54,7 @@ struct CountdownView: View {
                 }
             }
         }
-        .aspectRatio(1.2, contentMode: .fit)
+        .aspectRatio(1, contentMode: .fit)
         .frame(maxHeight: 100)
     }
 }

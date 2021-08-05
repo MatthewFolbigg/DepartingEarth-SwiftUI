@@ -17,36 +17,42 @@ struct LaunchListItemView: View {
     }
     
     var body: some View {
-        HStack(alignment: .bottom) {
-            VStack(alignment: .leading, spacing: 5) {
-                Text(launch.provider?.compactName ?? "")
-                    .font(.system(.headline, design: .monospaced))
-                    .fontWeight(.semibold)
-                Text(launch.rocket?.name ?? "")
-                    .font(.system(.subheadline, design: .monospaced))
-                    .fontWeight(.semibold)
-                    .truncationMode(.tail)
-                    .foregroundColor(.orange)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.6)
-                Text(launch.provider?.type ?? "")
-                    .font(.system(.caption, design: .default))
-                    .fontWeight(.light)
+        VStack(alignment: .leading, spacing: 5) {
+            Text(launch.mission?.name ?? "")
+                .font(.system(.subheadline, design: .default))
+                .fontWeight(.light)
+                .lineLimit(1)
+            Text(launch.provider?.compactName ?? "")
+                .font(.system(.headline, design: .monospaced))
+                .fontWeight(.semibold)
+                .lineLimit(1)
+            Text(launch.rocket?.name ?? "")
+                .font(.system(.subheadline, design: .default))
+                .fontWeight(.semibold)
+                .foregroundColor(.orange)
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+            Text(launch.mission?.type ?? "")
+                .font(.system(.caption, design: .default))
+                .fontWeight(.light)
+            
+            HStack(alignment: .bottom) {
+                VStack(alignment: .leading, spacing: 5) {
+                    Spacer()
+                    CountdownView(countdown: Countdown(to: launch.date))
+                        .frame(maxHeight: 40)
+                }
                 Spacer()
-                CountdownView(countdown: Countdown(to: launch.date))
-                    .frame(maxHeight: 30)
-            }
-            Spacer()
-            VStack(alignment: .trailing, spacing: 5) {
-                Spacer()
-                Text(launch.status?.abbreviation ?? "")
-                Text(LaunchDateFormatter.longString(for: launch.date))
-                    .font(.system(.caption, design: .default))
-                    .fontWeight(.light)
-                Spacer()
+                VStack(alignment: .trailing, spacing: 5) {
+                    Spacer()
+                    Text(launch.status?.abbreviation ?? "")
+                    Text(LaunchDateFormatter.dateStringWithMonthText(for: launch.date, compact: true))
+                        .font(.system(.caption, design: .default))
+                        .fontWeight(.light)
+                    Spacer()
+                }
             }
         }
-        .padding(.vertical, 5)
     }
     
 }
@@ -60,7 +66,7 @@ struct LaunchListItemView_Previews: PreviewProvider {
             LaunchListItemView(launch: launch)
             LaunchListItemView(launch: launch)
         }
-            .previewDevice("iPhone 12")
+        .previewDevice("iPhone 12 pro")
     }
 }
 

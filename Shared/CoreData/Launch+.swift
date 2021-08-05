@@ -30,6 +30,18 @@ extension Launch {
         }
     }
     
+    func dateString(compact: Bool = false, digitsOnly: Bool = false, digitSeperator: LaunchDateFormatter.Seperator = .forwardSlash) -> String {
+        if digitsOnly {
+            return LaunchDateFormatter.dateStringWithMonthDigit(for: date, seperator: digitSeperator)
+        } else {
+            return LaunchDateFormatter.dateStringWithMonthText(for: date, compact: compact)
+        }
+    }
+    
+    func timeString(withSeconds: Bool = false) -> String {
+        LaunchDateFormatter.timeString(for: date, withSeconds: withSeconds)
+    }
+    
     var countdownComponents: CountdownComponentStrings {
         get{ LaunchDateFormatter.countdownComponents(untill: date) }
     }

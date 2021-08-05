@@ -70,30 +70,28 @@ struct UpcomingLaunchesView: View {
     }
     
     var filterIndicatorBar: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .center, spacing: 3) {
-                Text("Provider:")
-                    .fontWeight(.thin)
-                Text(launchList.providerFilter != nil ? "\(launchList.providerFilter?.compactName ?? "")" : "All")
-                    .fontWeight(.regular)
-                Spacer()
+        HStack {
+            VStack(alignment: .leading, spacing: 10) {
+                filterIndicator(type: "Provider", status: launchList.providerFilter?.compactName ?? "")
+                filterIndicator(type: "Status", status: launchList.statusFilter?.abbreviation ?? "")
+                filterIndicator(type: "Orbit", status: launchList.orbitFilter?.abbreviation ?? "")
             }
-            HStack(alignment: .center, spacing: 3) {
-                Text("Status:")
-                    .fontWeight(.thin)
-                Text(launchList.statusFilter != nil ? "\(launchList.statusFilter?.abbreviation ?? "")" : "All")
-                    .fontWeight(.regular)
-                Spacer()
-            }
-            HStack(alignment: .center, spacing: 3) {
-                Text("Orbit:")
-                    .fontWeight(.thin)
-                Text(launchList.orbitFilter != nil ? "\(launchList.orbitFilter?.abbreviation ?? "")" : "All")
-                    .fontWeight(.regular)
-                Spacer()
-            }
+            Spacer()
+            clearAllFiltersButton
+                .foregroundColor(.red)
         }
         .font(.caption2)
+    }
+    
+    @ViewBuilder
+    func filterIndicator(type: String, status: String) -> some View {
+        HStack(alignment: .center, spacing: 3) {
+            Text("\(type):")
+                .fontWeight(.thin)
+            Text(launchList.orbitFilter != nil ? "\(status)" : "All")
+                .fontWeight(.regular)
+            Spacer()
+        }
     }
     
     //MARK: - Menu
@@ -114,9 +112,7 @@ struct UpcomingLaunchesView: View {
     
     var clearAllFiltersButton: some View {
         Button(
-            action: {
-                launchList.removeAllFilters()
-            },
+            action: { launchList.removeAllFilters() },
             label: { Label("Clear Filters", systemImage: "xmark.circle") }
         )
     }
@@ -198,13 +194,6 @@ struct UpcomingLaunchesView: View {
         )
     }
     
-    var deleteAllButton: some View {
-        Button(
-            action: { Launch.deleteAll(from: viewContext) },
-            label: { Text("Delete") }
-        )
-        .foregroundColor(.red)
-    }
 }
 
 
