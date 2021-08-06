@@ -60,7 +60,7 @@ struct LaunchDetailView: View {
             Text("Status").font(.title2).fontWeight(.medium)
             Label(
                 title: { Text(launch.status?.name ?? "") },
-                icon: { Image(systemName: "circle.fill").foregroundColor(.yellow) }
+                icon: { Image(systemName: "circle.fill").foregroundColor(launch.status?.color) }
             )
             Label(
                 title: { Text(launch.dateString(compact: true)) },
