@@ -19,7 +19,7 @@ struct CountdownView: View {
     var body: some View {
         
         HStack(alignment: .top , spacing: 5) {
-            
+            symbolView(symbolComponent: countdown.minus)
             componentView(component: countdown.days, label: "Day")
             componentView(component: countdown.hours, label: "Hour")
             componentView(component: countdown.minutes, label: "Minute")
@@ -28,19 +28,26 @@ struct CountdownView: View {
         .onReceive(timer) { _ in
             countdown.updateComponents()
         }
-
     }
     
     @ViewBuilder
     func componentView(component: String, label: String = "") -> some View {
+        //Total Frame Constants
+        let maxWidth: CGFloat = 100
+        let maxHeight: CGFloat = 100
+        
         GeometryReader { geo in
+            
+            //Component Constants
             let minAxis = min(geo.size.width, geo.size.height)
-            let height = min(geo.size.height , geo.size.width/1.5)
+            let height = minAxis/1.5
+            let width = geo.size.width
             let radius = minAxis * 0.15
+            
             VStack(alignment: .center, spacing: 1) {
                 ZStack {
                     Color.gray.clipShape(RoundedRectangle(cornerRadius: radius))
-                        .frame(width: geo.size.width, height: height, alignment: .center)
+                        .frame(width: width, height: height, alignment: .center)
                         
                         Text(component)
                             .font(.system(size: height * 0.8, weight: .semibold, design: .monospaced))
@@ -54,9 +61,43 @@ struct CountdownView: View {
                 }
             }
         }
+        
+        .frame(maxWidth: maxWidth, maxHeight: maxHeight)
         .aspectRatio(1, contentMode: .fit)
-        .frame(maxHeight: 100)
     }
+    
+    @ViewBuilder
+    func symbolView(symbolComponent: String) -> some View {
+        //TODO: Make Thinner
+        //Total Frame Constants
+        let maxWidth: CGFloat = 100
+        let maxHeight: CGFloat = 100
+        
+        GeometryReader { geo in
+            
+            //Component Constants
+            let minAxis = min(geo.size.width, geo.size.height)
+            let height = minAxis/1.5
+            let width = geo.size.width
+            let radius = minAxis * 0.15
+            
+            VStack(alignment: .center, spacing: 1) {
+                ZStack {
+                    Color.gray.clipShape(RoundedRectangle(cornerRadius: radius))
+                        .frame(width: width, height: height, alignment: .center)
+                        
+                        Text(symbolComponent)
+                            .font(.system(size: height * 0.8, weight: .semibold, design: .monospaced))
+                            .lineLimit(1)
+                            .foregroundColor(.white)
+                }
+            }
+        }
+        
+        .frame(maxWidth: maxWidth, maxHeight: maxHeight)
+        .aspectRatio(1, contentMode: .fit)
+    }
+    
 }
 
 struct CountdownView_Previews: PreviewProvider {
