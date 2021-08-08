@@ -40,7 +40,8 @@ struct LaunchListItemView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     Spacer()
                     CountdownView(countdown: Countdown(to: launch.date))
-                        .frame(maxHeight: 40)
+                        .frame(maxWidth: 220)
+                    Spacer()
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 5) {

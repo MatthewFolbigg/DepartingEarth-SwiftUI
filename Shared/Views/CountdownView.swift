@@ -10,96 +10,80 @@ import SwiftUI
 struct CountdownView: View {
     
     @ObservedObject var countdown: Countdown
-    
-    init(countdown: Countdown) {
-        self.countdown = countdown
-    }
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
-    var body: some View {
-        
-        HStack(alignment: .top , spacing: 5) {
-            symbolView(symbolComponent: countdown.minus)
-            componentView(component: countdown.days, label: "Day")
-            componentView(component: countdown.hours, label: "Hour")
-            componentView(component: countdown.minutes, label: "Minute")
-            componentView(component: countdown.seconds, label: "Second")
+    //MARK: Styling
+    var cornerRadius: CGFloat
+    var spacing: CGFloat
+    var backgroundColor: Color
+    var symbolBackgroundColor: Color
+    var textColor: Color
+    
+    //MARK: Init
+    init(countdown: Countdown, cornerRadius: CGFloat = 5, spacing: CGFloat = 5, color: Color = .gray, symbolColor: Color? = nil, textColor: Color = .white) {
+        self.countdown = countdown
+        self.cornerRadius = cornerRadius
+        self.spacing = spacing
+        self.backgroundColor = color
+        if let symbolColor = symbolColor {
+            self.symbolBackgroundColor = symbolColor
+        } else {
+            self.symbolBackgroundColor = color
         }
+        self.textColor = textColor
+    }
+    
+    //MARK: Body
+    var body: some View {
+        GeometryReader { geo in
+            let numberOfNumberComponents: CGFloat = 4
+            let numberOfSymbolComponents: CGFloat = 1
+            let spacing: CGFloat = spacing
+            let totalSpace = spacing * (numberOfNumberComponents + numberOfSymbolComponents)
+            let width = (geo.size.width - totalSpace) / (numberOfNumberComponents + (numberOfSymbolComponents * 0.5))
+                //4.5 represents 4 full width components and 1 half width symbol
+            HStack(alignment: .center, spacing: spacing) {
+                componentView(component: countdown.minus, isSymbol: true)
+                    .frame(maxWidth: width/2)
+                componentView(component: countdown.days)
+                    .frame(maxWidth: width)
+                componentView(component: countdown.hours)
+                    .frame(maxWidth: width)
+                componentView(component: countdown.minutes)
+                    .frame(maxWidth: width)
+                componentView(component: countdown.seconds)
+                    .frame(maxWidth: width)
+            }
+            .position(x: geo.frame(in: .local).midX, y: geo.frame(in: .local).midY)
+        }
+        .aspectRatio(CGSize(width: 15, height: 2), contentMode: .fit)
         .onReceive(timer) { _ in
             countdown.updateComponents()
         }
     }
     
-    @ViewBuilder
-    func componentView(component: String, label: String = "") -> some View {
-        //Total Frame Constants
-        let maxWidth: CGFloat = 100
-        let maxHeight: CGFloat = 100
-        
+    func componentView(component: String, isSymbol: Bool = false) -> some View {
         GeometryReader { geo in
-            
-            //Component Constants
-            let minAxis = min(geo.size.width, geo.size.height)
-            let height = minAxis/1.5
-            let width = geo.size.width
-            let radius = minAxis * 0.15
-            
-            VStack(alignment: .center, spacing: 1) {
-                ZStack {
-                    Color.gray.clipShape(RoundedRectangle(cornerRadius: radius))
-                        .frame(width: width, height: height, alignment: .center)
-                        
-                        Text(component)
-                            .font(.system(size: height * 0.8, weight: .semibold, design: .monospaced))
-                            .lineLimit(1)
-                            .foregroundColor(.white)
-                }
-                if let label = label {
-                    Text(label)
-                        .font(.system(size: height * 0.35, weight: .thin, design: .rounded))
-                        .lineLimit(1)
-                }
-            }
+            let fontSize = geo.size.height * 0.8
+            Text(component)
+                .font(.system(size: fontSize, weight: .semibold, design: .monospaced))
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .foregroundColor(textColor)
+                .position(x: geo.frame(in: .local).midX, y: (geo.frame(in: .local).midY))
         }
-        
-        .frame(maxWidth: maxWidth, maxHeight: maxHeight)
-        .aspectRatio(1, contentMode: .fit)
+        .aspectRatio(CGSize(width: isSymbol ? 5 : 10, height: 6), contentMode: .fit)
+        .background(
+            (isSymbol ? symbolBackgroundColor : backgroundColor)
+                .clipShape(RoundedRectangle(cornerRadius: isSymbol ? cornerRadius * 1.2 : cornerRadius))
+        )
     }
-    
-    @ViewBuilder
-    func symbolView(symbolComponent: String) -> some View {
-        //TODO: Make Thinner
-        //Total Frame Constants
-        let maxWidth: CGFloat = 100
-        let maxHeight: CGFloat = 100
-        
-        GeometryReader { geo in
-            
-            //Component Constants
-            let minAxis = min(geo.size.width, geo.size.height)
-            let height = minAxis/1.5
-            let width = geo.size.width
-            let radius = minAxis * 0.15
-            
-            VStack(alignment: .center, spacing: 1) {
-                ZStack {
-                    Color.gray.clipShape(RoundedRectangle(cornerRadius: radius))
-                        .frame(width: width, height: height, alignment: .center)
-                        
-                        Text(symbolComponent)
-                            .font(.system(size: height * 0.8, weight: .semibold, design: .monospaced))
-                            .lineLimit(1)
-                            .foregroundColor(.white)
-                }
-            }
-        }
-        
-        .frame(maxWidth: maxWidth, maxHeight: maxHeight)
-        .aspectRatio(1, contentMode: .fit)
-    }
-    
 }
 
+
+
+
+//MARK: - Previews
 struct CountdownView_Previews: PreviewProvider {
     static var previews: some View {
         CountdownView(countdown: Countdown(to: Date.distantFuture))
