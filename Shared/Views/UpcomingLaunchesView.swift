@@ -40,7 +40,7 @@ struct UpcomingLaunchesView: View {
                 }
             }
             .navigationTitle("Departing Soon")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.automatic)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     filterMenu

@@ -16,6 +16,13 @@ extension Color {
         let statusYellow = Color("StatusYellow")
         let statusRed = Color("StatusRed")
         let statusOrange = Color("StatusOrange")
+        
+        let greyBlueBackground = Color("greyBlueBackground")
+        let greyBlueForeground = Color("greyBlueForeground")
+        let greyBlueAccent = Color("greyBlueAccent")
+        
+        let deepOrangeAccent = Color("deepOrangeAccent")
+        
     }
     
 }

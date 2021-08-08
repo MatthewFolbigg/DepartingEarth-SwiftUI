@@ -36,6 +36,7 @@ struct LaunchListView: View {
                     .listRowInsets(EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20))
                 }
                 .listStyle(PlainListStyle())
+                .background(Color.ui.greyBlueBackground)
                 .onAppear {
                     if launches.isEmpty {
                         print("Data Downloaded")

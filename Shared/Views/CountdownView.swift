@@ -11,6 +11,7 @@ struct CountdownView: View {
     
     @ObservedObject var countdown: Countdown
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    let stopped: Bool
     
     //MARK: Styling
     var cornerRadius: CGFloat
@@ -20,8 +21,9 @@ struct CountdownView: View {
     var textColor: Color
     
     //MARK: Init
-    init(countdown: Countdown, cornerRadius: CGFloat = 5, spacing: CGFloat = 5, color: Color = .gray, symbolColor: Color? = nil, textColor: Color = .white) {
+    init(countdown: Countdown, stopped: Bool = false, cornerRadius: CGFloat = 5, spacing: CGFloat = 5, color: Color = .gray, symbolColor: Color? = nil, textColor: Color = .primary) {
         self.countdown = countdown
+        self.stopped = stopped
         self.cornerRadius = cornerRadius
         self.spacing = spacing
         self.backgroundColor = color
@@ -43,15 +45,15 @@ struct CountdownView: View {
             let width = (geo.size.width - totalSpace) / (numberOfNumberComponents + (numberOfSymbolComponents * 0.5))
                 //4.5 represents 4 full width components and 1 half width symbol
             HStack(alignment: .center, spacing: spacing) {
-                componentView(component: countdown.minus, isSymbol: true)
+                componentView(component: !stopped ? countdown.minus : "-", isSymbol: true)
                     .frame(maxWidth: width/2)
-                componentView(component: countdown.days)
+                componentView(component: !stopped ? countdown.days: "--")
                     .frame(maxWidth: width)
-                componentView(component: countdown.hours)
+                componentView(component: !stopped ? countdown.hours: "--")
                     .frame(maxWidth: width)
-                componentView(component: countdown.minutes)
+                componentView(component: !stopped ? countdown.minutes: "--")
                     .frame(maxWidth: width)
-                componentView(component: countdown.seconds)
+                componentView(component: !stopped ? countdown.seconds: "--")
                     .frame(maxWidth: width)
             }
             .position(x: geo.frame(in: .local).midX, y: geo.frame(in: .local).midY)

@@ -18,46 +18,97 @@ struct LaunchListItemView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(launch.mission?.name ?? "")
-                .font(.system(.subheadline, design: .default))
-                .fontWeight(.light)
-                .lineLimit(1)
-            Text(launch.provider?.compactName ?? "")
-                .font(.system(.headline, design: .monospaced))
-                .fontWeight(.semibold)
-                .lineLimit(1)
-            Text(launch.rocket?.name ?? "")
-                .font(.system(.subheadline, design: .default))
-                .fontWeight(.semibold)
-                .foregroundColor(.orange)
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-            Text(launch.mission?.type ?? "")
-                .font(.system(.caption, design: .default))
-                .fontWeight(.light)
-            
-            HStack(alignment: .bottom) {
-                VStack(alignment: .leading, spacing: 5) {
-                    Spacer()
-                    CountdownView(countdown: Countdown(to: launch.date))
-                        .frame(maxWidth: 220)
-                    Spacer()
-                }
-                Spacer()
-                VStack(alignment: .trailing, spacing: 5) {
-                    Spacer()
-                    Text(launch.status?.abbreviation ?? "")
-                    Text(LaunchDateFormatter.dateStringWithMonthText(for: launch.date, compact: true))
-                        .font(.system(.caption, design: .default))
-                        .fontWeight(.light)
-                    Spacer()
-                }
+            provider
+            rocket
+                .padding(.bottom, 5)
+            if launch.mission != nil {
+                type
+                mission
             }
+            Spacer()
+            HStack(alignment: .bottom) {
+                countdown
+                Spacer()
+//                date
+            }
+        }
+        .padding(.vertical)
+    }
+    
+    //MARK: - Main Section
+    var provider: some View {
+        Text(launch.provider?.compactName ?? "")
+            .fontWeight(.heavy)
+            .font(.system(.title2, design: .monospaced))
+            .foregroundColor(.ui.greyBlueAccent)
+            .lineLimit(1)
+    }
+    
+    var rocket: some View {
+        Text(launch.rocket?.name ?? "")
+            .fontWeight(.semibold)
+            .font(.system(.title3, design: .monospaced))
+            .foregroundColor(.ui.deepOrangeAccent)
+            .lineLimit(1)
+            .minimumScaleFactor(0.6)
+    }
+    
+    var mission: some View {
+        Text(launch.mission?.name ?? "")
+            .fontWeight(.regular)
+            .font(.system(.body, design: .monospaced))
+            .foregroundColor(.primary)
+            .lineLimit(2)
+            .minimumScaleFactor(0.8)
+    }
+    
+    var type: some View {
+        Text(launch.mission?.type ?? "")
+            .fontWeight(.bold)
+            .font(.system(.body, design: .monospaced))
+            .foregroundColor(.primary)
+            .lineLimit(2)
+            .minimumScaleFactor(0.8)
+    }
+    
+    //MARK: - Countdown Section
+    var countdown: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            CountdownView(
+                countdown: Countdown(to: launch.date),
+                stopped: launch.status?.currentSituation.noCountdown ?? true,
+                color: Color.ui.greyBlueBackground,
+                textColor: Color.ui.greyBlueForeground)
+                .frame(maxWidth: 220)
         }
     }
     
+    //MARK: - Status Section
+    var date: some View {
+        VStack(alignment: .trailing, spacing: 5) {
+            Spacer()
+            HStack {
+                Text(launch.status?.abbreviation ?? "")
+                    .fontWeight(.regular)
+                    .font(.system(.body, design: .rounded))
+                Text(Image(systemName: "circle.fill"))
+                    .foregroundColor(launch.status?.color)
+                    .padding(.bottom, 1.5)
+            }
+            Text(LaunchDateFormatter.dateStringWithMonthText(for: launch.date, compact: true))
+                .font(.system(.caption, design: .default))
+                .fontWeight(.light)
+            Spacer()
+        }
+    }
+    
+    
+    
 }
 
+
+
+//MARK: - Previews
 struct LaunchListItemView_Previews: PreviewProvider {
     static var previews: some View {
         let launch = PersistenceController.testData()

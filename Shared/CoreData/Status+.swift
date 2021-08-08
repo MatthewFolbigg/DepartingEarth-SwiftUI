@@ -28,6 +28,13 @@ extension Status {
         case inFlight = 6
         case partialFailure = 7
         case dateUnconfirmed = 8
+        
+        var noCountdown: Bool {
+            switch self {
+            case .go, .success, .inFlight, .partialFailure, .dateUnconfirmed: return false
+            case .failure, .hold, .dateUndetermined: return true
+            }
+        }
     }
     
     var currentSituation: Situation { Situation(rawValue: Int(statusID)) ?? .dateUndetermined }
