@@ -32,7 +32,7 @@ struct LaunchListItemView: View {
 //                date
             }
         }
-        .padding(.vertical)
+
     }
     
     //MARK: - Main Section
@@ -79,7 +79,7 @@ struct LaunchListItemView: View {
                 stopped: launch.status?.currentSituation.noCountdown ?? true,
                 color: Color.ui.greyBlueBackground,
                 textColor: Color.ui.greyBlueForeground)
-                .frame(maxWidth: 220)
+                .frame(maxHeight: 25)
         }
     }
     
