@@ -35,6 +35,15 @@ extension Status {
             case .failure, .hold, .dateUndetermined: return true
             }
         }
+        
+        var dateDescription: String {
+            switch self {
+            case .inFlight, .hold : return "In Progress"
+            case .go, .success, .partialFailure, .failure : return "Confirmed"
+            case .dateUnconfirmed : return "Expected"
+            case .dateUndetermined: return "Estimated"
+            }
+        }
     }
     
     var currentSituation: Situation { Situation(rawValue: Int(statusID)) ?? .dateUndetermined }

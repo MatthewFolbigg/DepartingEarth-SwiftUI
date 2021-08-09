@@ -11,35 +11,45 @@ struct LaunchListItemView: View {
     
     @State var launch: Launch
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
+
     init(launch: Launch) {
         self.launch = launch
     }
-    
+        
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            provider
-            rocket
-                .padding(.bottom, 5)
-            if launch.mission != nil {
-                type
-                mission
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 2) {
+                    provider
+                    rocket
+                }
+                Spacer()
+                VStack(alignment: .trailing, spacing: 3) {
+                    statusLight
+                        .shadow(color: launch.status?.color  ?? .primary, radius: 1)
+//                    statusText
+                }
+            }
+            VStack(alignment: .leading, spacing: 2) {
+                if launch.mission != nil {
+                    type
+                    mission
+                }
             }
             Spacer()
             HStack(alignment: .bottom) {
                 countdown
                 Spacer()
-//                date
+                date
             }
         }
-
     }
     
     //MARK: - Main Section
     var provider: some View {
         Text(launch.provider?.compactName ?? "")
             .fontWeight(.heavy)
-            .font(.system(.title2, design: .monospaced))
+            .font(.system(.title2, design: .rounded))
             .foregroundColor(.ui.greyBlueAccent)
             .lineLimit(1)
     }
@@ -47,16 +57,30 @@ struct LaunchListItemView: View {
     var rocket: some View {
         Text(launch.rocket?.name ?? "")
             .fontWeight(.semibold)
-            .font(.system(.title3, design: .monospaced))
+            .font(.system(.title3, design: .rounded))
             .foregroundColor(.ui.deepOrangeAccent)
             .lineLimit(1)
             .minimumScaleFactor(0.6)
     }
     
+    var statusLight: some View {
+            Image(systemName: "circle.fill")
+                .foregroundColor(launch.status?.color)
+                .scaleEffect(0.8)
+    }
+    
+    var statusText: some View {
+        Text(launch.status?.abbreviation ?? "")
+            .fontWeight(.regular)
+            .font(.system(.body, design: .rounded))
+            .foregroundColor(.primary)
+            .lineLimit(1)
+    }
+    
     var mission: some View {
         Text(launch.mission?.name ?? "")
             .fontWeight(.regular)
-            .font(.system(.body, design: .monospaced))
+            .font(.system(.body, design: .rounded))
             .foregroundColor(.primary)
             .lineLimit(2)
             .minimumScaleFactor(0.8)
@@ -65,7 +89,7 @@ struct LaunchListItemView: View {
     var type: some View {
         Text(launch.mission?.type ?? "")
             .fontWeight(.bold)
-            .font(.system(.body, design: .monospaced))
+            .font(.system(.body, design: .rounded))
             .foregroundColor(.primary)
             .lineLimit(2)
             .minimumScaleFactor(0.8)
@@ -83,26 +107,20 @@ struct LaunchListItemView: View {
         }
     }
     
-    //MARK: - Status Section
     var date: some View {
-        VStack(alignment: .trailing, spacing: 5) {
-            Spacer()
-            HStack {
-                Text(launch.status?.abbreviation ?? "")
-                    .fontWeight(.regular)
-                    .font(.system(.body, design: .rounded))
-                Text(Image(systemName: "circle.fill"))
-                    .foregroundColor(launch.status?.color)
-                    .padding(.bottom, 1.5)
-            }
+        VStack(alignment: .trailing) {
+            Text(launch.status?.currentSituation.dateDescription ?? "")
+                .fontWeight(.semibold)
+                .font(.system(.caption, design: .rounded))
+                .foregroundColor(.secondary)
+                .lineLimit(1)
             Text(LaunchDateFormatter.dateStringWithMonthText(for: launch.date, compact: true))
-                .font(.system(.caption, design: .default))
-                .fontWeight(.light)
-            Spacer()
+                .fontWeight(.medium)
+                .font(.system(.body, design: .rounded))
+                .foregroundColor(.primary)
+                .lineLimit(1)
         }
     }
-    
-    
     
 }
 
