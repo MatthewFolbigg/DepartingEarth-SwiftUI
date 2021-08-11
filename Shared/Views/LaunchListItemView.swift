@@ -25,9 +25,10 @@ struct LaunchListItemView: View {
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 3) {
-                    statusLight
-                        .shadow(color: launch.status?.color  ?? .primary, radius: 1)
-//                    statusText
+//                    statusLight
+//                        .shadow(color: launch.status?.color  ?? .primary, radius: 1)
+                    statusText
+                        .opacity(0.6)
                 }
             }
             VStack(alignment: .leading, spacing: 2) {
@@ -70,11 +71,15 @@ struct LaunchListItemView: View {
     }
     
     var statusText: some View {
-        Text(launch.status?.abbreviation ?? "")
-            .fontWeight(.regular)
-            .font(.system(.body, design: .rounded))
-            .foregroundColor(.primary)
-            .lineLimit(1)
+//        Text(launch.status?.abbreviation ?? "")
+//            .fontWeight(.regular)
+//            .font(.system(.body, design: .rounded))
+//            .foregroundColor(.white)
+//            .lineLimit(1)
+        Text(launch.status?.abbreviation ?? "").padding(4)
+            .foregroundColor(.ui.greyBlueForeground)
+            .background(RoundedRectangle(cornerRadius: 8).foregroundColor(launch.status?.color))
+            .scaleEffect(0.8)
     }
     
     var mission: some View {

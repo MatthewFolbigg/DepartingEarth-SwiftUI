@@ -36,6 +36,10 @@ extension Status {
             }
         }
         
+        static var allCases: [Situation] {
+            return [.go, .dateUndetermined, .success, .failure, .hold, .inFlight, .partialFailure, .dateUnconfirmed]
+        }
+        
         var dateDescription: String {
             switch self {
             case .inFlight, .hold : return "In Progress"

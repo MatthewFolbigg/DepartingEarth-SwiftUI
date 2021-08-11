@@ -23,20 +23,16 @@ struct UpcomingLaunchesView: View {
         _providers = FetchRequest(fetchRequest: Provider.requestForAll())
         _statuses = FetchRequest(fetchRequest: Status.requestForAll())
         _orbits = FetchRequest(fetchRequest: Orbit.requestForAll())
+        UINavigationBar.appearance().tintColor = UIColor(.ui.greyBlueAccent)
     }
 
     //MARK: - Main Body
     var body: some View {
         NavigationView {
             VStack {
-                
                 ZStack {
                     LaunchListView(request: launchList.filteredLaunchRequest())
                     if isDownloading { launchLibraryActivityIndicator }
-                }
-                if launchList.isFiltered {
-                    filterIndicatorBar
-                        .padding(.horizontal)
                 }
             }
             .navigationTitle("Departing Soon")
@@ -44,6 +40,7 @@ struct UpcomingLaunchesView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     filterMenu
+                        .foregroundColor(.ui.greyBlueAccent)
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
                     refreshButton
@@ -69,19 +66,19 @@ struct UpcomingLaunchesView: View {
         .clipShape(RoundedRectangle(cornerRadius: 20))
     }
     
-    var filterIndicatorBar: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 10) {
-                filterIndicator(type: "Provider", status: launchList.providerFilter?.compactName ?? "")
-                filterIndicator(type: "Status", status: launchList.statusFilter?.abbreviation ?? "")
-                filterIndicator(type: "Orbit", status: launchList.orbitFilter?.abbreviation ?? "")
-            }
-            Spacer()
-            clearAllFiltersButton
-                .foregroundColor(.red)
-        }
-        .font(.caption2)
-    }
+//    var filterIndicatorBar: some View {
+//        HStack {
+//            VStack(alignment: .leading, spacing: 10) {
+//                filterIndicator(type: "Provider", status: launchList.providerFilter?.compactName ?? "")
+//                filterIndicator(type: "Status", status: launchList.statusFilter?.abbreviation ?? "")
+//                filterIndicator(type: "Orbit", status: launchList.orbitFilter?.abbreviation ?? "")
+//            }
+//            Spacer()
+//            clearAllFiltersButton
+//                .foregroundColor(.red)
+//        }
+//        .font(.caption2)
+//    }
     
     @ViewBuilder
     func filterIndicator(type: String, status: String) -> some View {
@@ -106,7 +103,8 @@ struct UpcomingLaunchesView: View {
                 clearAllFiltersButton
             }
         } label: {
-            Label("Filter", systemImage: "ellipsis.circle").imageScale(.large)
+            let icon = launchList.isFiltered ? "line.horizontal.3.decrease.circle.fill" : "line.horizontal.3.decrease.circle"
+            Label("Filter", systemImage: icon).imageScale(.large)
         }
     }
     
@@ -129,7 +127,10 @@ struct UpcomingLaunchesView: View {
     var providerPicker: some View {
         Picker(
             selection: $launchList.providerFilter,
-            label: Label("Launch Provider", systemImage: "person.2"),
+            label: Label(
+                launchList.providerFilter != nil ? "\(launchList.providerFilter?.compactName ?? "Provider")" : "All Providers",
+                systemImage: "person.2"
+            ),
             content: {
                 if launchList.providerFilter != nil {
                         let tag: Provider? = nil
@@ -148,7 +149,10 @@ struct UpcomingLaunchesView: View {
     var statusPicker: some View {
         Picker(
             selection: $launchList.statusFilter,
-            label: Label("Status", systemImage: "calendar"),
+            label: Label(
+                launchList.statusFilter != nil ? "\(launchList.statusFilter?.abbreviation ?? "Status")" : "All Statuses",
+                systemImage: "calendar"
+            ),
             content: {
                 if launchList.statusFilter != nil {
                     let tag: Status? = nil
@@ -167,7 +171,10 @@ struct UpcomingLaunchesView: View {
     var orbitPicker: some View {
         Picker(
             selection: $launchList.orbitFilter,
-            label: Label("Orbit", systemImage: "circle.dashed"),
+            label: Label(
+                launchList.orbitFilter != nil ? "\(launchList.orbitFilter?.name ?? "Orbit")" : "All Orbits",
+                systemImage: "circle.dashed"
+            ),
             content: {
                 if launchList.statusFilter != nil {
                     let tag: Status? = nil
