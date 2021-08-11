@@ -68,7 +68,7 @@ struct CountdownView: View {
         GeometryReader { geo in
             let fontSize = geo.size.height * 0.8
             Text(component)
-                .font(.system(size: fontSize, weight: .semibold, design: .monospaced))
+                .font(.system(size: fontSize, weight: .semibold, design: .rounded))
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
                 .foregroundColor(textColor)

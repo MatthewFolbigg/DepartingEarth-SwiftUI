@@ -76,9 +76,10 @@ struct LaunchListItemView: View {
 //            .font(.system(.body, design: .rounded))
 //            .foregroundColor(.white)
 //            .lineLimit(1)
-        Text(launch.status?.abbreviation ?? "").padding(4)
-            .foregroundColor(.ui.greyBlueForeground)
-            .background(RoundedRectangle(cornerRadius: 8).foregroundColor(launch.status?.color))
+        Text(launch.status?.currentSituation.name ?? "").padding(.horizontal, 8).padding(.vertical, 3)
+            .foregroundColor(.primary)
+            .font(.system(.body, design: .rounded))
+            .background(RoundedRectangle(cornerRadius: 8).foregroundColor(launch.status?.color == .clear ? .ui.greyBlueBackground : launch.status?.color))
             .scaleEffect(0.8)
     }
     

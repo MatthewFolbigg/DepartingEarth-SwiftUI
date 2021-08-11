@@ -20,7 +20,7 @@ class UpcomingLaunchList: ObservableObject {
     init() {
         
     }
-        
+    
     func removeAllFilters() {
         providerFilter = nil
         statusFilter = nil

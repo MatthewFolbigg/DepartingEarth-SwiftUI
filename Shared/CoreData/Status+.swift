@@ -40,12 +40,38 @@ extension Status {
             return [.go, .dateUndetermined, .success, .failure, .hold, .inFlight, .partialFailure, .dateUnconfirmed]
         }
         
+        var name: String {
+            switch self {
+            case .go : return "Go for Launch"
+            case .success : return "Departed"
+            case .failure : return "Failed"
+            case .partialFailure : return "Departed*"
+            case .hold : return "Holding"
+            case .inFlight : return "In Flight"
+            case .dateUnconfirmed : return "Preparing"
+            case .dateUndetermined: return "Pending Date"
+            }
+        }
+        
         var dateDescription: String {
             switch self {
             case .inFlight, .hold : return "In Progress"
             case .go, .success, .partialFailure, .failure : return "Confirmed"
             case .dateUnconfirmed : return "Expected"
             case .dateUndetermined: return "Estimated"
+            }
+        }
+        
+        var filterName: String {
+            switch self {
+            case .go : return "Launching"
+            case .success : return "Departed"
+            case .failure : return "Failed"
+            case .partialFailure : return "Partially Failed"
+            case .hold : return "Holding"
+            case .inFlight : return "In Flight"
+            case .dateUnconfirmed : return "Expected"
+            case .dateUndetermined: return "No Date"
             }
         }
     }
@@ -56,7 +82,8 @@ extension Status {
         switch self.currentSituation {
         case .go, .inFlight, .success: return Color.ui.statusGreen
         case .hold: return Color.ui.statusOrange
-        case .dateUndetermined, .dateUnconfirmed: return Color.ui.statusYellow
+        case .dateUndetermined: return Color.clear
+        case .dateUnconfirmed: return Color.ui.statusYellow
         case .failure, .partialFailure: return Color.ui.statusRed
         }
     }
@@ -73,6 +100,14 @@ extension Status {
     static func requestForAll(ascending: Bool = true) -> NSFetchRequest<Status> {
         let request = NSFetchRequest<Status>(entityName: "Status")
         request.sortDescriptors = [NSSortDescriptor(key: "statusID", ascending: ascending)]
+        return request
+    }
+    
+    static func requestFor(id: Int) -> NSFetchRequest<Status> {
+        let request = NSFetchRequest<Status>(entityName: "Status")
+        let statusID = Int16(id)
+        let predicate = NSPredicate(format: "statusID == %i", statusID)
+        request.predicate = predicate
         return request
     }
 }

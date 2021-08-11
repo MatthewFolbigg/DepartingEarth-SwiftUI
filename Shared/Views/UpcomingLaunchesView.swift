@@ -150,7 +150,7 @@ struct UpcomingLaunchesView: View {
         Picker(
             selection: $launchList.statusFilter,
             label: Label(
-                launchList.statusFilter != nil ? "\(launchList.statusFilter?.abbreviation ?? "Status")" : "All Statuses",
+                launchList.statusFilter != nil ? "\(launchList.statusFilter?.currentSituation.filterName ?? "Status")" : "All Statuses",
                 systemImage: "calendar"
             ),
             content: {
@@ -161,7 +161,7 @@ struct UpcomingLaunchesView: View {
                 Divider()
                 ForEach(statuses, id: \.self) { status in
                     let tag: Status? = status
-                    Text(status.abbreviation ?? status.name!).tag(tag)
+                    Text(status.currentSituation.filterName).tag(tag)
                 }
             }
         )
