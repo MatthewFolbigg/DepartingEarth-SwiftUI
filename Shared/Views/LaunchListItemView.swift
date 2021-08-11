@@ -53,6 +53,7 @@ struct LaunchListItemView: View {
             .font(.system(.title2, design: .rounded))
             .foregroundColor(.ui.greyBlueAccent)
             .lineLimit(1)
+            .minimumScaleFactor(0.8)
     }
     
     var rocket: some View {

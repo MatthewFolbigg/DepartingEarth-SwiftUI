@@ -28,24 +28,24 @@ struct UpcomingLaunchesView: View {
 
     //MARK: - Main Body
     var body: some View {
-        NavigationView {
-            VStack {
-                ZStack {
-                    LaunchListView(request: launchList.filteredLaunchRequest())
-                    if isDownloading { launchLibraryActivityIndicator }
+        ZStack {
+            NavigationView {
+                VStack {
+                    LaunchListView(request: launchList.filteredLaunchRequest())    
+                }
+                .navigationTitle("Departing Soon")
+                .navigationBarTitleDisplayMode(.automatic)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        filterMenu
+                            .foregroundColor(.ui.greyBlueAccent)
+                    }
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        refreshButton
+                    }
                 }
             }
-            .navigationTitle("Departing Soon")
-            .navigationBarTitleDisplayMode(.automatic)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    filterMenu
-                        .foregroundColor(.ui.greyBlueAccent)
-                }
-                ToolbarItem(placement: .navigationBarLeading) {
-                    refreshButton
-                }
-            }
+            if isDownloading { launchLibraryActivityIndicator }
         }
     }
     
