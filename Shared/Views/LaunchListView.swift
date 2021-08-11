@@ -18,12 +18,14 @@ struct LaunchListView: View {
     }
     
     var body: some View {
-        VStack {
+        ZStack {
             if launches.count == 0 {
                 Spacer()
                 Text("No Launches")
-                    .foregroundColor(.gray)
-                    .fontWeight(.thin)
+                    .font(.system(.title3, design: .rounded))
+                    .foregroundColor(.secondary)
+                    .fontWeight(.light)
+                Spacer()
                 Spacer()
             } else {
                 List {
@@ -56,6 +58,6 @@ struct LaunchListView: View {
 //struct LaunchListView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        let context = PersistenceController.shared.container.viewContext
-//        LaunchListView().environment(\.managedObjectContext, context)
+//        LaunchListView(request: Launch.requestForAll(sortBy: .date)).environment(\.managedObjectContext, context)
 //    }
 //}

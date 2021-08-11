@@ -13,13 +13,18 @@ struct UpcomingLaunchesView: View {
     
     @ObservedObject var launchList: UpcomingLaunchList
     @ObservedObject var launchLibraryClient = LaunchLibraryApiClient.shared
+    
+    @FetchRequest var launches: FetchedResults<Launch>
     @FetchRequest var providers: FetchedResults<Provider>
     @FetchRequest var statuses: FetchedResults<Status>
     @FetchRequest var orbits: FetchedResults<Orbit>
+    
     var isDownloading: Bool { launchLibraryClient.fetchStatus == .fetching ? true : false }
     
+    //MARK: - Init
     init(launchList: UpcomingLaunchList) {
         self.launchList = launchList
+        _launches = FetchRequest(fetchRequest: Launch.requestForAll(sortBy: .date))
         _providers = FetchRequest(fetchRequest: Provider.requestForAll())
         _statuses = FetchRequest(fetchRequest: Status.requestForAll())
         _orbits = FetchRequest(fetchRequest: Orbit.requestForAll())
@@ -47,6 +52,19 @@ struct UpcomingLaunchesView: View {
             }
             if isDownloading { launchLibraryActivityIndicator }
         }
+        .onAppear {
+            if launches.isEmpty {
+                refreshList()
+            } else {
+                //Check last updated and update if stale
+            }
+        }
+    }
+    
+    //MARK: - Helper Methods
+    func refreshList() {
+        Launch.deleteAll(from: viewContext)
+        launchLibraryClient.fetchData(.upcomingLaunches)
     }
     
     //MARK: - Views
@@ -65,33 +83,8 @@ struct UpcomingLaunchesView: View {
         )
         .clipShape(RoundedRectangle(cornerRadius: 20))
     }
-    
-//    var filterIndicatorBar: some View {
-//        HStack {
-//            VStack(alignment: .leading, spacing: 10) {
-//                filterIndicator(type: "Provider", status: launchList.providerFilter?.compactName ?? "")
-//                filterIndicator(type: "Status", status: launchList.statusFilter?.abbreviation ?? "")
-//                filterIndicator(type: "Orbit", status: launchList.orbitFilter?.abbreviation ?? "")
-//            }
-//            Spacer()
-//            clearAllFiltersButton
-//                .foregroundColor(.red)
-//        }
-//        .font(.caption2)
-//    }
-    
-    @ViewBuilder
-    func filterIndicator(type: String, status: String) -> some View {
-        HStack(alignment: .center, spacing: 3) {
-            Text("\(type):")
-                .fontWeight(.thin)
-            Text(launchList.orbitFilter != nil ? "\(status)" : "All")
-                .fontWeight(.regular)
-            Spacer()
-        }
-    }
-    
-    //MARK: - Menu
+            
+    //MARK: - Filter Menu
     var filterMenu: some View {
         Menu {
             sortOrderMenuButton
@@ -124,6 +117,7 @@ struct UpcomingLaunchesView: View {
         )
     }
 
+    //MARK: Provider Filter
     var providerPicker: some View {
         Picker(
             selection: $launchList.providerFilter,
@@ -146,6 +140,7 @@ struct UpcomingLaunchesView: View {
         .pickerStyle(MenuPickerStyle())
     }
     
+    //MARK: Status Filter
     var statusPicker: some View {
         Picker(
             selection: $launchList.statusFilter,
@@ -168,6 +163,7 @@ struct UpcomingLaunchesView: View {
         .pickerStyle(MenuPickerStyle())
     }
     
+    //MARK: Orbit Filter
     var orbitPicker: some View {
         Picker(
             selection: $launchList.orbitFilter,
@@ -193,14 +189,11 @@ struct UpcomingLaunchesView: View {
     //MARK: - Buttons
     var refreshButton: some View {
         Button(
-            action: {
-                Launch.deleteAll(from: viewContext)
-                launchLibraryClient.fetchData(.upcomingLaunches)
-            },
+            action: { refreshList() },
             label: { Label("Refresh", systemImage: "arrow.clockwise.circle") }
         )
     }
-    
+
 }
 
 
