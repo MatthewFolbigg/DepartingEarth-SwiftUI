@@ -12,24 +12,31 @@ struct LaunchListItemView: View {
     @State var launch: Launch
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
+    struct drawing {
+        static let vSectionSpacing: CGFloat = 8
+        static let vItemSpacing: CGFloat = 2
+        static let shadowRadius: CGFloat = 2
+        static let shadownColor: Color = .secondary
+        static let secondaryItemOpcatity: Double = 0.6
+    }
+    
     init(launch: Launch) {
         self.launch = launch
     }
         
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: drawing.vSectionSpacing) {
             HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: drawing.vItemSpacing) {
                     provider
                     rocket
                 }
                 Spacer()
-                VStack(alignment: .trailing, spacing: 8) {
+                VStack(alignment: .trailing, spacing: drawing.vSectionSpacing) {
                     statusText
-                        .opacity(0.6)
                 }
             }
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: drawing.vItemSpacing) {
                 if launch.mission != nil {
                     type
                     mission
@@ -74,7 +81,12 @@ struct LaunchListItemView: View {
             .foregroundColor(.primary)
             .font(.system(.body, design: .rounded))
             .scaleEffect(0.8)
-            .background(RoundedRectangle(cornerRadius: 8).foregroundColor(launch.status?.color == .clear ? .ui.greyBlueBackground : launch.status?.color))
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .foregroundColor(launch.status?.color == .clear ? .ui.greyBlueBackground : launch.status?.color)
+                    .shadow(color: drawing.shadownColor, radius: drawing.shadowRadius)
+            )
+            .opacity(drawing.secondaryItemOpcatity)
     }
     
     var mission: some View {
@@ -102,7 +114,10 @@ struct LaunchListItemView: View {
                 countdown: Countdown(to: launch.date),
                 stopped: launch.status?.currentSituation.noCountdown ?? true,
                 color: Color.ui.greyBlueBackground,
-                textColor: Color.ui.greyBlueForeground)
+                textColor: Color.ui.greyBlueForeground,
+                shadowColor: drawing.shadownColor,
+                shadowRadius: drawing.shadowRadius
+            )
                 .frame(maxHeight: 25)
         }
     }
