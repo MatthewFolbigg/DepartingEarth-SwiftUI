@@ -20,4 +20,26 @@ extension Mission {
         }
         return mission
     }
+    
+    var symbolForType: String {
+        switch self.type {
+        //Utility
+        case "Resupply": return "shippingbox.fill"
+        //Deployment
+        case "Communications": return "antenna.radiowaves.left.and.right"
+        case "Dedicated Rideshare": return "square.stack.3d.up.fill"
+        //Science
+        case "Earth Science": return "cloud.drizzle.fill"
+        case "Planetary Science": return "binoculars.fill"
+        case "Heliophysics": return "sun.max.fill"
+        //Exploration
+        case "Human Exploration": return "person.2.fill"
+        case "Robotic Exploration": return "cpu"
+        //Other
+        case "Test Flight": return "paperplane.fill"
+        case "Government/Top Secret": return "key.fill"
+        default: return "circle.fill"
+        }
+    }
+    
 }

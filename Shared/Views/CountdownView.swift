@@ -44,7 +44,6 @@ struct CountdownView: View {
         GeometryReader { geo in
             let numberOfNumberComponents: CGFloat = 4
             let numberOfSymbolComponents: CGFloat = 1
-            let spacing: CGFloat = spacing
             let totalSpace = spacing * (numberOfNumberComponents + numberOfSymbolComponents)
             let width = (geo.size.width - totalSpace) / (numberOfNumberComponents + (numberOfSymbolComponents * 0.5))
                 //4.5 represents 4 full width components and 1 half width symbol
@@ -62,7 +61,7 @@ struct CountdownView: View {
             }
             .position(x: geo.frame(in: .local).midX, y: geo.frame(in: .local).midY)
         }
-        .aspectRatio(CGSize(width: 15, height: 2), contentMode: .fit)
+        .aspectRatio(CGSize(width: 15.4, height: 2), contentMode: .fit)
         .onReceive(timer) { _ in
             countdown.updateComponents()
         }

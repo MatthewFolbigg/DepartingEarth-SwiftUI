@@ -10,13 +10,15 @@ import SwiftUI
 struct LaunchListItemView: View {
     
     @State var launch: Launch
+    var situation: Status.Situation { launch.status?.currentSituation ?? .dateUndetermined }
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-
+    
     struct drawing {
         static let vSectionSpacing: CGFloat = 8
-        static let vItemSpacing: CGFloat = 2
+        static let vItemSpacing: CGFloat = 8
         static let shadowRadius: CGFloat = 2
         static let shadownColor: Color = .secondary
+        static let iconScale: Image.Scale = .medium
         static let secondaryItemOpcatity: Double = 0.6
     }
     
@@ -30,86 +32,122 @@ struct LaunchListItemView: View {
                 VStack(alignment: .leading, spacing: drawing.vItemSpacing) {
                     provider
                     rocket
+                    if launch.mission != nil {
+                        mission
+                    }
+                    date
                 }
                 Spacer()
-                VStack(alignment: .trailing, spacing: drawing.vSectionSpacing) {
-                    statusText
-                }
-            }
-            VStack(alignment: .leading, spacing: drawing.vItemSpacing) {
-                if launch.mission != nil {
-                    type
-                    mission
-                }
             }
             Spacer()
-            HStack(alignment: .bottom) {
+            HStack {
                 countdown
                 Spacer()
-                date
+                statusText.opacity(0.8)
             }
         }
+        .padding(5)
     }
     
     //MARK: - Main Section
-    var provider: some View {
-        Text(launch.provider?.compactName ?? "")
-            .fontWeight(.heavy)
-            .font(.system(.title2, design: .rounded))
-            .foregroundColor(.ui.greyBlueAccent)
-            .lineLimit(1)
-            .minimumScaleFactor(0.8)
-    }
-    
     var rocket: some View {
         Text(launch.rocket?.name ?? "")
-            .fontWeight(.semibold)
-            .font(.system(.title3, design: .rounded))
+            .fontWeight(.bold)
+            .font(.system(.title2, design: .default))
             .foregroundColor(.ui.deepOrangeAccent)
             .lineLimit(1)
             .minimumScaleFactor(0.6)
     }
     
-    var statusLight: some View {
-            Image(systemName: "circle.fill")
-                .foregroundColor(launch.status?.color)
-                .scaleEffect(0.8)
+    var provider: some View {
+        Text(launch.provider?.compactName ?? "")
+            .fontWeight(.black)
+            .font(.system(.title, design: .default))
+            .foregroundColor(.ui.greyBlueAccent)
+            .lineLimit(1)
+            .minimumScaleFactor(0.7)
+    }
+    
+    //MARK: Mission
+    var mission: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 4) {
+            Image(systemName: launch.mission?.symbolForType ?? "")
+                .imageScale(drawing.iconScale)
+            missionName
+        }
+        .foregroundColor(.ui.greyBlueAccent)
+    }
+        
+    var missionName: some View {
+        Text(launch.mission?.name ?? "")
+            .fontWeight(.semibold)
+            .font(.system(.subheadline, design: .default))
+            .foregroundColor(.ui.greyBlueAccent)
+            .lineLimit(2)
+            .minimumScaleFactor(0.8)
+    }
+    
+    //MARK: Date
+    var date: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 4) {
+            Image(systemName: "calendar")
+                .imageScale(drawing.iconScale)
+            if situation == .dateUndetermined || situation == .dateUnconfirmed  {
+                dateText
+                Text("\(launch.status?.currentSituation.dateDescription ?? "")")
+                    .fontWeight(.thin)
+                    .font(.system(.caption, design: .default))
+                    .foregroundColor(.ui.greyBlueAccent)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+            } else {
+                dateText
+            }
+            
+        }
+        .foregroundColor(.ui.greyBlueForeground)
+    }
+    
+    var dateText: some View {
+        Text(launch.dateString(compact: true))
+            .fontWeight(.semibold)
+            .font(.system(.subheadline, design: .default))
+            .foregroundColor(.ui.greyBlueAccent)
+            .lineLimit(2)
+            .minimumScaleFactor(0.8)
+    }
+    
+    //MARK: Status
+    var statusBar: some View {
+        RoundedRectangle(cornerRadius: 8)
+            .foregroundColor(launch.status?.color == .clear ? .ui.greyBlueBackground : launch.status?.color)
+            .shadow(color: drawing.shadownColor, radius: drawing.shadowRadius)
+            .frame(width: 120, height: 8)
+            .opacity(drawing.secondaryItemOpcatity)
+            .frame(width: 120, height: 8)
     }
     
     var statusText: some View {
-        Text(launch.status?.currentSituation.name ?? "").padding(.horizontal, 2).padding(.vertical, 2)
+        Text(launch.status?.currentSituation.name ?? "")
+            .padding(.horizontal, 2).padding(.vertical, 2)
             .foregroundColor(.primary)
-            .font(.system(.body, design: .rounded))
+            .font(.system(.body, design: .default))
             .scaleEffect(0.8)
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .foregroundColor(launch.status?.color == .clear ? .ui.greyBlueBackground : launch.status?.color)
                     .shadow(color: drawing.shadownColor, radius: drawing.shadowRadius)
+                    .frame(width: 120, height: 23)
             )
             .opacity(drawing.secondaryItemOpcatity)
+            .frame(width: 120, height: 23)
     }
     
-    var mission: some View {
-        Text(launch.mission?.name ?? "")
-            .fontWeight(.regular)
-            .font(.system(.body, design: .rounded))
-            .foregroundColor(.primary)
-            .lineLimit(2)
-            .minimumScaleFactor(0.8)
-    }
-    
-    var type: some View {
-        Text(launch.mission?.type ?? "")
-            .fontWeight(.bold)
-            .font(.system(.body, design: .rounded))
-            .foregroundColor(.primary)
-            .lineLimit(2)
-            .minimumScaleFactor(0.8)
-    }
-    
+
+        
     //MARK: - Countdown Section
     var countdown: some View {
-        VStack(alignment: .leading, spacing: 5) {
+        VStack(alignment: .leading, spacing: 0) {
             CountdownView(
                 countdown: Countdown(to: launch.date),
                 stopped: launch.status?.currentSituation.noCountdown ?? true,
@@ -118,25 +156,10 @@ struct LaunchListItemView: View {
                 shadowColor: drawing.shadownColor,
                 shadowRadius: drawing.shadowRadius
             )
-                .frame(maxHeight: 25)
+            .padding(.bottom, (drawing.shadowRadius)/2 * -1)
+            .frame(height: 24)
         }
     }
-    
-    var date: some View {
-        VStack(alignment: .trailing) {
-            Text(launch.status?.currentSituation.dateDescription ?? "")
-                .fontWeight(.semibold)
-                .font(.system(.caption, design: .rounded))
-                .foregroundColor(.secondary)
-                .lineLimit(1)
-            Text(LaunchDateFormatter.dateStringWithMonthText(for: launch.date, compact: true))
-                .fontWeight(.medium)
-                .font(.system(.body, design: .rounded))
-                .foregroundColor(.primary)
-                .lineLimit(1)
-        }
-    }
-    
 }
 
 

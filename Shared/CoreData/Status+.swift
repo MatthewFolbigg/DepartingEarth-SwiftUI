@@ -49,7 +49,7 @@ extension Status {
             case .hold : return "Holding"
             case .inFlight : return "In Flight"
             case .dateUnconfirmed : return "Preparing"
-            case .dateUndetermined: return "Pending Date"
+            case .dateUndetermined: return "Awaiting Info"
             }
         }
         
