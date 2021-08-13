@@ -19,18 +19,14 @@ struct CountdownView: View {
     var backgroundColor: Color
     var symbolBackgroundColor: Color
     var textColor: Color
-    var shadowColor: Color
-    var shadowRadius: CGFloat
     
     //MARK: Init
-    init(countdown: Countdown, stopped: Bool = false, cornerRadius: CGFloat = 5, spacing: CGFloat = 5, color: Color = .gray, symbolColor: Color? = nil, textColor: Color = .primary, shadowColor: Color = .clear, shadowRadius: CGFloat = 0.0) {
+    init(countdown: Countdown, stopped: Bool = false, cornerRadius: CGFloat = 5, spacing: CGFloat = 5, color: Color = .gray, symbolColor: Color? = nil, textColor: Color = .primary) {
         self.countdown = countdown
         self.stopped = stopped
         self.cornerRadius = cornerRadius
         self.spacing = spacing
         self.backgroundColor = color
-        self.shadowColor = shadowColor
-        self.shadowRadius = shadowRadius
         if let symbolColor = symbolColor {
             self.symbolBackgroundColor = symbolColor
         } else {
@@ -81,7 +77,6 @@ struct CountdownView: View {
         .background(
             (isSymbol ? symbolBackgroundColor : backgroundColor)
                 .clipShape(RoundedRectangle(cornerRadius: isSymbol ? cornerRadius * 1.2 : cornerRadius))
-                .shadow(color: shadowColor, radius: shadowRadius)
         )
     }
 }

@@ -35,7 +35,6 @@ struct LaunchListView: View {
                             NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.hidden()
                         }
                     }
-                    .listRowInsets(EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20))
                 }
                 .listStyle(PlainListStyle())
                 .background(Color.ui.greyBlueBackground)

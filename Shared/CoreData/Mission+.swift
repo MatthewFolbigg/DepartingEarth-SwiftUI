@@ -32,6 +32,7 @@ extension Mission {
         case "Earth Science": return "cloud.drizzle.fill"
         case "Planetary Science": return "binoculars.fill"
         case "Heliophysics": return "sun.max.fill"
+        case "Astrophysics": return "sun.max.fill"
         //Exploration
         case "Human Exploration": return "person.2.fill"
         case "Robotic Exploration": return "cpu"
