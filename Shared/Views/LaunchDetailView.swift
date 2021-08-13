@@ -21,7 +21,7 @@ struct LaunchDetailView: View {
             VStack(alignment: .leading, spacing: 20) {
                 HStack {
                     Spacer()
-                    CountdownView(countdown: Countdown(to: launch.date), color: .clear, textColor: launch.status?.color ?? .gray)
+                    CountdownView(countdown: Countdown(to: launch.date), backgroundColor: .clear, textColor: launch.status?.color ?? .gray)
                         .frame(maxWidth: 220)
                     Spacer()
                 }
