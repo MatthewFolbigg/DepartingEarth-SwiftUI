@@ -1,43 +1,52 @@
 //
 //  UpcomingLaunchesView.swift
-//  Shared
+//  Departing Earth
 //
-//  Created by Matthew Folbigg on 02/08/2021.
+//  Created by Matthew Folbigg on 14/08/2021.
 //
 
 import SwiftUI
-import CoreData
 
 struct UpcomingLaunchesView: View {
+    
     @Environment(\.managedObjectContext) private var viewContext
     
-    @ObservedObject var launchList: UpcomingLaunchList
     @ObservedObject var launchLibraryClient = LaunchLibraryApiClient.shared
-    
-    @FetchRequest var launches: FetchedResults<Launch>
-    @FetchRequest var providers: FetchedResults<Provider>
-    @FetchRequest var statuses: FetchedResults<Status>
-    @FetchRequest var orbits: FetchedResults<Orbit>
-    
     var isDownloading: Bool { launchLibraryClient.fetchStatus == .fetching ? true : false }
     
-    //MARK: - Init
-    init(launchList: UpcomingLaunchList) {
-        self.launchList = launchList
-        _launches = FetchRequest(fetchRequest: Launch.requestForAll(sortBy: .date))
+    @State var sortOrderAscending = true
+    @FetchRequest var providers: FetchedResults<Provider>
+    @State var providerFilter: String? = nil
+    @FetchRequest var orbits: FetchedResults<Orbit>
+    @State var orbitFilter: String? = nil
+    @FetchRequest var statuses: FetchedResults<Status>
+    @State var statusFilter: String? = nil
+    var isFiltered: Bool { providerFilter != nil || orbitFilter != nil || statusFilter != nil}
+    func removeAllFilters() { providerFilter = nil; orbitFilter = nil; statusFilter = nil }
+    
+    init() {
         _providers = FetchRequest(fetchRequest: Provider.requestForAll())
-        _statuses = FetchRequest(fetchRequest: Status.requestForAll())
         _orbits = FetchRequest(fetchRequest: Orbit.requestForAll())
+        _statuses = FetchRequest(fetchRequest: Status.requestForAll())
         UINavigationBar.appearance().tintColor = UIColor(.ui.greyBlueAccent)
     }
-
-    //MARK: - Main Body
+    
     var body: some View {
         ZStack {
             NavigationView {
+                //MARK: - Main View
                 VStack {
-                    LaunchListView(request: launchList.filteredLaunchRequest())    
+                    FilteredLaunchList(providerFilter: providerFilter, statusFilter: statusFilter, orbitFilter: orbitFilter, sortAscending: sortOrderAscending)
                 }
+                //MARK: - On Appear
+                .onAppear {
+                    if Launch.count(in: viewContext) == 0 {
+                        refreshLaunches(deletingFirst: false)
+                    } else {
+                        //TODO: Check for stale data
+                    }
+                }
+                //MARK: - Navigation and ToolBar
                 .navigationTitle("Departing Soon")
                 .navigationBarTitleDisplayMode(.automatic)
                 .toolbar {
@@ -47,27 +56,30 @@ struct UpcomingLaunchesView: View {
                     }
                     ToolbarItem(placement: .navigationBarLeading) {
                         refreshButton
+                            .foregroundColor(.ui.greyBlueAccent)
                     }
                 }
             }
             if isDownloading { launchLibraryActivityIndicator }
         }
-        .onAppear {
-            if launches.isEmpty {
-                refreshList()
-            } else {
-                //Check last updated and update if stale
-            }
+    }
+    
+    //MARK: Refreshing data
+    func refreshLaunches(deletingFirst: Bool = true) {
+        withAnimation {
+            if deletingFirst { Launch.deleteAll(from: viewContext) }
+            launchLibraryClient.fetchAndUpdateData(.upcomingLaunches)
         }
+
     }
     
-    //MARK: - Helper Methods
-    func refreshList() {
-        Launch.deleteAll(from: viewContext)
-        launchLibraryClient.fetchData(.upcomingLaunches)
+    var refreshButton: some View {
+        Button(
+            action: { refreshLaunches() },
+            label: { Label("Refresh", systemImage: "arrow.clockwise.circle") }
+        )
     }
     
-    //MARK: - Views
     var launchLibraryActivityIndicator: some View {
         VStack {
             ProgressView()
@@ -83,8 +95,15 @@ struct UpcomingLaunchesView: View {
         )
         .clipShape(RoundedRectangle(cornerRadius: 20))
     }
-            
-    //MARK: - Filter Menu
+    
+    
+}
+
+
+//MARK:- List Filtering Controls
+extension UpcomingLaunchesView {
+    
+    //MARK: Filter Menu
     var filterMenu: some View {
         Menu {
             sortOrderMenuButton
@@ -92,49 +111,55 @@ struct UpcomingLaunchesView: View {
             providerPicker
             statusPicker
             orbitPicker
-            if launchList.isFiltered {
-                clearAllFiltersButton
-            }
+            if isFiltered { clearAllFiltersButton }
         } label: {
-            let icon = launchList.isFiltered ? "line.horizontal.3.decrease.circle.fill" : "line.horizontal.3.decrease.circle"
-            Label("Filter", systemImage: icon).imageScale(.large)
+            let icon = isFiltered ? "line.horizontal.3.decrease.circle.fill" : "line.horizontal.3.decrease.circle"
+            Label("Filter", systemImage: icon)
+                .imageScale(.large)
         }
     }
     
-    //MARK: Non-Filter Buttons
+    //MARK: Sort Order
+    var sortOrderMenuButton: some View {
+        Button(
+            action: {
+                withAnimation {
+                    sortOrderAscending.toggle()
+                }
+            },
+            label: { Label("\(sortOrderAscending ? "Latest" : "Earliest") first", systemImage: "arrow.up.arrow.down") }
+        )
+    }
+    
+    //MARK: Clear Filters Button
     var clearAllFiltersButton: some View {
         Button(
-            action: { launchList.removeAllFilters() },
+            action: {
+                withAnimation {
+                    removeAllFilters()
+                }
+            },
             label: { Label("Clear Filters", systemImage: "xmark.circle") }
         )
     }
     
-    var sortOrderMenuButton: some View {
-        Button(
-            action: {
-                launchList.sortAscending.toggle()
-            },
-            label: { Label("\(launchList.sortAscending ? "Latest" : "Earliest") first", systemImage: "arrow.up.arrow.down") }
-        )
-    }
-
     //MARK: Provider Filter
     var providerPicker: some View {
         Picker(
-            selection: $launchList.providerFilter,
+            selection: $providerFilter.animation(),
             label: Label(
-                launchList.providerFilter != nil ? "\(launchList.providerFilter?.compactName ?? "Provider")" : "All Providers",
+                providerFilter != nil ? Provider.providerFor(name: providerFilter!, context: viewContext)?.compactName ?? "" : "All Providers",
                 systemImage: "person.2"
             ),
             content: {
-                if launchList.providerFilter != nil {
-                        let tag: Provider? = nil
+                if providerFilter != nil {
+                        let tag: String? = nil
                         Label("All Providers", systemImage: "xmark.circle").tag(tag)
                         Divider()
                     }
                     ForEach(providers, id: \.self) { provider in
-                        let tag: Provider? = provider
-                        Text(provider.compactName!).tag(tag)
+                        let tag: String? = provider.name ?? nil
+                        Text(provider.compactName).tag(tag)
                     }
                }
         )
@@ -144,20 +169,20 @@ struct UpcomingLaunchesView: View {
     //MARK: Status Filter
     var statusPicker: some View {
         Picker(
-            selection: $launchList.statusFilter,
+            selection: $statusFilter.animation(),
             label: Label(
-                launchList.statusFilter != nil ? "\(launchList.statusFilter?.currentSituation.filterName ?? "Status")" : "All Statuses",
+                statusFilter != nil ? statusFilter! : "All Statuses",
                 systemImage: "calendar"
             ),
             content: {
-                if launchList.statusFilter != nil {
+                if statusFilter != nil {
                     let tag: Status? = nil
                     Label("Any Status", systemImage: "xmark.circle").tag(tag)
                 }
                 Divider()
                 ForEach(statuses, id: \.self) { status in
-                    let tag: Status? = status
-                    Text(status.currentSituation.filterName).tag(tag)
+                    let tag: String? = status.name
+                    Text(status.name ?? status.currentSituation.filterName).tag(tag)
                 }
             }
         )
@@ -167,32 +192,24 @@ struct UpcomingLaunchesView: View {
     //MARK: Orbit Filter
     var orbitPicker: some View {
         Picker(
-            selection: $launchList.orbitFilter,
+            selection: $orbitFilter.animation(),
             label: Label(
-                launchList.orbitFilter != nil ? "\(launchList.orbitFilter?.name ?? "Orbit")" : "All Orbits",
+                orbitFilter != nil ? orbitFilter! : "All Orbits",
                 systemImage: "circle.dashed"
             ),
             content: {
-                if launchList.statusFilter != nil {
-                    let tag: Status? = nil
+                if orbitFilter != nil {
+                    let tag: String? = nil
                     Label("Any Orbit", systemImage: "xmark.circle").tag(tag)
                 }
                 Divider()
                 ForEach(orbits, id: \.self) { orbit in
-                    let tag: Orbit? = orbit
+                    let tag: String? = orbit.name
                     Text(orbit.name!).tag(tag)
                 }
             }
         )
         .pickerStyle(MenuPickerStyle())
-    }
-    
-    //MARK: - Buttons
-    var refreshButton: some View {
-        Button(
-            action: { refreshList() },
-            label: { Label("Refresh", systemImage: "arrow.clockwise.circle") }
-        )
     }
 
 }
@@ -200,9 +217,10 @@ struct UpcomingLaunchesView: View {
 
 
 
-//MARK: Previews
-struct UpcomingLaunchesListView_Previews: PreviewProvider {
+
+
+struct NEWUpcomingLaunchesView_Previews: PreviewProvider {
     static var previews: some View {
-        UpcomingLaunchesView(launchList: UpcomingLaunchList())
+        UpcomingLaunchesView()
     }
 }

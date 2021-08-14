@@ -11,8 +11,6 @@
 		1F09CF3726B841DB009FBD32 /* Departing_Earth.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2026B841DB009FBD32 /* Departing_Earth.xcdatamodeld */; };
 		1F09CF3826B841DB009FBD32 /* Departing_EarthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2226B841DB009FBD32 /* Departing_EarthApp.swift */; };
 		1F09CF3926B841DB009FBD32 /* Departing_EarthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2226B841DB009FBD32 /* Departing_EarthApp.swift */; };
-		1F09CF3A26B841DB009FBD32 /* UpcomingLaunchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2326B841DB009FBD32 /* UpcomingLaunchesView.swift */; };
-		1F09CF3B26B841DB009FBD32 /* UpcomingLaunchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2326B841DB009FBD32 /* UpcomingLaunchesView.swift */; };
 		1F09CF3C26B841DB009FBD32 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2426B841DB009FBD32 /* PersistenceController.swift */; };
 		1F09CF3D26B841DB009FBD32 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF2426B841DB009FBD32 /* PersistenceController.swift */; };
 		1F09CF3E26B841DB009FBD32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F09CF2526B841DB009FBD32 /* Assets.xcassets */; };
@@ -27,8 +25,6 @@
 		1F09CF5D26B9765E009FBD32 /* LaunchListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5B26B9765E009FBD32 /* LaunchListItemView.swift */; };
 		1F09CF5F26B98AB4009FBD32 /* Provider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5E26B98AB4009FBD32 /* Provider+.swift */; };
 		1F09CF6026B98AB4009FBD32 /* Provider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF5E26B98AB4009FBD32 /* Provider+.swift */; };
-		1F09CF6226B99A26009FBD32 /* LaunchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF6126B99A26009FBD32 /* LaunchListView.swift */; };
-		1F09CF6326B99A26009FBD32 /* LaunchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF6126B99A26009FBD32 /* LaunchListView.swift */; };
 		1F09CF6526BA104A009FBD32 /* Status+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF6426BA104A009FBD32 /* Status+.swift */; };
 		1F09CF6626BA104A009FBD32 /* Status+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09CF6426BA104A009FBD32 /* Status+.swift */; };
 		1F689C3726BA959100087665 /* LaunchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C3626BA959100087665 /* LaunchDetailView.swift */; };
@@ -45,18 +41,19 @@
 		1F689C4A26BBF8A000087665 /* Pad+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C4826BBF8A000087665 /* Pad+.swift */; };
 		1F689C4C26BC0CFC00087665 /* Countdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C4B26BC0CFC00087665 /* Countdown.swift */; };
 		1F689C4D26BC0CFC00087665 /* Countdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C4B26BC0CFC00087665 /* Countdown.swift */; };
-		1F689C4F26BC44B300087665 /* UpcomingLaunchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C4E26BC44B300087665 /* UpcomingLaunchList.swift */; };
-		1F689C5026BC44B300087665 /* UpcomingLaunchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C4E26BC44B300087665 /* UpcomingLaunchList.swift */; };
 		1F689C5226BD6FF800087665 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C5126BD6FF800087665 /* Color+.swift */; };
 		1F689C5326BD6FF800087665 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F689C5126BD6FF800087665 /* Color+.swift */; };
 		1F6CDE2C26C6BB8E00D9D6AB /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE2B26C6BB8E00D9D6AB /* CountdownView.swift */; };
 		1F6CDE2D26C6BB8E00D9D6AB /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE2B26C6BB8E00D9D6AB /* CountdownView.swift */; };
+		1F6CDE3226C800E400D9D6AB /* FilteredLaunchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE3126C800E400D9D6AB /* FilteredLaunchList.swift */; };
+		1F6CDE3326C800E400D9D6AB /* FilteredLaunchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE3126C800E400D9D6AB /* FilteredLaunchList.swift */; };
+		1F6CDE3526C802CE00D9D6AB /* UpcomingLaunchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE3426C802CE00D9D6AB /* UpcomingLaunchesView.swift */; };
+		1F6CDE3626C802CE00D9D6AB /* UpcomingLaunchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE3426C802CE00D9D6AB /* UpcomingLaunchesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1F09CF2126B841DB009FBD32 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		1F09CF2226B841DB009FBD32 /* Departing_EarthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Departing_EarthApp.swift; sourceTree = "<group>"; };
-		1F09CF2326B841DB009FBD32 /* UpcomingLaunchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingLaunchesView.swift; sourceTree = "<group>"; };
 		1F09CF2426B841DB009FBD32 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		1F09CF2526B841DB009FBD32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F09CF2A26B841DB009FBD32 /* Departing Earth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Departing Earth.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,7 +66,6 @@
 		1F09CF5526B87294009FBD32 /* Launch+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Launch+.swift"; sourceTree = "<group>"; };
 		1F09CF5B26B9765E009FBD32 /* LaunchListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchListItemView.swift; sourceTree = "<group>"; };
 		1F09CF5E26B98AB4009FBD32 /* Provider+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Provider+.swift"; sourceTree = "<group>"; };
-		1F09CF6126B99A26009FBD32 /* LaunchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchListView.swift; sourceTree = "<group>"; };
 		1F09CF6426BA104A009FBD32 /* Status+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Status+.swift"; sourceTree = "<group>"; };
 		1F689C3626BA959100087665 /* LaunchDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchDetailView.swift; sourceTree = "<group>"; };
 		1F689C3926BAAE3100087665 /* Rocket+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rocket+.swift"; sourceTree = "<group>"; };
@@ -78,9 +74,10 @@
 		1F689C4526BBF89500087665 /* Orbit+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Orbit+.swift"; sourceTree = "<group>"; };
 		1F689C4826BBF8A000087665 /* Pad+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pad+.swift"; sourceTree = "<group>"; };
 		1F689C4B26BC0CFC00087665 /* Countdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countdown.swift; sourceTree = "<group>"; };
-		1F689C4E26BC44B300087665 /* UpcomingLaunchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingLaunchList.swift; sourceTree = "<group>"; };
 		1F689C5126BD6FF800087665 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		1F6CDE2B26C6BB8E00D9D6AB /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
+		1F6CDE3126C800E400D9D6AB /* FilteredLaunchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredLaunchList.swift; sourceTree = "<group>"; };
+		1F6CDE3426C802CE00D9D6AB /* UpcomingLaunchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingLaunchesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +114,6 @@
 				1F09CF2226B841DB009FBD32 /* Departing_EarthApp.swift */,
 				1F689C3C26BAD5A800087665 /* LaunchDateFormatter.swift */,
 				1F689C4B26BC0CFC00087665 /* Countdown.swift */,
-				1F689C4E26BC44B300087665 /* UpcomingLaunchList.swift */,
 				1F09CF5326B86755009FBD32 /* Views */,
 				1F09CF5426B8675D009FBD32 /* LaunchLibrary */,
 				1F09CF4926B8497F009FBD32 /* CoreData */,
@@ -172,11 +168,10 @@
 		1F09CF5326B86755009FBD32 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1F09CF2326B841DB009FBD32 /* UpcomingLaunchesView.swift */,
-				1F09CF6126B99A26009FBD32 /* LaunchListView.swift */,
-				1F09CF5B26B9765E009FBD32 /* LaunchListItemView.swift */,
+				1F6CDE3426C802CE00D9D6AB /* UpcomingLaunchesView.swift */,
+				1F6CDE3126C800E400D9D6AB /* FilteredLaunchList.swift */,
 				1F689C3626BA959100087665 /* LaunchDetailView.swift */,
-				1F6CDE2B26C6BB8E00D9D6AB /* CountdownView.swift */,
+				1F6CDE3726C824B100D9D6AB /* List Row */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -188,6 +183,15 @@
 				1F09CF5026B857AB009FBD32 /* LaunchLibraryResponseTypes.swift */,
 			);
 			path = LaunchLibrary;
+			sourceTree = "<group>";
+		};
+		1F6CDE3726C824B100D9D6AB /* List Row */ = {
+			isa = PBXGroup;
+			children = (
+				1F09CF5B26B9765E009FBD32 /* LaunchListItemView.swift */,
+				1F6CDE2B26C6BB8E00D9D6AB /* CountdownView.swift */,
+			);
+			path = "List Row";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,7 +294,6 @@
 				1F689C3A26BAAE3100087665 /* Rocket+.swift in Sources */,
 				1F09CF3626B841DB009FBD32 /* Departing_Earth.xcdatamodeld in Sources */,
 				1F6CDE2C26C6BB8E00D9D6AB /* CountdownView.swift in Sources */,
-				1F09CF6226B99A26009FBD32 /* LaunchListView.swift in Sources */,
 				1F09CF3C26B841DB009FBD32 /* PersistenceController.swift in Sources */,
 				1F09CF5C26B9765E009FBD32 /* LaunchListItemView.swift in Sources */,
 				1F689C5226BD6FF800087665 /* Color+.swift in Sources */,
@@ -298,8 +301,9 @@
 				1F689C4926BBF8A000087665 /* Pad+.swift in Sources */,
 				1F689C3D26BAD5A800087665 /* LaunchDateFormatter.swift in Sources */,
 				1F689C4326BBF87800087665 /* Mission+.swift in Sources */,
-				1F689C4F26BC44B300087665 /* UpcomingLaunchList.swift in Sources */,
+				1F6CDE3526C802CE00D9D6AB /* UpcomingLaunchesView.swift in Sources */,
 				1F09CF3826B841DB009FBD32 /* Departing_EarthApp.swift in Sources */,
+				1F6CDE3226C800E400D9D6AB /* FilteredLaunchList.swift in Sources */,
 				1F09CF5F26B98AB4009FBD32 /* Provider+.swift in Sources */,
 				1F689C3726BA959100087665 /* LaunchDetailView.swift in Sources */,
 				1F09CF4B26B849B0009FBD32 /* LaunchLibraryClient.swift in Sources */,
@@ -307,7 +311,6 @@
 				1F689C4626BBF89500087665 /* Orbit+.swift in Sources */,
 				1F09CF5126B857AB009FBD32 /* LaunchLibraryResponseTypes.swift in Sources */,
 				1F09CF6526BA104A009FBD32 /* Status+.swift in Sources */,
-				1F09CF3A26B841DB009FBD32 /* UpcomingLaunchesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,7 +321,6 @@
 				1F689C3B26BAAE3100087665 /* Rocket+.swift in Sources */,
 				1F09CF3726B841DB009FBD32 /* Departing_Earth.xcdatamodeld in Sources */,
 				1F6CDE2D26C6BB8E00D9D6AB /* CountdownView.swift in Sources */,
-				1F09CF6326B99A26009FBD32 /* LaunchListView.swift in Sources */,
 				1F09CF3D26B841DB009FBD32 /* PersistenceController.swift in Sources */,
 				1F09CF5D26B9765E009FBD32 /* LaunchListItemView.swift in Sources */,
 				1F689C5326BD6FF800087665 /* Color+.swift in Sources */,
@@ -326,8 +328,9 @@
 				1F689C4A26BBF8A000087665 /* Pad+.swift in Sources */,
 				1F689C3E26BAD5A800087665 /* LaunchDateFormatter.swift in Sources */,
 				1F689C4426BBF87800087665 /* Mission+.swift in Sources */,
-				1F689C5026BC44B300087665 /* UpcomingLaunchList.swift in Sources */,
+				1F6CDE3626C802CE00D9D6AB /* UpcomingLaunchesView.swift in Sources */,
 				1F09CF3926B841DB009FBD32 /* Departing_EarthApp.swift in Sources */,
+				1F6CDE3326C800E400D9D6AB /* FilteredLaunchList.swift in Sources */,
 				1F09CF6026B98AB4009FBD32 /* Provider+.swift in Sources */,
 				1F689C3826BA959100087665 /* LaunchDetailView.swift in Sources */,
 				1F09CF4C26B849B0009FBD32 /* LaunchLibraryClient.swift in Sources */,
@@ -335,7 +338,6 @@
 				1F689C4726BBF89500087665 /* Orbit+.swift in Sources */,
 				1F09CF5226B857AB009FBD32 /* LaunchLibraryResponseTypes.swift in Sources */,
 				1F09CF6626BA104A009FBD32 /* Status+.swift in Sources */,
-				1F09CF3B26B841DB009FBD32 /* UpcomingLaunchesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,7 +15,7 @@ class LaunchLibraryApiClient: ObservableObject {
     
     @Published var fetchStatus: FetchStatus = .idle
     private var context: NSManagedObjectContext
-    private static var developerMode: Bool = false
+    private static var developerMode: Bool = true
     
     init(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
         self.context = context
@@ -50,7 +50,7 @@ class LaunchLibraryApiClient: ObservableObject {
         case fetching
     }
 
-    func fetchData(_ endpoint: Endpoint) {
+    func fetchAndUpdateData(_ endpoint: Endpoint) {
         print(endpoint.url)
         fetchStatus = .fetching
         launchDataFetchCancellable?.cancel()

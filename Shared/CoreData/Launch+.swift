@@ -77,9 +77,20 @@ extension Launch {
         PersistenceController.deleteAll(entityName: "Launch", from: context)
     }
     
-    static func requestForAll(sortBy: SortOption, ascending: Bool = true) -> NSFetchRequest<Launch> {
+    static func count(in context: NSManagedObjectContext) -> Int {
+        if let count = try? context.count(for: NSFetchRequest(entityName: "Launch")) {
+            print("count: \(count)")
+            return count
+        } else {
+            return 0
+        }
+    }
+    
+    static func requestForAll(sortBy: SortOption = .date, ascending: Bool = true, predicates: [NSPredicate] = []) -> NSFetchRequest<Launch> {
         let request = NSFetchRequest<Launch>(entityName: "Launch")
+        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         request.sortDescriptors = [NSSortDescriptor(key: sortBy.rawValue, ascending: ascending)]
+        request.predicate = predicate
         return request
     }
     

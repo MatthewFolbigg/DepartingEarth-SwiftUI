@@ -11,7 +11,6 @@ struct LaunchListItemView: View {
     
     @State var launch: Launch
     var situation: Status.Situation { launch.status?.currentSituation ?? .dateUndetermined }
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     struct drawing {
         static let vSectionSpacing: CGFloat = 8
@@ -44,7 +43,6 @@ struct LaunchListItemView: View {
 //                    date
                     status
                 }
-//                Spacer()
                 HStack {
                     countdown
                     Spacer()
