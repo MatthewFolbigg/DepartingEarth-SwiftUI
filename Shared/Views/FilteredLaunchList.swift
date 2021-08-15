@@ -13,29 +13,48 @@ struct FilteredLaunchList: View {
     var fetchRequest: FetchRequest<Launch>
     var launches: FetchedResults<Launch> { fetchRequest.wrappedValue }
     
+    @Binding var providerFilter: String?
+    @Binding var orbitFilter: String?
+    @Binding var statusFilter: String?
+    var isFiltered: Bool { providerFilter != nil || orbitFilter != nil || statusFilter != nil}
+    
     var body: some View {
-        List(launches, id: \.self) { launch in
-            ZStack {
-                LaunchListItemView(launch: launch)
-                NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.hidden()
+        ZStack {
+            List(launches, id: \.self) { launch in
+                ZStack {
+                    LaunchListItemView(launch: launch)
+                    NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.hidden()
+                }
             }
+            .listStyle(PlainListStyle())
+            .transition(.asymmetric(insertion: .move(edge: .top), removal: .move(edge: .top)))
+        
+            emptyListIndicator
         }
-//        .listStyle(PlainListStyle())
-        .transition(.asymmetric(insertion: .move(edge: .top), removal: .move(edge: .top)))
     }
     
-    init(providerFilter: String? = nil, statusFilter: String?, orbitFilter: String? = nil, sortAscending: Bool = true) {
+    init(providerFilter: Binding<String?> = .constant(nil), statusFilter: Binding<String?> = .constant(nil), orbitFilter: Binding<String?> = .constant(nil), sortAscending: Bool = true) {
+        
+        //TODO: Find a more controled place for these haptics. Aimed to tigger only on filter set/remove
+        let filterSetHaptic = UIImpactFeedbackGenerator(style: .medium)
+        filterSetHaptic.impactOccurred()
+        //---
+        
+        _providerFilter = providerFilter
+        _statusFilter = statusFilter
+        _orbitFilter = orbitFilter
+        
         var predicates: [NSPredicate] = []
         
-        if let providerFilter = providerFilter {
+        if let providerFilter = providerFilter.wrappedValue {
             predicates.append(NSPredicate(format: "provider.name == %@", providerFilter))
         }
         
-        if let statusFilter = statusFilter {
+        if let statusFilter = statusFilter.wrappedValue {
             predicates.append(NSPredicate(format: "status.name == %@", statusFilter))
         }
         
-        if let orbitFilter = orbitFilter {
+        if let orbitFilter = orbitFilter.wrappedValue {
             predicates.append(NSPredicate(format: "mission.orbit.name == %@", orbitFilter))
         }
         
@@ -45,10 +64,38 @@ struct FilteredLaunchList: View {
         fetchRequest = request
     }
     
+    func clearFilters() {
+        withAnimation {
+            providerFilter = nil
+            statusFilter = nil
+            orbitFilter = nil
+        }
+    }
+    
+    var emptyListIndicator: some View {
+        VStack(alignment: .center, spacing: 10) {
+            if launches.count == 0 && isFiltered {
+                Text("No Launches")
+                Button(
+                    action: { clearFilters() },
+                    label: {
+                        Label(
+                            title: { Text("Clear Filters") },
+                            icon: { Image(systemName: "x.circle") }
+                        )
+                        .foregroundColor(.red)
+                    }
+                )
+            } else if launches.count == 0 && !isFiltered {
+                Text("No Launches")
+            }
+        }
+    }
+    
 }
 
 struct FilteredLaunchList_Previews: PreviewProvider {
     static var previews: some View {
-        FilteredLaunchList(providerFilter: "SpaceX", statusFilter: nil, orbitFilter: nil, sortAscending: true)
+        FilteredLaunchList(providerFilter: .constant("SpaceX"), statusFilter: .constant(nil), orbitFilter: .constant(nil), sortAscending: true)
     }
 }

@@ -36,8 +36,9 @@ struct UpcomingLaunchesView: View {
             NavigationView {
                 //MARK: - Main View
                 VStack {
-                    FilteredLaunchList(providerFilter: providerFilter, statusFilter: statusFilter, orbitFilter: orbitFilter, sortAscending: sortOrderAscending)
+                    FilteredLaunchList(providerFilter: $providerFilter, statusFilter: $statusFilter, orbitFilter: $orbitFilter, sortAscending: sortOrderAscending)
                 }
+                .padding(.top, 2)
                 //MARK: - On Appear
                 .onAppear {
                     if Launch.count(in: viewContext) == 0 {
@@ -182,7 +183,7 @@ extension UpcomingLaunchesView {
                 Divider()
                 ForEach(statuses, id: \.self) { status in
                     let tag: String? = status.name
-                    Text(status.name ?? status.currentSituation.filterName).tag(tag)
+                        Text(status.name ?? status.currentSituation.filterName).tag(tag)
                 }
             }
         )
