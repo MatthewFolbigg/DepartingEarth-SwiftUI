@@ -44,7 +44,7 @@ struct UpcomingLaunchesView: View {
                     if Launch.count(in: viewContext) == 0 {
                         refreshLaunches(deletingFirst: false)
                     } else {
-                        //TODO: Check for stale data
+                        //Check for stale data
                     }
                 }
                 //MARK: - Navigation and ToolBar
@@ -177,7 +177,7 @@ extension UpcomingLaunchesView {
             ),
             content: {
                 if statusFilter != nil {
-                    let tag: Status? = nil
+                    let tag: String? = nil
                     Label("Any Status", systemImage: "xmark.circle").tag(tag)
                 }
                 Divider()

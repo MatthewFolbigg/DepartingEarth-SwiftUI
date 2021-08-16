@@ -27,6 +27,7 @@ struct FilteredLaunchList: View {
                 }
             }
             .listStyle(PlainListStyle())
+            //This transition current doesnt function when .listStyle is set
             .transition(.asymmetric(insertion: .move(edge: .top), removal: .move(edge: .top)))
         
             emptyListIndicator
@@ -62,6 +63,12 @@ struct FilteredLaunchList: View {
             fetchRequest: Launch.requestForAll(sortBy: .date, ascending: sortAscending, predicates: predicates),
             animation: .default)
         fetchRequest = request
+        
+        let launches = request.wrappedValue.map( {$0} )
+        if Launch.checkIsStale(launches: launches) {
+            LaunchLibraryApiClient.shared.fetchAndUpdateData(.upcomingLaunches)
+        }
+        
     }
     
     func clearFilters() {

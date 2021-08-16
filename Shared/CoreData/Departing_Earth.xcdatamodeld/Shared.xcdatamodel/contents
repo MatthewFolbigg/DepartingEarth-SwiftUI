@@ -3,6 +3,7 @@
     <entity name="Launch" representedClassName="Launch" syncable="YES" codeGenerationType="class">
         <attribute name="dateISO" optional="YES" attributeType="String"/>
         <attribute name="holdReason" optional="YES" attributeType="String"/>
+        <attribute name="lastUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="launchID" optional="YES" attributeType="String"/>
         <attribute name="name_" optional="YES" attributeType="String"/>
         <attribute name="weatherProbability" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -102,7 +103,7 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Launch" positionX="-1954.0234375" positionY="-645.82421875" width="128" height="209"/>
+        <element name="Launch" positionX="-1954.0234375" positionY="-645.82421875" width="128" height="224"/>
         <element name="Mission" positionX="-1755" positionY="-477" width="128" height="119"/>
         <element name="Orbit" positionX="-1746" positionY="-468" width="128" height="14"/>
         <element name="Pad" positionX="-1737" positionY="-459" width="128" height="134"/>

@@ -55,6 +55,8 @@ extension Launch {
     @discardableResult
     static func create(from info: LaunchInfo, context: NSManagedObjectContext) -> Launch {
         let launch = Launch(context: context)
+        launch.lastUpdated = Date()
+        
         //Attributes
         launch.launchID = info.id
         launch.name_ = info.name
@@ -99,6 +101,18 @@ extension Launch {
         request.sortDescriptors = [NSSortDescriptor(key: SortOption.name.rawValue, ascending: true)]
         request.predicate = NSPredicate(format: "launchID == %@", id)
         return request
+    }
+    
+    static func checkIsStale(launches: [Launch]) -> Bool {
+        let ageOfStaleInSeconds: Double = 1800 //30 minutes
+        print("Checking for stale data")
+        for launch in launches {
+            if launch.lastUpdated?.timeIntervalSinceNow ?? ageOfStaleInSeconds <= ageOfStaleInSeconds {
+                print("Data Stale: \(launch.name) \(launch.lastUpdated?.timeIntervalSinceNow ?? 0)")
+                return true
+            }
+        }
+        return false
     }
         
 }
