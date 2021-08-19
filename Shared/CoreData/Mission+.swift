@@ -21,6 +21,7 @@ extension Mission {
         return mission
     }
     
+    //TODO: Confirm Icons
     var symbolForType: String {
         switch self.type {
         //Utility

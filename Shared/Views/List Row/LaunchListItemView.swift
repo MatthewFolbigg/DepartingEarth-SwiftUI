@@ -128,7 +128,7 @@ struct LaunchListItemView: View {
         HStack(alignment: .firstTextBaseline, spacing: drawing.hItemSpacing) {
             Label(
                 title: { statusText },
-                icon: { Image(systemName: "checkmark.circle") }
+                icon: { launch.status?.icon }
             )
             .layoutPriority(1)
         }

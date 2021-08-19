@@ -88,6 +88,17 @@ extension Status {
         }
     }
     
+    //TODO: Confirm Icons
+    var icon: Image {
+        switch self.currentSituation {
+        case .success: return Image(systemName: "checkmark.circle")
+        case .failure, .partialFailure: return Image(systemName: "xmark.circle")
+        case .go, .dateUnconfirmed, .inFlight: return Image(systemName: "paperplane.circle")
+        case .dateUndetermined: return Image(systemName: "questionmark.circle")
+        case .hold: return Image(systemName: "pause.circle")
+        }
+    }
+    
     static func create(from info: LaunchStatus, context: NSManagedObjectContext) -> Status {
         let status = Status(context: context)
         status.statusID = Int16(info.id)

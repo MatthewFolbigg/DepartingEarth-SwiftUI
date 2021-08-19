@@ -38,7 +38,6 @@ struct UpcomingLaunchesView: View {
                 VStack {
                     FilteredLaunchList(providerFilter: $providerFilter, statusFilter: $statusFilter, orbitFilter: $orbitFilter, sortAscending: sortOrderAscending)
                 }
-                .padding(.top, 2)
                 //MARK: - On Appear
                 .onAppear {
                     if Launch.count(in: viewContext) == 0 {
