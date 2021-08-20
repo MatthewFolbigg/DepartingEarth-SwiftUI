@@ -41,9 +41,8 @@ struct UpcomingLaunchesView: View {
         ZStack {
             NavigationView {
                 //MARK: - Main View
-                VStack {
-                    FilteredLaunchList(pinnedIDs: pinned.launchIDs, showPinned: showPinned, providerFilter: $providerFilter, statusFilter: $statusFilter, orbitFilter: $orbitFilter, sortAscending: sortOrderAscending)
-                }
+                FilteredLaunchListView(pinnedIDs: pinned.launchIDs, showPinned: showPinned, providerFilter: $providerFilter, statusFilter: $statusFilter, orbitFilter: $orbitFilter, sortAscending: sortOrderAscending)
+                
                 //MARK: - On Appear
                 .onAppear {
                     if Launch.count(in: viewContext) == 0 {

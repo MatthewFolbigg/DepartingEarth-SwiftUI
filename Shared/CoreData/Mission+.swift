@@ -39,6 +39,7 @@ extension Mission {
         case "Robotic Exploration": return "cpu"
         //Other
         case "Test Flight": return "paperplane.fill"
+        case "Suborbital": return "circle.bottomhalf.fill"
         case "Government/Top Secret": return "key.fill"
         default: return "circle.fill"
         }

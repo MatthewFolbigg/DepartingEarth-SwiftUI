@@ -1,5 +1,5 @@
 //
-//  FilteredLaunchList.swift
+//  FilteredLaunchListView.swift
 //  Departing Earth
 //
 //  Created by Matthew Folbigg on 14/08/2021.
@@ -8,31 +8,30 @@
 import SwiftUI
 import CoreData
 
-struct FilteredLaunchList: View {
+struct FilteredLaunchListView: View {
+    
+    @EnvironmentObject var pinned: PinnedLaunches
     
     var fetchRequest: FetchRequest<Launch>
     var launches: FetchedResults<Launch> { fetchRequest.wrappedValue }
     
-    @EnvironmentObject var pinned: PinnedLaunches
     @Binding var providerFilter: String?
     @Binding var orbitFilter: String?
     @Binding var statusFilter: String?
     var isFiltered: Bool { providerFilter != nil || orbitFilter != nil || statusFilter != nil}
     
     var body: some View {
-        ZStack {
-            List(launches, id: \.self) { launch in
+        List { //This list should be directly within a navigation view to prevent issues. Not wrapped in any stacks
+            if launches.isEmpty { emptyListIndicator }
+            ForEach(launches, id: \.self) { launch in
                 ZStack {
                     LaunchListItemView(launch: launch, isPinned: pinned.isPinned(launch))
                     NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.hidden()
                 }
             }
-            .listStyle(PlainListStyle())
-            //This transition current doesnt function when .listStyle is set
-            .transition(.asymmetric(insertion: .move(edge: .top), removal: .move(edge: .top)))
-        
-            emptyListIndicator
         }
+        .id(UUID()) //This fixes as crash when swapping between pinned and all several times by preventing list animations.
+        .listStyle(PlainListStyle())
     }
     
     init(pinnedIDs: [String] = [], showPinned: Bool = false, providerFilter: Binding<String?> = .constant(nil), statusFilter: Binding<String?> = .constant(nil), orbitFilter: Binding<String?> = .constant(nil), sortAscending: Bool = true) {
@@ -47,7 +46,6 @@ struct FilteredLaunchList: View {
         _orbitFilter = orbitFilter
         
         var predicates: [NSPredicate] = []
-        
         if showPinned {
             predicates.append(NSPredicate(format: "launchID IN %@", pinnedIDs))
         }
@@ -86,21 +84,27 @@ struct FilteredLaunchList: View {
     
     var emptyListIndicator: some View {
         VStack(alignment: .center, spacing: 10) {
-            if launches.count == 0 && isFiltered {
-                Text("No Launches")
-                Button(
-                    action: { clearFilters() },
-                    label: {
-                        Label(
-                            title: { Text("Clear Filters") },
-                            icon: { Image(systemName: "x.circle") }
-                        )
-                        .foregroundColor(.red)
-                    }
-                )
-            } else if launches.count == 0 && !isFiltered {
-                Text("No Launches")
+            Spacer()
+            HStack {
+                Spacer()
+                if launches.count == 0 && isFiltered {
+                    Text("No Launches")
+                    Button(
+                        action: { clearFilters() },
+                        label: {
+                            Label(
+                                title: { Text("Clear Filters") },
+                                icon: { Image(systemName: "x.circle") }
+                            )
+                            .foregroundColor(.red)
+                        }
+                    )
+                } else if launches.count == 0 && !isFiltered {
+                    Text("No Launches")
+                }
+                Spacer()
             }
+            Spacer()
         }
     }
     
@@ -108,6 +112,6 @@ struct FilteredLaunchList: View {
 
 //struct FilteredLaunchList_Previews: PreviewProvider {
 //    static var previews: some View {
-//        FilteredLaunchList(providerFilter: .constant("SpaceX"), statusFilter: .constant(nil), orbitFilter: .constant(nil), sortAscending: true)
+//        FilteredLaunchListView(providerFilter: .constant("SpaceX"), statusFilter: .constant(nil), orbitFilter: .constant(nil), sortAscending: true)
 //    }
 //}
