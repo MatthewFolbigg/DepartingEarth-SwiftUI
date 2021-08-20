@@ -117,8 +117,8 @@ struct PersistenceController {
             pad: PadInfo(
                 id: 10,
                 name: "A remote pad",
-                latitude: "100",
-                longitude: "100",
+                latitude: "40",
+                longitude: "-73",
                 location: PadLocationInfo(name: "United Kingdom", countryCode: "UK")),
             probability: 50)
         return Launch.create(from: info, context: context)

@@ -103,6 +103,13 @@ extension Launch {
         return request
     }
     
+    static func requestForLaunch(withIDs ids: [String]) -> NSFetchRequest<Launch> {
+        let request = NSFetchRequest<Launch>(entityName: "Launch")
+        request.sortDescriptors = [NSSortDescriptor(key: SortOption.name.rawValue, ascending: true)]
+        request.predicate = NSPredicate(format: "launchID IN %@", ids)
+        return request
+    }
+    
     static func checkIsStale(launches: [Launch]) -> Bool {
         let ageOfStaleInSeconds: Double = 1800 //30 minutes
         print("Checking for stale data")

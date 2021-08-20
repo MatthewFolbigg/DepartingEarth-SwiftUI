@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import MapKit
 
 extension Pad {
     static func create(from info: PadInfo, context: NSManagedObjectContext) -> Pad {
@@ -18,6 +19,16 @@ extension Pad {
         pad.locationName = info.location.name
         pad.countryCode = info.location.countryCode
         return pad
+    }
+    
+    var locationCoordinate: CLLocationCoordinate2D {
+        let latDouble = Double(latitude!) ?? 0
+        let longDouble = Double(longitude!) ?? 0
+        print(latDouble)
+        print(longDouble)
+        let lat = CLLocationDegrees(latDouble)
+        let long = CLLocationDegrees(longDouble)
+        return CLLocationCoordinate2D(latitude: lat, longitude: long)
     }
     
 }

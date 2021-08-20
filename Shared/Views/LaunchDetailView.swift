@@ -7,13 +7,15 @@
 
 import SwiftUI
 import Combine
+import MapKit
 
 struct LaunchDetailView: View {
     
+    @EnvironmentObject var pinned: PinnedLaunches
     @State var launch: Launch
-    
     @State var missionIsExpanded: Bool = false
-    
+    var isPinned: Bool { pinned.isPinned(launch) }
+        
     init(launch: Launch) {
         self.launch = launch
     }
@@ -41,6 +43,14 @@ struct LaunchDetailView: View {
             .padding(25)
         }
         .navigationTitle(launch.mission?.name ?? "Flight")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(
+                    action: { withAnimation { pinned.togglePin(for: launch) } },
+                    label: { Label("Pinned", systemImage: isPinned ? "pin.circle.fill" : "pin.circle") }
+                )
+            }
+        }
     }
     
     var countdown: some View {
@@ -120,9 +130,8 @@ struct LaunchDetailView: View {
         .padding(20)
         .background(Color.ui.greyBlueBackground.clipShape(RoundedRectangle(cornerRadius: 20)).opacity(0.5))
     }
-
+    
 }
-
 
 
 

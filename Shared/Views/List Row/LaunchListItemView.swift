@@ -10,6 +10,8 @@ import SwiftUI
 struct LaunchListItemView: View {
     
     @State var launch: Launch
+    @EnvironmentObject var pinned: PinnedLaunches
+    var isPinned: Bool { pinned.isPinned(launch) }
     var situation: Status.Situation { launch.status?.currentSituation ?? .dateUndetermined }
     
     struct drawing {
@@ -23,7 +25,7 @@ struct LaunchListItemView: View {
         static let textMinimumScale: CGFloat = 0.8
     }
     
-    init(launch: Launch) {
+    init(launch: Launch, isPinned: Bool) {
         self.launch = launch
     }
         
@@ -33,7 +35,11 @@ struct LaunchListItemView: View {
             statusColorBar
             VStack(alignment: .leading, spacing: drawing.vSectionSpacing) {
                 VStack(alignment: .leading, spacing: drawing.vItemSpacing) {
-                    provider
+                    HStack {
+                        provider
+                        Spacer()
+                        if isPinned { Image(systemName: "pin.circle").foregroundColor(.orange) }
+                    }
                     rocket
                 }
                 VStack(alignment: .leading, spacing: drawing.vItemSpacing) {
@@ -172,10 +178,10 @@ struct LaunchListItemView_Previews: PreviewProvider {
     static var previews: some View {
         let launch = PersistenceController.testData()
         List {
-            LaunchListItemView(launch: launch)
-            LaunchListItemView(launch: launch)
-            LaunchListItemView(launch: launch)
-            LaunchListItemView(launch: launch)
+            LaunchListItemView(launch: launch, isPinned: false)
+            LaunchListItemView(launch: launch, isPinned: false)
+            LaunchListItemView(launch: launch, isPinned: true)
+            LaunchListItemView(launch: launch, isPinned: false)
         }
         .previewDevice("iPhone 12 pro")
     }

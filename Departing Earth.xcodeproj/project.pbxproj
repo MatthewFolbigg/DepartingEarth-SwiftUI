@@ -49,6 +49,10 @@
 		1F6CDE3326C800E400D9D6AB /* FilteredLaunchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE3126C800E400D9D6AB /* FilteredLaunchList.swift */; };
 		1F6CDE3526C802CE00D9D6AB /* UpcomingLaunchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE3426C802CE00D9D6AB /* UpcomingLaunchesView.swift */; };
 		1F6CDE3626C802CE00D9D6AB /* UpcomingLaunchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE3426C802CE00D9D6AB /* UpcomingLaunchesView.swift */; };
+		1F6CDE3F26CEE6FD00D9D6AB /* CustomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE3E26CEE6FD00D9D6AB /* CustomList.swift */; };
+		1F6CDE4026CEE6FD00D9D6AB /* CustomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE3E26CEE6FD00D9D6AB /* CustomList.swift */; };
+		1F6CDE4326CEEE6A00D9D6AB /* PinnedLaunches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4226CEEE6A00D9D6AB /* PinnedLaunches.swift */; };
+		1F6CDE4426CEEE6A00D9D6AB /* PinnedLaunches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4226CEEE6A00D9D6AB /* PinnedLaunches.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +82,8 @@
 		1F6CDE2B26C6BB8E00D9D6AB /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
 		1F6CDE3126C800E400D9D6AB /* FilteredLaunchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredLaunchList.swift; sourceTree = "<group>"; };
 		1F6CDE3426C802CE00D9D6AB /* UpcomingLaunchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingLaunchesView.swift; sourceTree = "<group>"; };
+		1F6CDE3E26CEE6FD00D9D6AB /* CustomList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomList.swift; sourceTree = "<group>"; };
+		1F6CDE4226CEEE6A00D9D6AB /* PinnedLaunches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedLaunches.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,8 +120,10 @@
 				1F09CF2226B841DB009FBD32 /* Departing_EarthApp.swift */,
 				1F689C3C26BAD5A800087665 /* LaunchDateFormatter.swift */,
 				1F689C4B26BC0CFC00087665 /* Countdown.swift */,
+				1F6CDE4226CEEE6A00D9D6AB /* PinnedLaunches.swift */,
 				1F09CF5326B86755009FBD32 /* Views */,
 				1F09CF5426B8675D009FBD32 /* LaunchLibrary */,
+				1F6CDE4126CEE71000D9D6AB /* Model */,
 				1F09CF4926B8497F009FBD32 /* CoreData */,
 				1F689C5126BD6FF800087665 /* Color+.swift */,
 				1F09CF2526B841DB009FBD32 /* Assets.xcassets */,
@@ -192,6 +200,14 @@
 				1F6CDE2B26C6BB8E00D9D6AB /* CountdownView.swift */,
 			);
 			path = "List Row";
+			sourceTree = "<group>";
+		};
+		1F6CDE4126CEE71000D9D6AB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1F6CDE3E26CEE6FD00D9D6AB /* CustomList.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,6 +311,7 @@
 				1F09CF3626B841DB009FBD32 /* Departing_Earth.xcdatamodeld in Sources */,
 				1F6CDE2C26C6BB8E00D9D6AB /* CountdownView.swift in Sources */,
 				1F09CF3C26B841DB009FBD32 /* PersistenceController.swift in Sources */,
+				1F6CDE3F26CEE6FD00D9D6AB /* CustomList.swift in Sources */,
 				1F09CF5C26B9765E009FBD32 /* LaunchListItemView.swift in Sources */,
 				1F689C5226BD6FF800087665 /* Color+.swift in Sources */,
 				1F689C4C26BC0CFC00087665 /* Countdown.swift in Sources */,
@@ -308,6 +325,7 @@
 				1F689C3726BA959100087665 /* LaunchDetailView.swift in Sources */,
 				1F09CF4B26B849B0009FBD32 /* LaunchLibraryClient.swift in Sources */,
 				1F09CF5626B87294009FBD32 /* Launch+.swift in Sources */,
+				1F6CDE4326CEEE6A00D9D6AB /* PinnedLaunches.swift in Sources */,
 				1F689C4626BBF89500087665 /* Orbit+.swift in Sources */,
 				1F09CF5126B857AB009FBD32 /* LaunchLibraryResponseTypes.swift in Sources */,
 				1F09CF6526BA104A009FBD32 /* Status+.swift in Sources */,
@@ -322,6 +340,7 @@
 				1F09CF3726B841DB009FBD32 /* Departing_Earth.xcdatamodeld in Sources */,
 				1F6CDE2D26C6BB8E00D9D6AB /* CountdownView.swift in Sources */,
 				1F09CF3D26B841DB009FBD32 /* PersistenceController.swift in Sources */,
+				1F6CDE4026CEE6FD00D9D6AB /* CustomList.swift in Sources */,
 				1F09CF5D26B9765E009FBD32 /* LaunchListItemView.swift in Sources */,
 				1F689C5326BD6FF800087665 /* Color+.swift in Sources */,
 				1F689C4D26BC0CFC00087665 /* Countdown.swift in Sources */,
@@ -335,6 +354,7 @@
 				1F689C3826BA959100087665 /* LaunchDetailView.swift in Sources */,
 				1F09CF4C26B849B0009FBD32 /* LaunchLibraryClient.swift in Sources */,
 				1F09CF5726B87294009FBD32 /* Launch+.swift in Sources */,
+				1F6CDE4426CEEE6A00D9D6AB /* PinnedLaunches.swift in Sources */,
 				1F689C4726BBF89500087665 /* Orbit+.swift in Sources */,
 				1F09CF5226B857AB009FBD32 /* LaunchLibraryResponseTypes.swift in Sources */,
 				1F09CF6626BA104A009FBD32 /* Status+.swift in Sources */,

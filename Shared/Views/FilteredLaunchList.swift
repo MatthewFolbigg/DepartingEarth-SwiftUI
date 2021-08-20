@@ -13,6 +13,7 @@ struct FilteredLaunchList: View {
     var fetchRequest: FetchRequest<Launch>
     var launches: FetchedResults<Launch> { fetchRequest.wrappedValue }
     
+    @EnvironmentObject var pinned: PinnedLaunches
     @Binding var providerFilter: String?
     @Binding var orbitFilter: String?
     @Binding var statusFilter: String?
@@ -22,7 +23,7 @@ struct FilteredLaunchList: View {
         ZStack {
             List(launches, id: \.self) { launch in
                 ZStack {
-                    LaunchListItemView(launch: launch)
+                    LaunchListItemView(launch: launch, isPinned: pinned.isPinned(launch))
                     NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.hidden()
                 }
             }
@@ -34,7 +35,7 @@ struct FilteredLaunchList: View {
         }
     }
     
-    init(providerFilter: Binding<String?> = .constant(nil), statusFilter: Binding<String?> = .constant(nil), orbitFilter: Binding<String?> = .constant(nil), sortAscending: Bool = true) {
+    init(pinnedIDs: [String] = [], showPinned: Bool = false, providerFilter: Binding<String?> = .constant(nil), statusFilter: Binding<String?> = .constant(nil), orbitFilter: Binding<String?> = .constant(nil), sortAscending: Bool = true) {
         
         //TODO: Find a more controled place for these haptics. Aimed to tigger only on filter set/remove
         let filterSetHaptic = UIImpactFeedbackGenerator(style: .medium)
@@ -46,6 +47,10 @@ struct FilteredLaunchList: View {
         _orbitFilter = orbitFilter
         
         var predicates: [NSPredicate] = []
+        
+        if showPinned {
+            predicates.append(NSPredicate(format: "launchID IN %@", pinnedIDs))
+        }
         
         if let providerFilter = providerFilter.wrappedValue {
             predicates.append(NSPredicate(format: "provider.name == %@", providerFilter))
@@ -101,8 +106,8 @@ struct FilteredLaunchList: View {
     
 }
 
-struct FilteredLaunchList_Previews: PreviewProvider {
-    static var previews: some View {
-        FilteredLaunchList(providerFilter: .constant("SpaceX"), statusFilter: .constant(nil), orbitFilter: .constant(nil), sortAscending: true)
-    }
-}
+//struct FilteredLaunchList_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FilteredLaunchList(providerFilter: .constant("SpaceX"), statusFilter: .constant(nil), orbitFilter: .constant(nil), sortAscending: true)
+//    }
+//}

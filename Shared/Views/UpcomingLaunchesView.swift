@@ -11,9 +11,15 @@ struct UpcomingLaunchesView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
+    @EnvironmentObject var pinned: PinnedLaunches
+    
+    @State var showPinned: Bool = false
+        
+    //Launch Library API States
     @ObservedObject var launchLibraryClient = LaunchLibraryApiClient.shared
     var isDownloading: Bool { launchLibraryClient.fetchStatus == .fetching ? true : false }
     
+    //Filter States
     @State var sortOrderAscending = true
     @FetchRequest var providers: FetchedResults<Provider>
     @State var providerFilter: String? = nil
@@ -36,18 +42,16 @@ struct UpcomingLaunchesView: View {
             NavigationView {
                 //MARK: - Main View
                 VStack {
-                    FilteredLaunchList(providerFilter: $providerFilter, statusFilter: $statusFilter, orbitFilter: $orbitFilter, sortAscending: sortOrderAscending)
+                    FilteredLaunchList(pinnedIDs: pinned.launchIDs, showPinned: showPinned, providerFilter: $providerFilter, statusFilter: $statusFilter, orbitFilter: $orbitFilter, sortAscending: sortOrderAscending)
                 }
                 //MARK: - On Appear
                 .onAppear {
                     if Launch.count(in: viewContext) == 0 {
                         refreshLaunches(deletingFirst: false)
-                    } else {
-                        //Check for stale data
                     }
                 }
                 //MARK: - Navigation and ToolBar
-                .navigationTitle("Departing Soon")
+                .navigationTitle(showPinned ? "Pinned" : "Departing Soon")
                 .navigationBarTitleDisplayMode(.automatic)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -57,6 +61,9 @@ struct UpcomingLaunchesView: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         refreshButton
                             .foregroundColor(.ui.greyBlueAccent)
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        pinnedButton
                     }
                 }
             }
@@ -95,13 +102,22 @@ struct UpcomingLaunchesView: View {
         )
         .clipShape(RoundedRectangle(cornerRadius: 20))
     }
-    
-    
+        
 }
+
+
+
 
 
 //MARK:- List Filtering Controls
 extension UpcomingLaunchesView {
+    
+    var pinnedButton: some View {
+        Button(
+            action: { withAnimation { showPinned.toggle() } },
+            label: { Label("Pinned", systemImage: showPinned ? "pin.circle.fill" : "pin.circle") }
+        )
+    }
     
     //MARK: Filter Menu
     var filterMenu: some View {
