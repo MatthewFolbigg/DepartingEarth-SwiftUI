@@ -53,6 +53,8 @@
 		1F6CDE4026CEE6FD00D9D6AB /* CustomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE3E26CEE6FD00D9D6AB /* CustomList.swift */; };
 		1F6CDE4326CEEE6A00D9D6AB /* PinnedLaunches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4226CEEE6A00D9D6AB /* PinnedLaunches.swift */; };
 		1F6CDE4426CEEE6A00D9D6AB /* PinnedLaunches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4226CEEE6A00D9D6AB /* PinnedLaunches.swift */; };
+		1F6CDE4726D15AB500D9D6AB /* NavBarAppearanceModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4626D15AB500D9D6AB /* NavBarAppearanceModifier.swift */; };
+		1F6CDE4826D15AB500D9D6AB /* NavBarAppearanceModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4626D15AB500D9D6AB /* NavBarAppearanceModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +86,7 @@
 		1F6CDE3426C802CE00D9D6AB /* UpcomingLaunchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingLaunchesView.swift; sourceTree = "<group>"; };
 		1F6CDE3E26CEE6FD00D9D6AB /* CustomList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomList.swift; sourceTree = "<group>"; };
 		1F6CDE4226CEEE6A00D9D6AB /* PinnedLaunches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedLaunches.swift; sourceTree = "<group>"; };
+		1F6CDE4626D15AB500D9D6AB /* NavBarAppearanceModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarAppearanceModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +183,7 @@
 				1F6CDE3126C800E400D9D6AB /* FilteredLaunchListView.swift */,
 				1F689C3626BA959100087665 /* LaunchDetailView.swift */,
 				1F6CDE3726C824B100D9D6AB /* List Row */,
+				1F6CDE4526D15A7F00D9D6AB /* ViewModifiers */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -208,6 +212,14 @@
 				1F6CDE3E26CEE6FD00D9D6AB /* CustomList.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		1F6CDE4526D15A7F00D9D6AB /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				1F6CDE4626D15AB500D9D6AB /* NavBarAppearanceModifier.swift */,
+			);
+			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,6 +337,7 @@
 				1F689C3726BA959100087665 /* LaunchDetailView.swift in Sources */,
 				1F09CF4B26B849B0009FBD32 /* LaunchLibraryClient.swift in Sources */,
 				1F09CF5626B87294009FBD32 /* Launch+.swift in Sources */,
+				1F6CDE4726D15AB500D9D6AB /* NavBarAppearanceModifier.swift in Sources */,
 				1F6CDE4326CEEE6A00D9D6AB /* PinnedLaunches.swift in Sources */,
 				1F689C4626BBF89500087665 /* Orbit+.swift in Sources */,
 				1F09CF5126B857AB009FBD32 /* LaunchLibraryResponseTypes.swift in Sources */,
@@ -354,6 +367,7 @@
 				1F689C3826BA959100087665 /* LaunchDetailView.swift in Sources */,
 				1F09CF4C26B849B0009FBD32 /* LaunchLibraryClient.swift in Sources */,
 				1F09CF5726B87294009FBD32 /* Launch+.swift in Sources */,
+				1F6CDE4826D15AB500D9D6AB /* NavBarAppearanceModifier.swift in Sources */,
 				1F6CDE4426CEEE6A00D9D6AB /* PinnedLaunches.swift in Sources */,
 				1F689C4726BBF89500087665 /* Orbit+.swift in Sources */,
 				1F09CF5226B857AB009FBD32 /* LaunchLibraryResponseTypes.swift in Sources */,

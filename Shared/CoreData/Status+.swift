@@ -80,11 +80,11 @@ extension Status {
     
     var color: Color {
         switch self.currentSituation {
-        case .go, .inFlight, .success: return Color.ui.statusGreen
-        case .hold: return Color.ui.statusOrange
+        case .go, .inFlight, .success: return Color.app.statusGreen
+        case .hold: return Color.app.statusOrange
         case .dateUndetermined: return Color.clear
-        case .dateUnconfirmed: return Color.ui.statusYellow
-        case .failure, .partialFailure: return Color.ui.statusRed
+        case .dateUnconfirmed: return Color.app.statusYellow
+        case .failure, .partialFailure: return Color.app.statusRed
         }
     }
     

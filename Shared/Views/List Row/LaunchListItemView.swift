@@ -38,7 +38,7 @@ struct LaunchListItemView: View {
                     HStack {
                         provider
                         Spacer()
-                        if isPinned { Image(systemName: "pin.circle").foregroundColor(.orange) }
+                        if isPinned { Image(systemName: "pin.circle").foregroundColor(.app.control) }
                     }
                     rocket
                 }
@@ -64,7 +64,7 @@ struct LaunchListItemView: View {
         Text(launch.provider?.compactName ?? "")
             .fontWeight(.black)
             .font(.system(.headline, design: .default))
-            .foregroundColor(.ui.greyBlueAccent)
+            .foregroundColor(.app.textSecondary)
             .lineLimit(1)
             .minimumScaleFactor(drawing.textMinimumScale)
     }
@@ -73,7 +73,7 @@ struct LaunchListItemView: View {
         Text(launch.rocket?.name ?? "")
             .fontWeight(.black)
             .font(.system(.headline, design: .default))
-            .foregroundColor(.ui.deepOrangeAccent)
+            .foregroundColor(.app.textPrimary)
             .lineLimit(1)
             .minimumScaleFactor(drawing.textMinimumScale)
     }
@@ -87,7 +87,7 @@ struct LaunchListItemView: View {
                     .imageScale(drawing.iconScale)
             }
         )
-        .foregroundColor(.ui.greyBlueAccent)
+        .foregroundColor(.app.textPrimary)
     }
     
     var missionNameText: some View {
@@ -110,7 +110,7 @@ struct LaunchListItemView: View {
                     .layoutPriority(0)
             }
         }
-        .foregroundColor(.ui.greyBlueAccent)
+        .foregroundColor(.app.textPrimary)
     }
     
     var dateText: some View {
@@ -138,7 +138,7 @@ struct LaunchListItemView: View {
             )
             .layoutPriority(1)
         }
-        .foregroundColor(.ui.greyBlueAccent)
+        .foregroundColor(.app.textPrimary)
     }
     
     var statusText: some View {
@@ -152,7 +152,7 @@ struct LaunchListItemView: View {
     var statusColorBar: some View {
         Rectangle()
             .frame(maxWidth: 3)
-            .foregroundColor(launch.status?.color == .clear ? .ui.greyBlueBackground : launch.status?.color)
+            .foregroundColor(launch.status?.color == .clear ? .app.backgroundPrimary : launch.status?.color)
     }
     
     
@@ -162,8 +162,8 @@ struct LaunchListItemView: View {
         CountdownView(
             countdown: Countdown(to: launch.date),
             stopped: launch.status?.currentSituation.noCountdown ?? true,
-            backgroundColor: .ui.greyBlueBackground.opacity(0.5),
-            textColor: .ui.greyBlueAccent,
+            backgroundColor: .app.backgroundPrimary.opacity(0.5),
+            textColor: .app.textPrimary,
             fontWeight: .bold
         )
         .aspectRatio(CGSize(width: 11, height: 1), contentMode: .fit)

@@ -11,42 +11,56 @@ import CoreData
 struct FilteredLaunchListView: View {
     
     @EnvironmentObject var pinned: PinnedLaunches
+    @Namespace private var launchesNameSpace
     
     var fetchRequest: FetchRequest<Launch>
     var launches: FetchedResults<Launch> { fetchRequest.wrappedValue }
     
+    @State var selectedLaunch: Launch? = nil
+    @State var presentingLaunch: Bool = false
+    
     @Binding var providerFilter: String?
     @Binding var orbitFilter: String?
     @Binding var statusFilter: String?
+    @Binding var showingPinned: Bool
     var isFiltered: Bool { providerFilter != nil || orbitFilter != nil || statusFilter != nil}
     
     var body: some View {
-        List { //This list should be directly within a navigation view to prevent issues. Not wrapped in any stacks
-            if launches.isEmpty { emptyListIndicator }
-            ForEach(launches, id: \.self) { launch in
-                ZStack {
-                    LaunchListItemView(launch: launch, isPinned: pinned.isPinned(launch))
-                    NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.hidden()
+        ZStack {
+            List {
+                ForEach(launches, id: \.self) { launch in
+                    ZStack {
+                        LaunchListItemView(launch: launch, isPinned: pinned.isPinned(launch))
+                        //For` iPad// NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.hidden() //Will be the method for iPad
+                    }
+                    .onTapGesture {
+                        self.selectedLaunch = launch
+                    }
                 }
             }
+            .sheet(item: $selectedLaunch) { launch in
+                NavigationView { LaunchDetailView(launch: launch).environmentObject(pinned) }
+            }
+            .listStyle(PlainListStyle())
+//            .animation(nil) //Removed animation due to glitches with long lists whilst looking for work arounds
+            if launches.isEmpty { emptyListIndicator.zIndex(1).animation(.easeInOut) }
         }
-        .id(UUID()) //This fixes as crash when swapping between pinned and all several times by preventing list animations.
-        .listStyle(PlainListStyle())
     }
     
-    init(pinnedIDs: [String] = [], showPinned: Bool = false, providerFilter: Binding<String?> = .constant(nil), statusFilter: Binding<String?> = .constant(nil), orbitFilter: Binding<String?> = .constant(nil), sortAscending: Bool = true) {
+    init(pinnedIDs: [String] = [], showPinned: Binding<Bool> = .constant(false), providerFilter: Binding<String?> = .constant(nil), statusFilter: Binding<String?> = .constant(nil), orbitFilter: Binding<String?> = .constant(nil), sortAscending: Bool = true) {
         
         //TODO: Find a more controled place for these haptics. Aimed to tigger only on filter set/remove
         let filterSetHaptic = UIImpactFeedbackGenerator(style: .medium)
         filterSetHaptic.impactOccurred()
         //---
         
+        _showingPinned = showPinned
         _providerFilter = providerFilter
         _statusFilter = statusFilter
         _orbitFilter = orbitFilter
         
         var predicates: [NSPredicate] = []
-        if showPinned {
+        if showPinned.wrappedValue {
             predicates.append(NSPredicate(format: "launchID IN %@", pinnedIDs))
         }
         
@@ -84,27 +98,21 @@ struct FilteredLaunchListView: View {
     
     var emptyListIndicator: some View {
         VStack(alignment: .center, spacing: 10) {
-            Spacer()
-            HStack {
-                Spacer()
-                if launches.count == 0 && isFiltered {
-                    Text("No Launches")
-                    Button(
-                        action: { clearFilters() },
-                        label: {
-                            Label(
-                                title: { Text("Clear Filters") },
-                                icon: { Image(systemName: "x.circle") }
-                            )
-                            .foregroundColor(.red)
-                        }
-                    )
-                } else if launches.count == 0 && !isFiltered {
-                    Text("No Launches")
-                }
-                Spacer()
+            if launches.count == 0 && isFiltered {
+                Text("No Launches")
+                Button(
+                    action: { clearFilters() },
+                    label: {
+                        Label(
+                            title: { Text("Clear Filters") },
+                            icon: { Image(systemName: "x.circle") }
+                        )
+                        .foregroundColor(.red)
+                    }
+                )
+            } else if launches.count == 0 && !isFiltered {
+                Text("No Launches")
             }
-            Spacer()
         }
     }
     

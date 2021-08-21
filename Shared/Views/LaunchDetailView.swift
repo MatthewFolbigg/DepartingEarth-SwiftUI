@@ -11,15 +11,12 @@ import MapKit
 
 struct LaunchDetailView: View {
     
+    @Environment(\.presentationMode) var presentation
     @EnvironmentObject var pinned: PinnedLaunches
     @State var launch: Launch
     @State var missionIsExpanded: Bool = false
     var isPinned: Bool { pinned.isPinned(launch) }
         
-    init(launch: Launch) {
-        self.launch = launch
-    }
-    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 15) {
@@ -42,12 +39,19 @@ struct LaunchDetailView: View {
             }
             .padding(25)
         }
+        .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(launch.mission?.name ?? "Flight")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(
                     action: { withAnimation { pinned.togglePin(for: launch) } },
                     label: { Label("Pinned", systemImage: isPinned ? "pin.circle.fill" : "pin.circle") }
+                )
+            }
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(
+                    action: { presentation.wrappedValue.dismiss() },
+                    label: { Text("Close") }
                 )
             }
         }
@@ -57,8 +61,8 @@ struct LaunchDetailView: View {
         CountdownView(
             countdown: Countdown(to: launch.date),
             stopped: launch.status?.currentSituation.noCountdown ?? true,
-            backgroundColor: .ui.greyBlueBackground.opacity(0.5),
-            textColor: .ui.greyBlueAccent,
+            backgroundColor: .app.backgroundAccented,
+            textColor: .app.textPrimary,
             fontWeight: .bold
         )
     }
@@ -81,9 +85,9 @@ struct LaunchDetailView: View {
             )
             Text(launch.status?.infoText ?? "").font(.caption).fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
         }
-        .foregroundColor(.ui.greyBlueForeground)
+        .foregroundColor(.app.textPrimary)
         .padding(20)
-        .background(Color.ui.greyBlueBackground.clipShape(RoundedRectangle(cornerRadius: 20)).opacity(0.5))
+        .background(Color.app.backgroundPrimary.clipShape(RoundedRectangle(cornerRadius: 20)).opacity(0.5))
     }
     
     var missionSection: some View {
@@ -95,7 +99,7 @@ struct LaunchDetailView: View {
                 Image(systemName: "ellipsis.circle")
                     .rotationEffect(Angle(degrees: missionIsExpanded ? 90 : 0))
                     .scaleEffect(missionIsExpanded ? 1.2 : 1)
-                    .foregroundColor(missionIsExpanded ? .ui.deepOrangeAccent : .ui.greyBlueForeground)
+                    .foregroundColor(missionIsExpanded ? .app.control : .app.control)
             }
             Label(
                 title: { Text(launch.provider?.compactName ?? "") },
@@ -116,7 +120,7 @@ struct LaunchDetailView: View {
             if missionIsExpanded {
                 Spacer()
                 Text(launch.mission?.infoText ?? "").font(.system(.body)).fontWeight(.thin)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.app.textPrimary)
                     //TODO: improve transition. currently overlaps other text on rapid press
                     .transition(.asymmetric(
                         insertion: .move(edge: .top).combined(with: .opacity.animation(.easeInOut.delay(0.2))),
@@ -126,9 +130,9 @@ struct LaunchDetailView: View {
             }
         }
         }
-        .foregroundColor(.ui.greyBlueForeground)
+        .foregroundColor(.app.textPrimary)
         .padding(20)
-        .background(Color.ui.greyBlueBackground.clipShape(RoundedRectangle(cornerRadius: 20)).opacity(0.5))
+        .background(Color.app.backgroundPrimary.clipShape(RoundedRectangle(cornerRadius: 20)).opacity(0.5))
     }
     
 }

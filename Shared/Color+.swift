@@ -9,19 +9,26 @@ import Foundation
 import SwiftUI
 
 extension Color {
-    static let ui = UI()
+    static let app = AppTheme()
     
-    struct UI {
+    struct AppTheme {
+        //Launch Status Colours
         let statusGreen = Color("StatusGreen")
         let statusYellow = Color("StatusYellow")
         let statusRed = Color("StatusRed")
         let statusOrange = Color("StatusOrange")
         
-        let greyBlueBackground = Color("greyBlueBackground")
-        let greyBlueForeground = Color("greyBlueForeground")
-        let greyBlueAccent = Color("greyBlueAccent")
+        //Text Colours
+        let textPrimary = Color("Primary Text")
+        let textSecondary = Color("Secondary Text")
         
-        let deepOrangeAccent = Color("deepOrangeAccent")
+        //Accents
+        let control = Color("Control Accent One")
+        
+        //Backgrounds
+        let backgroundPlain = Color("Background Plain")
+        let backgroundAccented = Color("Background Accented")
+        let backgroundPrimary = Color("Background Primary")
         
     }
     

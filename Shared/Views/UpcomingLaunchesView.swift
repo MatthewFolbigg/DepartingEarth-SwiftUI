@@ -34,14 +34,13 @@ struct UpcomingLaunchesView: View {
         _providers = FetchRequest(fetchRequest: Provider.requestForAll())
         _orbits = FetchRequest(fetchRequest: Orbit.requestForAll())
         _statuses = FetchRequest(fetchRequest: Status.requestForAll())
-        UINavigationBar.appearance().tintColor = UIColor(.ui.greyBlueAccent)
     }
     
     var body: some View {
         ZStack {
             NavigationView {
                 //MARK: - Main View
-                FilteredLaunchListView(pinnedIDs: pinned.launchIDs, showPinned: showPinned, providerFilter: $providerFilter, statusFilter: $statusFilter, orbitFilter: $orbitFilter, sortAscending: sortOrderAscending)
+                FilteredLaunchListView(pinnedIDs: pinned.launchIDs, showPinned: $showPinned, providerFilter: $providerFilter, statusFilter: $statusFilter, orbitFilter: $orbitFilter, sortAscending: sortOrderAscending)
                 
                 //MARK: - On Appear
                 .onAppear {
@@ -50,20 +49,12 @@ struct UpcomingLaunchesView: View {
                     }
                 }
                 //MARK: - Navigation and ToolBar
+                .navBarAppearance(forground: .app.textPrimary, background: .app.backgroundAccented, tint: .app.control, hasSeperator: false)
                 .navigationTitle(showPinned ? "Pinned" : "Departing Soon")
-                .navigationBarTitleDisplayMode(.automatic)
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        filterMenu
-                            .foregroundColor(.ui.greyBlueAccent)
-                    }
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        refreshButton
-                            .foregroundColor(.ui.greyBlueAccent)
-                    }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        pinnedButton
-                    }
+                    ToolbarItem(placement: .navigationBarTrailing) { filterToolBarItem }
+                    ToolbarItem(placement: .navigationBarLeading) { refreshToolBarItem }
+                    ToolbarItem(placement: .navigationBarTrailing) { pinToolBarItem }
                 }
             }
             if isDownloading { launchLibraryActivityIndicator }
@@ -77,13 +68,6 @@ struct UpcomingLaunchesView: View {
             launchLibraryClient.fetchAndUpdateData(.upcomingLaunches)
         }
 
-    }
-    
-    var refreshButton: some View {
-        Button(
-            action: { refreshLaunches() },
-            label: { Label("Refresh", systemImage: "arrow.clockwise.circle") }
-        )
     }
     
     var launchLibraryActivityIndicator: some View {
@@ -104,20 +88,34 @@ struct UpcomingLaunchesView: View {
         
 }
 
+//MARK: ToolBar Items
+extension UpcomingLaunchesView {
+    var filterToolBarItem: some View {
+        filterMenu
+            .foregroundColor(.app.control)
+    }
+    
+    var refreshToolBarItem: some View {
+        Button(
+            action: { refreshLaunches() },
+            label: { Label("Refresh", systemImage: "arrow.clockwise.circle") }
+        )
+    }
+    
+    var pinToolBarItem: some View {
+        Button(
+            action: { withAnimation { showPinned.toggle() } },
+            label: { Label("Pinned", systemImage: showPinned ? "pin.circle.fill" : "pin.circle") }
+        )
+    }
+}
 
 
 
 
 //MARK:- List Filtering Controls
 extension UpcomingLaunchesView {
-    
-    var pinnedButton: some View {
-        Button(
-            action: { withAnimation { showPinned.toggle() } },
-            label: { Label("Pinned", systemImage: showPinned ? "pin.circle.fill" : "pin.circle") }
-        )
-    }
-    
+        
     //MARK: Filter Menu
     var filterMenu: some View {
         Menu {
