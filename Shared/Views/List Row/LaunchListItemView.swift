@@ -12,7 +12,7 @@ struct LaunchListItemView: View {
     @State var launch: Launch
     @EnvironmentObject var pinned: PinnedLaunches
     var isPinned: Bool { pinned.isPinned(launch) }
-    var situation: Status.Situation { launch.status?.currentSituation ?? .dateUndetermined }
+    var situation: Status.Situation { launch.status.currentSituation}
     
     struct drawing {
         static let vSectionSpacing: CGFloat = 8
@@ -95,7 +95,7 @@ struct LaunchListItemView: View {
                 .minimumScaleFactor(drawing.textMinimumScale)
                 .layoutPriority(1)
             if situation == .dateUndetermined || situation == .dateUnconfirmed  {
-                Text("\(launch.status?.currentSituation.dateDescription ?? "")")
+                Text(launch.status.currentSituation.dateDescription)
                     .font(.app.listItemLight)
                     .lineLimit(1)
                     .minimumScaleFactor(drawing.textMinimumScale)
@@ -108,7 +108,7 @@ struct LaunchListItemView: View {
     //MARK: - Status
     var status: some View {
         HStack(alignment: .firstTextBaseline, spacing: drawing.hItemSpacing) {
-            Label(launch.status?.currentSituation.name ?? "", systemImage: launch.status?.iconName ?? "")
+            Label(launch.status.currentSituation.name, systemImage: launch.status.iconName)
                 .font(.app.listItemRegular)
                 .lineLimit(1)
                 .minimumScaleFactor(drawing.textMinimumScale)
@@ -120,7 +120,7 @@ struct LaunchListItemView: View {
     var statusColorBar: some View {
         Rectangle()
             .frame(maxWidth: 3)
-            .foregroundColor(launch.status?.color == .clear ? .app.backgroundPrimary : launch.status?.color)
+            .foregroundColor(launch.status.color == .clear ? .app.backgroundPrimary : launch.status.color)
     }
     
     
@@ -128,13 +128,12 @@ struct LaunchListItemView: View {
     //MARK: Countdown
     var countdown: some View {
         CountdownView(
-            countdown: Countdown(to: launch.date),
-            stopped: launch.status?.currentSituation.noCountdown ?? true,
+            countdown: launch.countdown,
+            stopped: launch.status.currentSituation.noCountdown,
             backgroundColor: .app.backgroundPrimary.opacity(0.5),
             textColor: .app.textPrimary
         )
         .aspectRatio(CGSize(width: 11, height: 1), contentMode: .fit)
-        .font(.system(.body, design: .default))
     }
 }
 

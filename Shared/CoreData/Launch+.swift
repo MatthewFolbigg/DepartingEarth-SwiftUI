@@ -15,6 +15,13 @@ extension Launch {
         get { self.name_ ?? "" }
         set { self.name_ = newValue }
     }
+    
+    var countdown: Countdown { Countdown(to: date) }
+    
+    var status: Status {
+        status_ ?? Status.create(from: Status.defaultStatusInfo, context: PersistenceController.shared.container.viewContext)
+    }
+    
     var date: Date {
         get {
             let dateFormatter = ISO8601DateFormatter()
@@ -41,17 +48,8 @@ extension Launch {
     func timeString(withSeconds: Bool = false) -> String {
         LaunchDateFormatter.timeString(for: date, withSeconds: withSeconds)
     }
-    
-    var countdownComponents: CountdownComponentStrings {
-        get{ LaunchDateFormatter.countdownComponents(untill: date) }
-    }
-    
-    //MARK: - Helper Methods
-    enum SortOption: String {
-        case name = "name_"
-        case date = "dateISO"
-    }
-    
+        
+    //MARK: - Creation and Deletion
     @discardableResult
     static func create(from info: LaunchInfo, context: NSManagedObjectContext) -> Launch {
         let launch = Launch(context: context)
@@ -69,7 +67,7 @@ extension Launch {
         //Relationships
         launch.provider = Provider.create(from: info.launchServiceProvider, context: context)
         launch.rocket = Rocket.create(from: info.rocket, context: context)
-        launch.status = Status.create(from: info.launchStatus, context: context)
+        launch.status_ = Status.create(from: info.launchStatus, context: context)
         launch.pad = Pad.create(from: info.pad, context: context)
         if let missionInfo = info.mission { launch.mission = Mission.create(from: missionInfo, context: context) }
         return launch
@@ -79,13 +77,10 @@ extension Launch {
         PersistenceController.deleteAll(entityName: "Launch", from: context)
     }
     
-    static func count(in context: NSManagedObjectContext) -> Int {
-        if let count = try? context.count(for: NSFetchRequest(entityName: "Launch")) {
-            print("count: \(count)")
-            return count
-        } else {
-            return 0
-        }
+    //MARK: - Request Methods
+    enum SortOption: String {
+        case name = "name_"
+        case date = "dateISO"
     }
     
     static func requestForAll(sortBy: SortOption = .date, ascending: Bool = true, predicates: [NSPredicate] = []) -> NSFetchRequest<Launch> {
@@ -108,6 +103,16 @@ extension Launch {
         request.sortDescriptors = [NSSortDescriptor(key: SortOption.name.rawValue, ascending: true)]
         request.predicate = NSPredicate(format: "launchID IN %@", ids)
         return request
+    }
+    
+    //MARK: - Entity Info/Stats
+    static func count(in context: NSManagedObjectContext) -> Int {
+        if let count = try? context.count(for: NSFetchRequest(entityName: "Launch")) {
+            print("count: \(count)")
+            return count
+        } else {
+            return 0
+        }
     }
     
     static func checkIsStale(launches: [Launch]) -> Bool {

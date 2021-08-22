@@ -58,8 +58,8 @@ struct LaunchDetailView: View {
     
     var countdown: some View {
         CountdownView(
-            countdown: Countdown(to: launch.date),
-            stopped: launch.status?.currentSituation.noCountdown ?? true,
+            countdown: launch.countdown,
+            stopped: launch.status.currentSituation.noCountdown,
             backgroundColor: .app.backgroundAccented,
             textColor: .app.textPrimary
         )
@@ -73,10 +73,11 @@ struct LaunchDetailView: View {
                 Text("Status").font(.app.sectionTitle)
                 Spacer()
             }
-            Label(launch.status?.currentSituation.name ?? "", systemImage: launch.status?.iconName ?? "")
+            Label(launch.status.currentSituation.name, systemImage: launch.status.iconName)
             Label(launch.dateString(), systemImage: "calendar")
-            Text(launch.status?.infoText ?? "")
-                .font(.app.sectionCaption).fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+            Text(launch.status.infoText ?? "")
+                .font(.app.sectionCaption)
+                .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
         }
         .font(.app.sectionDefault)
         .groupedSectionStyle()
@@ -86,7 +87,8 @@ struct LaunchDetailView: View {
         HStack {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text("Mission").font(.app.sectionTitle)
+                Text("Mission")
+                    .font(.app.sectionTitle)
                 Spacer()
                 Image(systemName: "ellipsis.circle")
                     .rotationEffect(Angle(degrees: missionIsExpanded ? 90 : 0))

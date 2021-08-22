@@ -25,12 +25,10 @@ extension Font {
         let sectionParagraph = Font.system(.body, design: design).weight(.thin)
         let sectionCaption = Font.system(.caption, design: design).weight(.thin)
         
-        
         //List Items
         let listItemProminent   = Font.system(.headline, design: design).weight(.black)
         let listItemRegular     = Font.system(.subheadline, design: design).weight(.regular)
         let listItemLight       = Font.system(.subheadline, design: design).weight(.ultraLight)
-        
         
     }
 }

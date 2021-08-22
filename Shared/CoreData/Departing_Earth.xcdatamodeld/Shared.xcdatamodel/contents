@@ -13,7 +13,7 @@
         <relationship name="pad" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pad" inverseName="launches" inverseEntity="Pad"/>
         <relationship name="provider" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Provider" inverseName="launches" inverseEntity="Provider"/>
         <relationship name="rocket" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Rocket" inverseName="launches" inverseEntity="Rocket"/>
-        <relationship name="status" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Status" inverseName="launches" inverseEntity="Status"/>
+        <relationship name="status_" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Status" inverseName="launches" inverseEntity="Status"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="launchID"/>
@@ -95,7 +95,7 @@
         <attribute name="infoText" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="statusID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="launches" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Launch" inverseName="status" inverseEntity="Launch"/>
+        <relationship name="launches" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Launch" inverseName="status_" inverseEntity="Launch"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="statusID"/>
@@ -109,6 +109,6 @@
         <element name="Pad" positionX="-1737" positionY="-459" width="128" height="134"/>
         <element name="Provider" positionX="-1592.4609375" positionY="-650.73046875" width="128" height="149"/>
         <element name="Rocket" positionX="-1575.15234375" positionY="-471.32421875" width="128" height="134"/>
-        <element name="Status" positionX="-1573.1796875" positionY="-309.6953125" width="128" height="118"/>
+        <element name="Status" positionX="-1573.1796875" positionY="-309.6953125" width="128" height="104"/>
     </elements>
 </model>

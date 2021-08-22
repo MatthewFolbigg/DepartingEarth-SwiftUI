@@ -18,6 +18,7 @@ extension Status {
     // 6 - In Flight
     // 7 - Partial Failure
     // 8 - To Be Confirmed - Awaiting official confirmation, current date is known with some certainty.
+    //404 - Custom, local to App not from API - To provide a default value in the event of a nil status relationship
     
     enum Situation: Int {
         case go = 1
@@ -121,4 +122,6 @@ extension Status {
         request.predicate = predicate
         return request
     }
+    
+    static var defaultStatusInfo: LaunchStatus { LaunchStatus(id: 404, name: "Unknown", abbrev: "N/A", description: "No status information is currently available") } 
 }
