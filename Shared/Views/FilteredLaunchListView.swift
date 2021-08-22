@@ -103,11 +103,8 @@ struct FilteredLaunchListView: View {
                 Button(
                     action: { clearFilters() },
                     label: {
-                        Label(
-                            title: { Text("Clear Filters") },
-                            icon: { Image(systemName: "x.circle") }
-                        )
-                        .foregroundColor(.red)
+                        Label("Clear Filters", systemImage: "x.circle")
+                            .foregroundColor(.red)
                     }
                 )
             } else if launches.count == 0 && !isFiltered {

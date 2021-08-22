@@ -55,6 +55,8 @@
 		1F6CDE4426CEEE6A00D9D6AB /* PinnedLaunches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4226CEEE6A00D9D6AB /* PinnedLaunches.swift */; };
 		1F6CDE4726D15AB500D9D6AB /* NavBarAppearanceModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4626D15AB500D9D6AB /* NavBarAppearanceModifier.swift */; };
 		1F6CDE4826D15AB500D9D6AB /* NavBarAppearanceModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4626D15AB500D9D6AB /* NavBarAppearanceModifier.swift */; };
+		1F6CDE4A26D2964300D9D6AB /* GroupedSectionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4926D2964300D9D6AB /* GroupedSectionModifier.swift */; };
+		1F6CDE4B26D2964300D9D6AB /* GroupedSectionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4926D2964300D9D6AB /* GroupedSectionModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +89,7 @@
 		1F6CDE3E26CEE6FD00D9D6AB /* CustomList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomList.swift; sourceTree = "<group>"; };
 		1F6CDE4226CEEE6A00D9D6AB /* PinnedLaunches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedLaunches.swift; sourceTree = "<group>"; };
 		1F6CDE4626D15AB500D9D6AB /* NavBarAppearanceModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarAppearanceModifier.swift; sourceTree = "<group>"; };
+		1F6CDE4926D2964300D9D6AB /* GroupedSectionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedSectionModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				1F6CDE4626D15AB500D9D6AB /* NavBarAppearanceModifier.swift */,
+				1F6CDE4926D2964300D9D6AB /* GroupedSectionModifier.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -328,6 +332,7 @@
 				1F689C5226BD6FF800087665 /* Color+.swift in Sources */,
 				1F689C4C26BC0CFC00087665 /* Countdown.swift in Sources */,
 				1F689C4926BBF8A000087665 /* Pad+.swift in Sources */,
+				1F6CDE4A26D2964300D9D6AB /* GroupedSectionModifier.swift in Sources */,
 				1F689C3D26BAD5A800087665 /* LaunchDateFormatter.swift in Sources */,
 				1F689C4326BBF87800087665 /* Mission+.swift in Sources */,
 				1F6CDE3526C802CE00D9D6AB /* UpcomingLaunchesView.swift in Sources */,
@@ -358,6 +363,7 @@
 				1F689C5326BD6FF800087665 /* Color+.swift in Sources */,
 				1F689C4D26BC0CFC00087665 /* Countdown.swift in Sources */,
 				1F689C4A26BBF8A000087665 /* Pad+.swift in Sources */,
+				1F6CDE4B26D2964300D9D6AB /* GroupedSectionModifier.swift in Sources */,
 				1F689C3E26BAD5A800087665 /* LaunchDateFormatter.swift in Sources */,
 				1F689C4426BBF87800087665 /* Mission+.swift in Sources */,
 				1F6CDE3626C802CE00D9D6AB /* UpcomingLaunchesView.swift in Sources */,

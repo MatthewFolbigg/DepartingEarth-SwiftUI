@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct navBarAppearanceModifier: ViewModifier {
+struct NavBarAppearanceModifier: ViewModifier {
     
     init(forground: Color, background: Color, tint: Color, hasSeperator: Bool, seperator: Color) {
         let navBarAppearance = UINavigationBarAppearance()
@@ -38,7 +38,7 @@ struct navBarAppearanceModifier: ViewModifier {
 extension View {
     
     func navBarAppearance(forground: Color, background: Color, tint: Color, hasSeperator: Bool = true, seperator: Color = .primary) -> some View {
-        self.modifier(navBarAppearanceModifier(
+        self.modifier(NavBarAppearanceModifier(
                         forground: forground,
                         background: background,
                         tint: tint,

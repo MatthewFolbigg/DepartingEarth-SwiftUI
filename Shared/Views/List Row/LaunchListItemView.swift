@@ -80,73 +80,44 @@ struct LaunchListItemView: View {
         
     //MARK: - Mission
     var mission: some View {
-        Label(
-            title: { missionNameText },
-            icon: {
-                Image(systemName: launch.mission?.symbolForType ?? "")
-                    .imageScale(drawing.iconScale)
-            }
-        )
-        .foregroundColor(.app.textPrimary)
-    }
-    
-    var missionNameText: some View {
-        Text(launch.mission?.name ?? "")
+        Label(launch.mission?.name ?? "", systemImage: launch.mission?.symbolForType ?? "")
+            .imageScale(drawing.iconScale)
             .font(.system(.subheadline, design: .default))
             .lineLimit(1)
             .minimumScaleFactor(drawing.textMinimumScale)
+            .foregroundColor(.app.textPrimary)
     }
     
     //MARK: - Date
     var date: some View {
         HStack(alignment: .firstTextBaseline, spacing: drawing.hItemSpacing) {
-            Label(
-                title: { dateText },
-                icon: { Image(systemName: "calendar") }
-            )
-            .layoutPriority(1)
+            Label(launch.dateString(compact: true), systemImage: "calendar")
+                .font(.system(.subheadline, design: .default).weight(.regular))
+                .lineLimit(1)
+                .minimumScaleFactor(drawing.textMinimumScale)
+                .layoutPriority(1)
             if situation == .dateUndetermined || situation == .dateUnconfirmed  {
-                dateDescriptionText
+                Text("\(launch.status?.currentSituation.dateDescription ?? "")")
+                    .fontWeight(.thin)
+                    .font(.system(.subheadline, design: .default))
+                    .lineLimit(1)
+                    .minimumScaleFactor(drawing.textMinimumScale)
                     .layoutPriority(0)
             }
         }
         .foregroundColor(.app.textPrimary)
     }
-    
-    var dateText: some View {
-        Text(launch.dateString(compact: true))
-            .fontWeight(.regular)
-            .font(.system(.subheadline, design: .default))
-            .lineLimit(1)
-            .minimumScaleFactor(drawing.textMinimumScale)
-    }
-    
-    var dateDescriptionText: some View {
-        Text("\(launch.status?.currentSituation.dateDescription ?? "")")
-            .fontWeight(.thin)
-            .font(.system(.subheadline, design: .default))
-            .lineLimit(1)
-            .minimumScaleFactor(drawing.textMinimumScale)
-    }
-    
+        
     //MARK: - Status
     var status: some View {
         HStack(alignment: .firstTextBaseline, spacing: drawing.hItemSpacing) {
-            Label(
-                title: { statusText },
-                icon: { launch.status?.icon }
-            )
-            .layoutPriority(1)
+            Label(launch.status?.currentSituation.name ?? "", systemImage: launch.status?.iconName ?? "")
+                .font(.system(.subheadline, design: .default).weight(.regular))
+                .lineLimit(1)
+                .minimumScaleFactor(drawing.textMinimumScale)
+                .layoutPriority(1)
         }
         .foregroundColor(.app.textPrimary)
-    }
-    
-    var statusText: some View {
-        Text(launch.status?.currentSituation.name ?? "")
-            .fontWeight(.regular)
-            .font(.system(.subheadline, design: .default))
-            .lineLimit(1)
-            .minimumScaleFactor(drawing.textMinimumScale)
     }
     
     var statusColorBar: some View {

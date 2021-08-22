@@ -75,19 +75,12 @@ struct LaunchDetailView: View {
                 Text("Status").font(.title2).fontWeight(.medium)
                 Spacer()
             }
-            Label(
-                title: { Text(launch.status?.currentSituation.name ?? "") },
-                icon: { launch.status?.icon }
-            )
-            Label(
-                title: { Text(launch.dateString()) },
-                icon: { Image(systemName: "calendar") }
-            )
+            Label(launch.status?.currentSituation.name ?? "", systemImage: launch.status?.iconName ?? "")
+            Label(launch.dateString(), systemImage: "calendar")
             Text(launch.status?.infoText ?? "").font(.caption).fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
         }
-        .foregroundColor(.app.textPrimary)
-        .padding(20)
-        .background(Color.app.backgroundPrimary.clipShape(RoundedRectangle(cornerRadius: 20)).opacity(0.5))
+        .groupedSection()
+        
     }
     
     var missionSection: some View {
@@ -101,26 +94,14 @@ struct LaunchDetailView: View {
                     .scaleEffect(missionIsExpanded ? 1.2 : 1)
                     .foregroundColor(missionIsExpanded ? .app.control : .app.control)
             }
-            Label(
-                title: { Text(launch.provider?.compactName ?? "") },
-                icon: { Image(systemName: "person.2") }
-            )
-            Label(
-                title: { Text(launch.rocket?.name ?? "")},
-                icon: { Image(systemName: "airplane") }
-            )
-            Label(
-                title: { Text(launch.mission?.type ?? "") },
-                icon: { Image(systemName: launch.mission?.symbolForType ?? "") }
-            )
-            Label(
-                title: { Text(launch.mission?.orbit?.name ?? "") },
-                icon: { Image(systemName: "circle.dashed") }
-            )
+            Label(launch.provider?.compactName ?? "", systemImage: "person.2")
+            Label(launch.rocket?.name ?? "", systemImage: "airplane")
+            Label(launch.mission?.type ?? "", systemImage: launch.mission?.symbolForType ?? "")
+            Label(launch.mission?.orbit?.name ?? "", systemImage: "circle.dashed")
+            
             if missionIsExpanded {
                 Spacer()
                 Text(launch.mission?.infoText ?? "").font(.system(.body)).fontWeight(.thin)
-                    .foregroundColor(.app.textPrimary)
                     //TODO: improve transition. currently overlaps other text on rapid press
                     .transition(.asymmetric(
                         insertion: .move(edge: .top).combined(with: .opacity.animation(.easeInOut.delay(0.2))),
@@ -130,12 +111,12 @@ struct LaunchDetailView: View {
             }
         }
         }
-        .foregroundColor(.app.textPrimary)
-        .padding(20)
-        .background(Color.app.backgroundPrimary.clipShape(RoundedRectangle(cornerRadius: 20)).opacity(0.5))
+        .groupedSection()
     }
     
 }
+
+
 
 
 

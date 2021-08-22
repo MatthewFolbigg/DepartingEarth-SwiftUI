@@ -89,13 +89,13 @@ extension Status {
     }
     
     //TODO: Confirm Icons
-    var icon: Image {
+    var iconName: String {
         switch self.currentSituation {
-        case .success: return Image(systemName: "checkmark.circle")
-        case .failure, .partialFailure: return Image(systemName: "xmark.circle")
-        case .go, .dateUnconfirmed, .inFlight: return Image(systemName: "paperplane.circle")
-        case .dateUndetermined: return Image(systemName: "questionmark.circle")
-        case .hold: return Image(systemName: "pause.circle")
+        case .success: return "checkmark.circle"
+        case .failure, .partialFailure: return "xmark.circle"
+        case .go, .dateUnconfirmed, .inFlight: return "paperplane.circle"
+        case .dateUndetermined: return "questionmark.circle"
+        case .hold: return "pause.circle"
         }
     }
     
