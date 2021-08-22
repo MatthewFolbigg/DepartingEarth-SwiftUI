@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GroupedSectionModifier: ViewModifier {
+struct GroupedSectionStyleModifier: ViewModifier {
     
     var edgeInsets: EdgeInsets
     var forgroundColor: Color
@@ -35,7 +35,7 @@ struct GroupedSectionModifier: ViewModifier {
 }
 
 extension View {
-    func groupedSection(forgroundColor: Color = .app.textPrimary, backgroundColor: Color = .app.backgroundPrimary, cornerRadius: CGFloat = 20, padding: CGFloat = 20) -> some View {
-        self.modifier(GroupedSectionModifier(forgroundColor: forgroundColor, backgroundColor: backgroundColor, cornerRadius: cornerRadius, padding: padding))
+    func groupedSectionStyle(forgroundColor: Color = .app.textPrimary, backgroundColor: Color = .app.backgroundPrimary, cornerRadius: CGFloat = 20, padding: CGFloat = 20) -> some View {
+        self.modifier(GroupedSectionStyleModifier(forgroundColor: forgroundColor, backgroundColor: backgroundColor, cornerRadius: cornerRadius, padding: padding))
     }
 }

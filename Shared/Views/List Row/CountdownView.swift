@@ -16,15 +16,13 @@ struct CountdownView: View {
     //MARK: Styling
     var textColor: Color
     var backgroundColor: Color
-    var fontWeight: Font.Weight
     
     //MARK: Init
-    init(countdown: Countdown, stopped: Bool = false, backgroundColor: Color = .clear, textColor: Color = .primary, fontWeight: Font.Weight = .regular) {
+    init(countdown: Countdown, stopped: Bool = false, backgroundColor: Color = .clear, textColor: Color = .primary) {
         self.countdown = countdown
         self.stopped = stopped
         self.textColor = textColor
         self.backgroundColor = backgroundColor
-        self.fontWeight = fontWeight
     }
     
     struct drawing {
@@ -53,7 +51,7 @@ struct CountdownView: View {
     @ViewBuilder
     func viewForTime(component: String) -> some View {
         Text(component)
-            .fontWeight(fontWeight)
+            .font(.app.countdown)
             .lineLimit(1)
             .padding(.vertical, drawing.textBorderV)
             .foregroundColor(textColor)
@@ -68,7 +66,7 @@ struct CountdownView: View {
     @ViewBuilder
     func viewForDate(component: String) -> some View {
         Text(component)
-            .fontWeight(fontWeight)
+            .font(.app.countdown)
             .lineLimit(1)
             .padding(.vertical, drawing.textBorderV)
             .foregroundColor(textColor)
@@ -82,7 +80,7 @@ struct CountdownView: View {
     @ViewBuilder
     func viewForSymbol(component: String) -> some View {
         Text(component)
-            .fontWeight(fontWeight)
+            .font(.app.countdown)
             .padding(.horizontal, 5)
             .lineLimit(1)
             .padding(.vertical, drawing.textBorderV)

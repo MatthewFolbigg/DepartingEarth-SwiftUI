@@ -12,8 +12,13 @@ struct NavBarAppearanceModifier: ViewModifier {
     init(forground: Color, background: Color, tint: Color, hasSeperator: Bool, seperator: Color) {
         let navBarAppearance = UINavigationBarAppearance()
         //Forground
-        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor(forground)]
-        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor(forground)]
+        navBarAppearance.titleTextAttributes = [
+            .foregroundColor: UIColor(forground)
+        ]
+        navBarAppearance.largeTitleTextAttributes = [
+            .foregroundColor: UIColor(forground)
+        ]
+        
         //Background
         navBarAppearance.backgroundColor = UIColor(background)
         //Seperator

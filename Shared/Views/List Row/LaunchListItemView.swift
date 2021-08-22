@@ -46,7 +46,7 @@ struct LaunchListItemView: View {
                     if launch.mission != nil {
                         mission
                     }
-//                    date
+                    date
                     status
                 }
                 HStack {
@@ -62,8 +62,7 @@ struct LaunchListItemView: View {
     //MARK: - Sections
     var provider: some View {
         Text(launch.provider?.compactName ?? "")
-            .fontWeight(.black)
-            .font(.system(.headline, design: .default))
+            .font(.app.listItemProminent)
             .foregroundColor(.app.textSecondary)
             .lineLimit(1)
             .minimumScaleFactor(drawing.textMinimumScale)
@@ -71,8 +70,7 @@ struct LaunchListItemView: View {
     
     var rocket: some View {
         Text(launch.rocket?.name ?? "")
-            .fontWeight(.black)
-            .font(.system(.headline, design: .default))
+            .font(.app.listItemProminent)
             .foregroundColor(.app.textPrimary)
             .lineLimit(1)
             .minimumScaleFactor(drawing.textMinimumScale)
@@ -82,7 +80,7 @@ struct LaunchListItemView: View {
     var mission: some View {
         Label(launch.mission?.name ?? "", systemImage: launch.mission?.symbolForType ?? "")
             .imageScale(drawing.iconScale)
-            .font(.system(.subheadline, design: .default))
+            .font(.app.listItemRegular)
             .lineLimit(1)
             .minimumScaleFactor(drawing.textMinimumScale)
             .foregroundColor(.app.textPrimary)
@@ -92,14 +90,13 @@ struct LaunchListItemView: View {
     var date: some View {
         HStack(alignment: .firstTextBaseline, spacing: drawing.hItemSpacing) {
             Label(launch.dateString(compact: true), systemImage: "calendar")
-                .font(.system(.subheadline, design: .default).weight(.regular))
+                .font(.app.listItemRegular)
                 .lineLimit(1)
                 .minimumScaleFactor(drawing.textMinimumScale)
                 .layoutPriority(1)
             if situation == .dateUndetermined || situation == .dateUnconfirmed  {
                 Text("\(launch.status?.currentSituation.dateDescription ?? "")")
-                    .fontWeight(.thin)
-                    .font(.system(.subheadline, design: .default))
+                    .font(.app.listItemLight)
                     .lineLimit(1)
                     .minimumScaleFactor(drawing.textMinimumScale)
                     .layoutPriority(0)
@@ -112,7 +109,7 @@ struct LaunchListItemView: View {
     var status: some View {
         HStack(alignment: .firstTextBaseline, spacing: drawing.hItemSpacing) {
             Label(launch.status?.currentSituation.name ?? "", systemImage: launch.status?.iconName ?? "")
-                .font(.system(.subheadline, design: .default).weight(.regular))
+                .font(.app.listItemRegular)
                 .lineLimit(1)
                 .minimumScaleFactor(drawing.textMinimumScale)
                 .layoutPriority(1)
@@ -134,8 +131,7 @@ struct LaunchListItemView: View {
             countdown: Countdown(to: launch.date),
             stopped: launch.status?.currentSituation.noCountdown ?? true,
             backgroundColor: .app.backgroundPrimary.opacity(0.5),
-            textColor: .app.textPrimary,
-            fontWeight: .bold
+            textColor: .app.textPrimary
         )
         .aspectRatio(CGSize(width: 11, height: 1), contentMode: .fit)
         .font(.system(.body, design: .default))

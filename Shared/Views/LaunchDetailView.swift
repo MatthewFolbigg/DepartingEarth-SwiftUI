@@ -24,7 +24,6 @@ struct LaunchDetailView: View {
                     Spacer()
                     countdown
                         .aspectRatio(CGSize(width: 11, height: 1), contentMode: .fit)
-                        .font(.system(.body, design: .default))
                         .scaleEffect(1.2)
                     Spacer()
                 }
@@ -62,8 +61,7 @@ struct LaunchDetailView: View {
             countdown: Countdown(to: launch.date),
             stopped: launch.status?.currentSituation.noCountdown ?? true,
             backgroundColor: .app.backgroundAccented,
-            textColor: .app.textPrimary,
-            fontWeight: .bold
+            textColor: .app.textPrimary
         )
     }
     
@@ -72,22 +70,23 @@ struct LaunchDetailView: View {
         //TODO: Window Start Window End timeline
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text("Status").font(.title2).fontWeight(.medium)
+                Text("Status").font(.app.sectionTitle)
                 Spacer()
             }
             Label(launch.status?.currentSituation.name ?? "", systemImage: launch.status?.iconName ?? "")
             Label(launch.dateString(), systemImage: "calendar")
-            Text(launch.status?.infoText ?? "").font(.caption).fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+            Text(launch.status?.infoText ?? "")
+                .font(.app.sectionCaption).fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
         }
-        .groupedSection()
-        
+        .font(.app.sectionDefault)
+        .groupedSectionStyle()
     }
     
     var missionSection: some View {
         HStack {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text("Mission").font(.title2).fontWeight(.medium)
+                Text("Mission").font(.app.sectionTitle)
                 Spacer()
                 Image(systemName: "ellipsis.circle")
                     .rotationEffect(Angle(degrees: missionIsExpanded ? 90 : 0))
@@ -101,7 +100,8 @@ struct LaunchDetailView: View {
             
             if missionIsExpanded {
                 Spacer()
-                Text(launch.mission?.infoText ?? "").font(.system(.body)).fontWeight(.thin)
+                Text(launch.mission?.infoText ?? "")
+                    .font(.app.sectionParagraph)
                     //TODO: improve transition. currently overlaps other text on rapid press
                     .transition(.asymmetric(
                         insertion: .move(edge: .top).combined(with: .opacity.animation(.easeInOut.delay(0.2))),
@@ -111,7 +111,8 @@ struct LaunchDetailView: View {
             }
         }
         }
-        .groupedSection()
+        .font(.app.sectionDefault)
+        .groupedSectionStyle()
     }
     
 }
