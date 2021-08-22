@@ -44,17 +44,18 @@ struct UpcomingLaunchesView: View {
                 
                 //MARK: - On Appear
                 .onAppear {
+                    Launch.count(in: viewContext)
                     if Launch.count(in: viewContext) == 0 {
-                        refreshLaunches(deletingFirst: false)
+                        refreshLaunches(deletingFirst: true)
                     }
                 }
                 //MARK: - Navigation and ToolBar
                 .navBarAppearance(forground: .app.textPrimary, background: .app.backgroundAccented, tint: .app.control, hasSeperator: false)
                 .navigationTitle(showPinned ? "Pinned" : "Departing Soon")
                 .toolbar {
+                    ToolbarItem(placement: .cancellationAction) { refreshToolBarItem }
                     ToolbarItem(placement: .navigationBarTrailing) { filterToolBarItem }
-                    ToolbarItem(placement: .navigationBarLeading) { refreshToolBarItem }
-                    ToolbarItem(placement: .navigationBarTrailing) { pinToolBarItem }
+                    ToolbarItem(placement: .automatic) { pinToolBarItem }
                 }
             }
             if isDownloading { launchLibraryActivityIndicator }
@@ -62,7 +63,7 @@ struct UpcomingLaunchesView: View {
     }
     
     //MARK: Refreshing data
-    func refreshLaunches(deletingFirst: Bool = true) {
+    func refreshLaunches(deletingFirst: Bool = false) {
         withAnimation {
             if deletingFirst { Launch.deleteAll(from: viewContext) }
             launchLibraryClient.fetchAndUpdateData(.upcomingLaunches)
@@ -80,7 +81,7 @@ struct UpcomingLaunchesView: View {
         .frame(width: 200, height: 120, alignment: .center)
         .foregroundColor(.secondary)
         .background(
-            Color(UIColor.tertiarySystemGroupedBackground)
+            Color.app.backgroundPrimary
                 .opacity(0.9)
         )
         .clipShape(RoundedRectangle(cornerRadius: 20))

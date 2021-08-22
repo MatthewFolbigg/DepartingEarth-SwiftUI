@@ -49,11 +49,6 @@ struct FilteredLaunchListView: View {
     
     init(pinnedIDs: [String] = [], showPinned: Binding<Bool> = .constant(false), providerFilter: Binding<String?> = .constant(nil), statusFilter: Binding<String?> = .constant(nil), orbitFilter: Binding<String?> = .constant(nil), sortAscending: Bool = true) {
         
-        //TODO: Find a more controled place for these haptics. Aimed to tigger only on filter set/remove
-        let filterSetHaptic = UIImpactFeedbackGenerator(style: .medium)
-        filterSetHaptic.impactOccurred()
-        //---
-        
         _showingPinned = showPinned
         _providerFilter = providerFilter
         _statusFilter = statusFilter

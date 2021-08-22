@@ -41,13 +41,13 @@ struct LaunchDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(launch.mission?.name ?? "Flight")
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .automatic) {
                 Button(
                     action: { withAnimation { pinned.togglePin(for: launch) } },
                     label: { Label("Pinned", systemImage: isPinned ? "pin.circle.fill" : "pin.circle") }
                 )
             }
-            ToolbarItem(placement: .navigationBarLeading) {
+            ToolbarItem(placement: .navigation) {
                 Button(
                     action: { presentation.wrappedValue.dismiss() },
                     label: { Text("Close") }

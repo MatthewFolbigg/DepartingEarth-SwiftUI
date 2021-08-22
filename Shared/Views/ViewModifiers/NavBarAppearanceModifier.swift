@@ -10,6 +10,8 @@ import SwiftUI
 struct NavBarAppearanceModifier: ViewModifier {
     
     init(forground: Color, background: Color, tint: Color, hasSeperator: Bool, seperator: Color) {
+        //TODO: Move this to iOS only folders
+        #if os(iOS)
         let navBarAppearance = UINavigationBarAppearance()
         //Forground
         navBarAppearance.titleTextAttributes = [
@@ -32,6 +34,7 @@ struct NavBarAppearanceModifier: ViewModifier {
         UINavigationBar.appearance().standardAppearance = navBarAppearance
         UINavigationBar.appearance().compactAppearance = navBarAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+        #endif
     }
     
     func body(content: Content) -> some View {

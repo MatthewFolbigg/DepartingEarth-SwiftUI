@@ -19,13 +19,15 @@ extension Launch {
     var countdown: Countdown { Countdown(to: date) }
     
     var status: Status {
+        //provides a default value in the event of a CoreData error. API will always return a status
         status_ ?? Status.create(from: Status.defaultStatusInfo, context: PersistenceController.shared.container.viewContext)
     }
     
     var date: Date {
         get {
             let dateFormatter = ISO8601DateFormatter()
-            let date = dateFormatter.date(from: self.dateISO!)
+            if dateISO == nil { print("nil date for \(name)") }
+            let date = dateFormatter.date(from: dateISO ?? "2007-01-08T09:41:00Z")
             //TODO: Remove force unwrap
             return date!
         }
