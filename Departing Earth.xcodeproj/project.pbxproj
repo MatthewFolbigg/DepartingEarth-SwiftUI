@@ -59,6 +59,8 @@
 		1F6CDE4B26D2964300D9D6AB /* GroupedSectionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4926D2964300D9D6AB /* GroupedSectionModifier.swift */; };
 		1F6CDE4D26D29DC000D9D6AB /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4C26D29DC000D9D6AB /* Font+.swift */; };
 		1F6CDE4E26D29DC000D9D6AB /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4C26D29DC000D9D6AB /* Font+.swift */; };
+		1F6CDE5026D3D6BD00D9D6AB /* TagStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4F26D3D6BD00D9D6AB /* TagStyleModifier.swift */; };
+		1F6CDE5126D3D6BD00D9D6AB /* TagStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6CDE4F26D3D6BD00D9D6AB /* TagStyleModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +95,7 @@
 		1F6CDE4626D15AB500D9D6AB /* NavBarAppearanceModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarAppearanceModifier.swift; sourceTree = "<group>"; };
 		1F6CDE4926D2964300D9D6AB /* GroupedSectionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedSectionModifier.swift; sourceTree = "<group>"; };
 		1F6CDE4C26D29DC000D9D6AB /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
+		1F6CDE4F26D3D6BD00D9D6AB /* TagStyleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagStyleModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +229,7 @@
 			children = (
 				1F6CDE4626D15AB500D9D6AB /* NavBarAppearanceModifier.swift */,
 				1F6CDE4926D2964300D9D6AB /* GroupedSectionModifier.swift */,
+				1F6CDE4F26D3D6BD00D9D6AB /* TagStyleModifier.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -346,6 +350,7 @@
 				1F6CDE4D26D29DC000D9D6AB /* Font+.swift in Sources */,
 				1F689C3726BA959100087665 /* LaunchDetailView.swift in Sources */,
 				1F09CF4B26B849B0009FBD32 /* LaunchLibraryClient.swift in Sources */,
+				1F6CDE5026D3D6BD00D9D6AB /* TagStyleModifier.swift in Sources */,
 				1F09CF5626B87294009FBD32 /* Launch+.swift in Sources */,
 				1F6CDE4726D15AB500D9D6AB /* NavBarAppearanceModifier.swift in Sources */,
 				1F6CDE4326CEEE6A00D9D6AB /* PinnedLaunches.swift in Sources */,
@@ -378,6 +383,7 @@
 				1F6CDE4E26D29DC000D9D6AB /* Font+.swift in Sources */,
 				1F689C3826BA959100087665 /* LaunchDetailView.swift in Sources */,
 				1F09CF4C26B849B0009FBD32 /* LaunchLibraryClient.swift in Sources */,
+				1F6CDE5126D3D6BD00D9D6AB /* TagStyleModifier.swift in Sources */,
 				1F09CF5726B87294009FBD32 /* Launch+.swift in Sources */,
 				1F6CDE4826D15AB500D9D6AB /* NavBarAppearanceModifier.swift in Sources */,
 				1F6CDE4426CEEE6A00D9D6AB /* PinnedLaunches.swift in Sources */,

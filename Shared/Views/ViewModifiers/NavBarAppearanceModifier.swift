@@ -44,14 +44,7 @@ struct NavBarAppearanceModifier: ViewModifier {
 }
 
 extension View {
-    
     func navBarAppearance(forground: Color, background: Color, tint: Color, hasSeperator: Bool = true, seperator: Color = .primary) -> some View {
-        self.modifier(NavBarAppearanceModifier(
-                        forground: forground,
-                        background: background,
-                        tint: tint,
-                        hasSeperator: hasSeperator,
-                        seperator: seperator))
+        self.modifier(NavBarAppearanceModifier(forground: forground, background: background, tint: tint, hasSeperator: hasSeperator, seperator: seperator))
     }
-    
 }

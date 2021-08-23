@@ -27,7 +27,7 @@ struct UpcomingLaunchesView: View {
     @State var orbitFilter: String? = nil
     @FetchRequest var statuses: FetchedResults<Status>
     @State var statusFilter: String? = nil
-    var isFiltered: Bool { providerFilter != nil || orbitFilter != nil || statusFilter != nil}
+    var isFiltered: Bool { providerFilter != nil || orbitFilter != nil || statusFilter != nil }
     func removeAllFilters() { providerFilter = nil; orbitFilter = nil; statusFilter = nil }
     
     init() {
@@ -44,17 +44,16 @@ struct UpcomingLaunchesView: View {
                 
                 //MARK: - On Appear
                 .onAppear {
-                    Launch.count(in: viewContext)
                     if Launch.count(in: viewContext) == 0 {
                         refreshLaunches(deletingFirst: true)
                     }
                 }
                 //MARK: - Navigation and ToolBar
                 .navBarAppearance(forground: .app.textPrimary, background: .app.backgroundAccented, tint: .app.control, hasSeperator: false)
-                .navigationTitle(showPinned ? "Pinned" : "Departing Soon")
+                .navigationTitle(showPinned ? "Tracking" : "Departing Earth")
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) { refreshToolBarItem }
-                    ToolbarItem(placement: .navigationBarTrailing) { filterToolBarItem }
+                    ToolbarItem(placement: .navigationBarTrailing) { filterToolBarItem } //TODO: Position for MacOS
                     ToolbarItem(placement: .automatic) { pinToolBarItem }
                 }
             }
@@ -230,11 +229,9 @@ extension UpcomingLaunchesView {
 
 
 
-
-
-
 struct NEWUpcomingLaunchesView_Previews: PreviewProvider {
     static var previews: some View {
         UpcomingLaunchesView()
+            .environmentObject(PinnedLaunches())
     }
 }

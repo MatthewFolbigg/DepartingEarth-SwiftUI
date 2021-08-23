@@ -11,7 +11,6 @@ import MapKit
 
 struct LaunchDetailView: View {
     
-    @Environment(\.presentationMode) var presentation
     @EnvironmentObject var pinned: PinnedLaunches
     @State var launch: Launch
     @State var missionIsExpanded: Bool = false
@@ -38,19 +37,13 @@ struct LaunchDetailView: View {
             }
             .padding(25)
         }
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.inline) //TODO: Not available on MacOS
         .navigationTitle(launch.mission?.name ?? "Flight")
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button(
                     action: { withAnimation { pinned.togglePin(for: launch) } },
                     label: { Label("Pinned", systemImage: isPinned ? "pin.circle.fill" : "pin.circle") }
-                )
-            }
-            ToolbarItem(placement: .navigation) {
-                Button(
-                    action: { presentation.wrappedValue.dismiss() },
-                    label: { Text("Close") }
                 )
             }
         }

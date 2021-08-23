@@ -17,6 +17,12 @@ extension Launch {
     }
     
     var countdown: Countdown { Countdown(to: date) }
+    var hasLaunched: Bool {
+        status.currentSituation == .success ||
+        status.currentSituation == .failure ||
+        status.currentSituation == .partialFailure ||
+        status.currentSituation == .inFlight
+    }
     
     var status: Status {
         //provides a default value in the event of a CoreData error. API will always return a status

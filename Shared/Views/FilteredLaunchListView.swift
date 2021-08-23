@@ -16,9 +16,6 @@ struct FilteredLaunchListView: View {
     var fetchRequest: FetchRequest<Launch>
     var launches: FetchedResults<Launch> { fetchRequest.wrappedValue }
     
-    @State var selectedLaunch: Launch? = nil
-    @State var presentingLaunch: Bool = false
-    
     @Binding var providerFilter: String?
     @Binding var orbitFilter: String?
     @Binding var statusFilter: String?
@@ -31,29 +28,28 @@ struct FilteredLaunchListView: View {
                 ForEach(launches, id: \.self) { launch in
                     ZStack {
                         LaunchListItemView(launch: launch, isPinned: pinned.isPinned(launch))
-                        //For` iPad// NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.hidden() //Will be the method for iPad
+                         NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }
+                            .hidden()
                     }
-                    .onTapGesture {
-                        self.selectedLaunch = launch
-                    }
+                    .listRowBackground(Color.app.backgroundAccented)
                 }
             }
-            .sheet(item: $selectedLaunch) { launch in
-                NavigationView { LaunchDetailView(launch: launch).environmentObject(pinned) }
-            }
+            .background(Color.app.backgroundPrimary).ignoresSafeArea()
+            
             .listStyle(PlainListStyle())
-//            .animation(nil) //Removed animation due to glitches with long lists whilst looking for work arounds
             if launches.isEmpty { emptyListIndicator.zIndex(1).animation(.easeInOut) }
         }
     }
     
     init(pinnedIDs: [String] = [], showPinned: Binding<Bool> = .constant(false), providerFilter: Binding<String?> = .constant(nil), statusFilter: Binding<String?> = .constant(nil), orbitFilter: Binding<String?> = .constant(nil), sortAscending: Bool = true) {
         
+        UITableView.appearance().backgroundColor = .clear //TODO: Not available on MacOS
+        
         _showingPinned = showPinned
         _providerFilter = providerFilter
         _statusFilter = statusFilter
         _orbitFilter = orbitFilter
-        
+                
         var predicates: [NSPredicate] = []
         if showPinned.wrappedValue {
             predicates.append(NSPredicate(format: "launchID IN %@", pinnedIDs))

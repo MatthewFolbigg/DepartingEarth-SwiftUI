@@ -12,7 +12,7 @@ struct LaunchListItemView: View {
     @State var launch: Launch
     @EnvironmentObject var pinned: PinnedLaunches
     var isPinned: Bool { pinned.isPinned(launch) }
-    var situation: Status.Situation { launch.status.currentSituation}
+    var situation: Status.Situation { launch.status.currentSituation }
     
     struct drawing {
         static let vSectionSpacing: CGFloat = 8
@@ -32,7 +32,7 @@ struct LaunchListItemView: View {
     //MARK: - Body
     var body: some View {
         HStack(alignment: .top) {
-            statusColorBar
+            vStatusColorBar
             VStack(alignment: .leading, spacing: drawing.vSectionSpacing) {
                 VStack(alignment: .leading, spacing: drawing.vItemSpacing) {
                     HStack {
@@ -94,13 +94,13 @@ struct LaunchListItemView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(drawing.textMinimumScale)
                 .layoutPriority(1)
-            if situation == .dateUndetermined || situation == .dateUnconfirmed  {
-                Text(launch.status.currentSituation.dateDescription)
-                    .font(.app.listItemLight)
-                    .lineLimit(1)
-                    .minimumScaleFactor(drawing.textMinimumScale)
-                    .layoutPriority(0)
-            }
+//            if situation == .dateUndetermined || situation == .dateUnconfirmed  {
+//                Text(launch.status.currentSituation.dateDescription)
+//                    .font(.app.listItemLight)
+//                    .lineLimit(1)
+//                    .minimumScaleFactor(drawing.textMinimumScale)
+//                    .layoutPriority(0)
+//            }
         }
         .foregroundColor(.app.textPrimary)
     }
@@ -109,17 +109,25 @@ struct LaunchListItemView: View {
     var status: some View {
         HStack(alignment: .firstTextBaseline, spacing: drawing.hItemSpacing) {
             Label(launch.status.currentSituation.name, systemImage: launch.status.iconName)
-                .font(.app.listItemRegular)
-                .lineLimit(1)
+                .tagStyle(color: .app.textPrimary)
+//                .tagStyle(color: launch.status.color == .clear ? .app.textPrimary : launch.status.color)
+//                .font(.app.listItemRegular)
+//                .lineLimit(1)
                 .minimumScaleFactor(drawing.textMinimumScale)
                 .layoutPriority(1)
         }
         .foregroundColor(.app.textPrimary)
     }
     
-    var statusColorBar: some View {
+    var vStatusColorBar: some View {
         Rectangle()
-            .frame(maxWidth: 3)
+            .frame(maxWidth: 5)
+            .foregroundColor(launch.status.color == .clear ? .app.backgroundPrimary : launch.status.color)
+    }
+    
+    var hstatusColorBar: some View {
+        Rectangle()
+            .frame(maxHeight: 5)
             .foregroundColor(launch.status.color == .clear ? .app.backgroundPrimary : launch.status.color)
     }
     
@@ -144,12 +152,12 @@ struct LaunchListItemView_Previews: PreviewProvider {
     static var previews: some View {
         let launch = PersistenceController.testData()
         List {
-            LaunchListItemView(launch: launch, isPinned: false)
-            LaunchListItemView(launch: launch, isPinned: false)
-            LaunchListItemView(launch: launch, isPinned: true)
-            LaunchListItemView(launch: launch, isPinned: false)
+            LaunchListItemView(launch: launch, isPinned: false).environmentObject(PinnedLaunches())
+            
         }
+        .listStyle(PlainListStyle())
         .previewDevice("iPhone 12 pro")
+//        .preferredColorScheme(.dark)
     }
 }
 
