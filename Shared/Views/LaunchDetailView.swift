@@ -37,6 +37,7 @@ struct LaunchDetailView: View {
             }
             .padding(25)
         }
+        .background(Color.app.backgroundAccented.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline) //TODO: Not available on MacOS
         .navigationTitle(launch.mission?.name ?? "Flight")
         .toolbar {
@@ -53,7 +54,7 @@ struct LaunchDetailView: View {
         CountdownView(
             countdown: launch.countdown,
             stopped: launch.status.currentSituation.noCountdown,
-            backgroundColor: .app.backgroundAccented,
+            backgroundColor: .app.backgroundPrimary,
             textColor: .app.textPrimary
         )
     }
@@ -120,6 +121,7 @@ struct LaunchDetailView_Previews: PreviewProvider {
     static var previews: some View {
         let launch = PersistenceController.testData()
         LaunchDetailView(launch: launch)
+            .environmentObject(PinnedLaunches())
             .previewDevice("iPhone 12")
     }
 }

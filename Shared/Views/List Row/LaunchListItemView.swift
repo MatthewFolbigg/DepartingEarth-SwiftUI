@@ -109,8 +109,7 @@ struct LaunchListItemView: View {
     var status: some View {
         HStack(alignment: .firstTextBaseline, spacing: drawing.hItemSpacing) {
             Label(launch.status.currentSituation.name, systemImage: launch.status.iconName)
-                .tagStyle(color: .app.textPrimary)
-//                .tagStyle(color: launch.status.color == .clear ? .app.textPrimary : launch.status.color)
+                .tagStyle(color: launch.status.color == .clear ? .app.textPrimary : launch.status.color)
 //                .font(.app.listItemRegular)
 //                .lineLimit(1)
                 .minimumScaleFactor(drawing.textMinimumScale)
@@ -138,7 +137,7 @@ struct LaunchListItemView: View {
         CountdownView(
             countdown: launch.countdown,
             stopped: launch.status.currentSituation.noCountdown,
-            backgroundColor: .app.backgroundPrimary.opacity(0.5),
+            backgroundColor: .app.backgroundPrimary,//.opacity(0.5),
             textColor: .app.textPrimary
         )
         .aspectRatio(CGSize(width: 11, height: 1), contentMode: .fit)

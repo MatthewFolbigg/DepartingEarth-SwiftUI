@@ -19,8 +19,6 @@ struct TagStyleModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .font(.app.listItemRegular)
-            .lineLimit(1)
             .foregroundColor(color)
             .colorMultiply(multiplyColor)
             .saturation(isDark ? 3 : 1)
