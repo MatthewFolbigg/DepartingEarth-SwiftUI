@@ -24,8 +24,11 @@ struct NavBarAppearanceModifier: ViewModifier {
         //Background
         navBarAppearance.backgroundColor = UIColor(background)
         //Seperator
-        if hasSeperator { navBarAppearance.shadowColor = UIColor(seperator)
-        } else { navBarAppearance.shadowColor = .clear } //Hides Sepeator
+        if hasSeperator {
+            navBarAppearance.shadowColor = UIColor(seperator)
+        } else {
+            navBarAppearance.shadowColor = .clear //Hides Sepeator
+        }
 
         //Tint
         UINavigationBar.appearance().tintColor = UIColor(tint)

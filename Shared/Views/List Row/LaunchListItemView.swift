@@ -42,21 +42,21 @@ struct LaunchListItemView: View {
                     }
                     rocket
                 }
-                VStack(alignment: .leading, spacing: drawing.vItemSpacing) {
-                    if launch.mission != nil {
-                        mission
-                    }
-                    date
-                    status
-                }
                 HStack {
-                    countdown
-                    Spacer()
-                } .padding(.top, 8)
+                    VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: drawing.vItemSpacing) {
+                            if launch.mission != nil {
+                                mission
+                            }
+                            date
+                            status
+                        }
+                        countdown.padding(.top, 0)
+                    }
+                }
             }
             Spacer()
         }
-        .padding(.vertical, 5)
     }
     
     //MARK: - Sections
@@ -109,7 +109,7 @@ struct LaunchListItemView: View {
     var status: some View {
         HStack(alignment: .firstTextBaseline, spacing: drawing.hItemSpacing) {
             Label(launch.status.currentSituation.name, systemImage: launch.status.iconName)
-                .tagStyle(color: launch.status.color == .clear ? .app.textPrimary : launch.status.color)
+                .tagStyle(color: .app.textSecondary)
 //                .font(.app.listItemRegular)
 //                .lineLimit(1)
                 .minimumScaleFactor(drawing.textMinimumScale)

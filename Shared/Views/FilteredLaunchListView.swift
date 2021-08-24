@@ -10,6 +10,7 @@ import CoreData
 
 struct FilteredLaunchListView: View {
     
+    @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject var pinned: PinnedLaunches
     @Namespace private var launchesNameSpace
     
@@ -31,14 +32,25 @@ struct FilteredLaunchListView: View {
                          NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }
                             .hidden()
                     }
-                    .listRowBackground(Color.app.backgroundAccented)
+//                    .listRowBackground(Color.app.backgroundAccented)
+                    .listRowBackground(backgroundGradient)
                 }
             }
-            .background(Color.app.backgroundPrimary).ignoresSafeArea()
+            .background(Color.app.backgroundPlain).ignoresSafeArea()
             
             .listStyle(PlainListStyle())
             if launches.isEmpty { emptyListIndicator.zIndex(1).animation(.easeInOut) }
         }
+    }
+    
+    var backgroundGradient: some View {
+//        LinearGradient(
+//            gradient: gradient,
+//            startPoint: .topLeading,
+//            endPoint: .bottomTrailing)
+        let gradientColors: [Color] = [.app.backgroundPrimary, .app.backgroundPlain]
+        let gradient = colorScheme == .light ? Gradient(colors: [.app.backgroundPlain]) : Gradient(colors: gradientColors)
+        return RadialGradient(gradient: gradient, center: .topLeading, startRadius: 1, endRadius: 600)
     }
     
     init(pinnedIDs: [String] = [], showPinned: Binding<Bool> = .constant(false), providerFilter: Binding<String?> = .constant(nil), statusFilter: Binding<String?> = .constant(nil), orbitFilter: Binding<String?> = .constant(nil), sortAscending: Bool = true) {
