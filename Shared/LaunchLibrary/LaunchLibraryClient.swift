@@ -63,6 +63,7 @@ class LaunchLibraryApiClient: ObservableObject {
         launchDataFetchCancellable = publisher
             .sink(receiveValue: { [weak self] data in
                 self?.fetchStatus = .idle
+                if data.results.isEmpty { print("Error: No launches returned") }
                 for info in data.results {
                     Launch.create(from: info, context: self!.context)
                     try? self?.context.save()

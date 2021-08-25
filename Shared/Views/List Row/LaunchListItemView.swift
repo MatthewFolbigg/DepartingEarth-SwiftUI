@@ -12,7 +12,6 @@ struct LaunchListItemView: View {
     @State var launch: Launch
     @EnvironmentObject var pinned: PinnedLaunches
     var isPinned: Bool { pinned.isPinned(launch) }
-    var situation: Status.Situation { launch.status.currentSituation }
     
     struct drawing {
         static let vSectionSpacing: CGFloat = 8

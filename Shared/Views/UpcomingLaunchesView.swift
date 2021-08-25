@@ -97,7 +97,7 @@ extension UpcomingLaunchesView {
     
     var refreshToolBarItem: some View {
         Button(
-            action: { refreshLaunches() },
+            action: { refreshLaunches(deletingFirst: true) },
             label: { Label("Refresh", systemImage: "arrow.clockwise.circle") }
         )
     }
