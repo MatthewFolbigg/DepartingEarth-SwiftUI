@@ -21,7 +21,6 @@ class LaunchLibraryApiClient: ObservableObject {
         self.context = context
     }
     
-    
     //MARK: - Endpoints
     private static var baseUrl: String { developerMode ?
         "https://lldev.thespacedevs.com/2.2.0/" : "https://ll.thespacedevs.com/2.2.0/"
@@ -73,10 +72,7 @@ class LaunchLibraryApiClient: ObservableObject {
                     
                     //MARK: Successful resquest with launches
                     DispatchQueue.main.async {
-                        for info in decoded.results {
-                            Launch.create(from: info, context: self.context)
-                            try? self.context.save()
-                        }
+                        self.store(results: launches, in: self.context)
                         self.fetchStatus = .idle
                     }
                     return
@@ -89,6 +85,14 @@ class LaunchLibraryApiClient: ObservableObject {
             }
         }.resume()
         
+    }
+    
+    //MARK: Helper Methods
+    func store(results: [LaunchInfo], in context: NSManagedObjectContext) {
+        for info in results {
+            Launch.create(from: info, context: self.context)
+            try? self.context.save()
+        }
     }
     
 }
