@@ -86,7 +86,7 @@ struct FilteredLaunchListView: View {
         
         let launches = request.wrappedValue.map( {$0} )
         if Launch.checkIsStale(launches: launches) {
-            LaunchLibraryApiClient.shared.fetchAndUpdateData(.upcomingLaunches)
+            LaunchLibraryApiClient.shared.fetchData(.upcomingLaunches)
         }
         
     }

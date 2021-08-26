@@ -65,7 +65,7 @@ struct UpcomingLaunchesView: View {
     func refreshLaunches(deletingFirst: Bool = false) {
         withAnimation {
             if deletingFirst { Launch.deleteAll(from: viewContext) }
-            launchLibraryClient.fetchAndUpdateData(.upcomingLaunches)
+            launchLibraryClient.fetchData(.upcomingLaunches)
         }
 
     }

@@ -42,7 +42,8 @@ class LaunchLibraryApiClient: ObservableObject {
             }
         }
     }
-    //MARK: - Requests
+    
+    //MARK: - Data Request
     private var launchDataFetchCancellable: AnyCancellable?
     
     enum FetchStatus {
@@ -50,25 +51,44 @@ class LaunchLibraryApiClient: ObservableObject {
         case fetching
     }
 
-    func fetchAndUpdateData(_ endpoint: Endpoint) {
-        print(endpoint.url)
-        fetchStatus = .fetching
-        launchDataFetchCancellable?.cancel()
-        let session = URLSession.shared
-        let publisher = session.dataTaskPublisher(for: endpoint.url)
-            .map(\.data)
-            .decode(type: UpcomingLaunchApiResponse.self, decoder: JSONDecoder())
-            .replaceError(with: UpcomingLaunchApiResponse(results: []))
-            .receive(on: DispatchQueue.main)
-        launchDataFetchCancellable = publisher
-            .sink(receiveValue: { [weak self] data in
-                self?.fetchStatus = .idle
-                if data.results.isEmpty { print("Error: No launches returned") }
-                for info in data.results {
-                    Launch.create(from: info, context: self!.context)
-                    try? self?.context.save()
+    func fetchData(_ endpoint: Endpoint) {
+        let url = endpoint.url
+        let request = URLRequest(url: url)
+        let decoder = JSONDecoder()
+        
+        self.fetchStatus = .fetching
+        URLSession.shared.dataTask(with: request) { data, response, error in
+        
+            if let data = data {
+                if let decoded = try? decoder.decode(UpcomingLaunchApiResponse.self, from: data) {
+                    //MARK: - Success Cases
+                    let launches = decoded.results
+                    
+                    //MARK: Successful resquest but no launches
+                    DispatchQueue.main.async {
+                        if launches.isEmpty {
+                            print("Success but no lanches returned")
+                        }
+                    }
+                    
+                    //MARK: Successful resquest with launches
+                    DispatchQueue.main.async {
+                        for info in decoded.results {
+                            Launch.create(from: info, context: self.context)
+                            try? self.context.save()
+                        }
+                        self.fetchStatus = .idle
+                    }
+                    return
                 }
-            })
+            }
+            //MARK: - Error Cases
+            DispatchQueue.main.async {
+                print(error?.localizedDescription ?? "Unknown Error")
+                self.fetchStatus = .idle
+            }
+        }.resume()
+        
     }
     
 }
