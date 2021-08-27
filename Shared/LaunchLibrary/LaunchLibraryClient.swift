@@ -14,6 +14,8 @@ class LaunchLibraryApiClient: ObservableObject {
     static var shared = LaunchLibraryApiClient(context: PersistenceController.shared.container.viewContext)
     
     @Published var fetchStatus: FetchStatus = .idle
+    @Published var fetchError: LaunchLibraryError? = nil
+    
     private var context: NSManagedObjectContext
     private static var developerMode: Bool = false
     
@@ -80,6 +82,8 @@ class LaunchLibraryApiClient: ObservableObject {
             }
             //MARK: - Error Cases
             DispatchQueue.main.async {
+                //TODO: API throttle will land here so need to look for status codes rather that defaulting to netowrk error
+                self.fetchError = .networkFailure
                 print(error?.localizedDescription ?? "Unknown Error")
                 self.fetchStatus = .idle
             }
@@ -97,3 +101,25 @@ class LaunchLibraryApiClient: ObservableObject {
     
 }
 
+
+//MARK: Errors
+extension LaunchLibraryApiClient {
+    
+    enum LaunchLibraryError: String, Identifiable {
+        case networkFailure
+        
+        var id: String { self.rawValue }
+        
+        var alert: Alert {
+            switch self {
+            case .networkFailure:
+                return Alert(
+                    title: Text("Network Failure"),
+                    message: Text("Unable to fetch launches. Check your internet connection and try again")
+                )
+            }
+        }
+    }
+    
+    
+}

@@ -48,6 +48,10 @@ struct UpcomingLaunchesView: View {
                         refreshLaunches(deletingFirst: true)
                     }
                 }
+                .alert(item: $launchLibraryClient.fetchError) { fetchError in
+                    fetchError.alert
+                }
+                    
                 //MARK: - Navigation and ToolBar
                 .navBarAppearance(forground: .app.textPrimary, background: .app.backgroundAccented, tint: .app.control, hasSeperator: false)
                 .navigationTitle(showPinned ? "Tracking" : "Departing Earth")
@@ -67,7 +71,6 @@ struct UpcomingLaunchesView: View {
             if deletingFirst { Launch.deleteAll(from: viewContext) }
             launchLibraryClient.fetchData(.upcomingLaunches)
         }
-
     }
     
     var launchLibraryActivityIndicator: some View {
