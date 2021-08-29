@@ -53,16 +53,26 @@ class LaunchLibraryApiClient: ObservableObject {
     }
 
     func fetchData(_ endpoint: Endpoint) {
+        //TODO: Update to be cancellable to prevent overlapping requests
         let url = endpoint.url
         let request = URLRequest(url: url)
         let decoder = JSONDecoder()
         
         self.fetchStatus = .fetching
         URLSession.shared.dataTask(with: request) { data, response, error in
-        
+            
+            //MARK: - API Error Cases
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    print("API Success")
+                } else {
+                    print("API Error")
+                }
+            }
+            
+            //MARK: - Handle Success
             if let data = data {
                 if let decoded = try? decoder.decode(UpcomingLaunchApiResponse.self, from: data) {
-                    //MARK: - Success Cases
                     let launches = decoded.results
                     
                     //MARK: Successful resquest but no launches
@@ -80,7 +90,7 @@ class LaunchLibraryApiClient: ObservableObject {
                     return
                 }
             }
-            //MARK: - Error Cases
+            //MARK: - Network Error Cases
             DispatchQueue.main.async {
                 //TODO: API throttle will land here so need to look for status codes rather that defaulting to netowrk error
                 self.fetchError = .networkFailure
