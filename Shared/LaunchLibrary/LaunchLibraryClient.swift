@@ -63,11 +63,17 @@ class LaunchLibraryApiClient: ObservableObject {
             
             //MARK: - API Error Cases
             if let response = response as? HTTPURLResponse {
-                if response.statusCode == 200 {
-                    print("API Success")
-                } else {
-                    print("API Error")
+                DispatchQueue.main.async {
+                    switch response.statusCode {
+                        case 429:
+                            self.handleFetchError(.apiThrottle, printDescription: "Request Throttled, Too Many requests made.")
+                            return
+                        case 200:
+                            print("API Success")
+                        default: return
+                    }
                 }
+                
             }
             
             //MARK: - Handle Success
@@ -88,20 +94,23 @@ class LaunchLibraryApiClient: ObservableObject {
                         self.fetchStatus = .idle
                     }
                     return
+                } else {
+                    //TODO: Unable to decode Error
                 }
-            }
-            //MARK: - Network Error Cases
-            DispatchQueue.main.async {
-                //TODO: API throttle will land here so need to look for status codes rather that defaulting to netowrk error
-                self.fetchError = .networkFailure
-                print(error?.localizedDescription ?? "Unknown Error")
-                self.fetchStatus = .idle
+            } else {
+                //TODO: No Data Error
             }
         }.resume()
         
     }
     
     //MARK: Helper Methods
+    func handleFetchError(_ error : LaunchLibraryError, printDescription: String?) {
+        if let description = printDescription { print(description) }
+        self.fetchError = error
+        self.fetchStatus = .idle
+    }
+    
     func store(results: [LaunchInfo], in context: NSManagedObjectContext) {
         for info in results {
             Launch.create(from: info, context: self.context)
@@ -117,6 +126,7 @@ extension LaunchLibraryApiClient {
     
     enum LaunchLibraryError: String, Identifiable {
         case networkFailure
+        case apiThrottle
         
         var id: String { self.rawValue }
         
@@ -126,6 +136,11 @@ extension LaunchLibraryApiClient {
                 return Alert(
                     title: Text("Network Failure"),
                     message: Text("Unable to fetch launches. Check your internet connection and try again")
+                )
+            case .apiThrottle:
+                return Alert(
+                    title: Text("API Throttled"),
+                    message: Text("Too many update requests have been made, please try again later")
                 )
             }
         }
