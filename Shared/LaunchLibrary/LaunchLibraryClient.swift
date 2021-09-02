@@ -66,14 +66,16 @@ class LaunchLibraryApiClient: ObservableObject {
                 DispatchQueue.main.async {
                     switch response.statusCode {
                         case 429:
-                            self.handleFetchError(.apiThrottle, printDescription: "Request Throttled, Too Many requests made.")
+                            self.handleFetchError(.apiRateLimit, printDescription: "Request Throttled, Too Many requests made.")
                             return
                         case 200:
                             print("API Success")
-                        default: return
+                            break
+                        default:
+                            self.handleFetchError(.apiUnknownError, printDescription: "Got a response but not a handled error code. Code: \(response.statusCode)")
+                            return
                     }
                 }
-                
             }
             
             //MARK: - Handle Success
@@ -95,10 +97,14 @@ class LaunchLibraryApiClient: ObservableObject {
                     }
                     return
                 } else {
-                    //TODO: Unable to decode Error
+                    DispatchQueue.main.async {
+                        self.handleFetchError(.dataDecodeError, printDescription: "Unable to decode data returned from request")
+                    }
                 }
             } else {
-                //TODO: No Data Error
+                DispatchQueue.main.async {
+                    self.handleFetchError(.dataNilError, printDescription: "No data returned from request")
+                }
             }
         }.resume()
         
@@ -126,7 +132,10 @@ extension LaunchLibraryApiClient {
     
     enum LaunchLibraryError: String, Identifiable {
         case networkFailure
-        case apiThrottle
+        case apiRateLimit
+        case apiUnknownError
+        case dataNilError
+        case dataDecodeError
         
         var id: String { self.rawValue }
         
@@ -137,10 +146,25 @@ extension LaunchLibraryApiClient {
                     title: Text("Network Failure"),
                     message: Text("Unable to fetch launches. Check your internet connection and try again")
                 )
-            case .apiThrottle:
+            case .apiRateLimit:
                 return Alert(
                     title: Text("API Throttled"),
                     message: Text("Too many update requests have been made, please try again later")
+                )
+            case .apiUnknownError:
+                return Alert(
+                    title: Text("Unknow Error"),
+                    message: Text("Something went wrong with the upcoming launch list. Please try again.")
+                )
+            case .dataNilError:
+                return Alert(
+                    title: Text("No Data"),
+                    message: Text("No data was received, check your network connection and try again.")
+                )
+            case .dataDecodeError:
+                return Alert(
+                    title: Text("Unable to Decode Data"),
+                    message: Text("Something went wrong with the upcoming launch data, please try again.")
                 )
             }
         }
