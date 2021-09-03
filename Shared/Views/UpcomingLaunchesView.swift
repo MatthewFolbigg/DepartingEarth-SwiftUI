@@ -41,6 +41,7 @@ struct UpcomingLaunchesView: View {
             NavigationView {
                 //MARK: - Main View
                 FilteredLaunchListView(pinnedIDs: pinned.launchIDs, showPinned: $showPinned, providerFilter: $providerFilter, statusFilter: $statusFilter, orbitFilter: $orbitFilter, sortAscending: sortOrderAscending)
+                    .id(launchLibraryClient.lastSuccessfulFetch)
                 
                 //MARK: - On Appear
                 .onAppear {

@@ -26,7 +26,7 @@ struct FilteredLaunchListView: View {
     var body: some View {
         ZStack {
             List {
-                ForEach(launches, id: \.self) { launch in
+                ForEach(launches, id: \.self.launchID) { launch in
                     ZStack {
                         LaunchListItemView(launch: launch, isPinned: pinned.isPinned(launch))
                          NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }
@@ -83,7 +83,7 @@ struct FilteredLaunchListView: View {
             fetchRequest: Launch.requestForAll(sortBy: .date, ascending: sortAscending, predicates: predicates),
             animation: .default)
         fetchRequest = request
-                
+
     }
     
     func clearFilters() {

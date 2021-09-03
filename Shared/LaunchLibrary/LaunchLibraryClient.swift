@@ -15,6 +15,7 @@ class LaunchLibraryApiClient: ObservableObject {
     
     @Published var fetchStatus: FetchStatus = .idle
     @Published var fetchError: LaunchLibraryError? = nil
+    @Published var lastSuccessfulFetch = Date() //Used as an ID for a launch list. Will refresh the list when changed to make sure all data is updated on currently displayed launches
     
     private var context: NSManagedObjectContext
     private static var developerMode: Bool = false
@@ -94,6 +95,7 @@ class LaunchLibraryApiClient: ObservableObject {
                             DispatchQueue.main.async {
                                 self.store(results: launches, in: self.context)
                                 self.fetchStatus = .idle
+                                self.lastSuccessfulFetch = Date()
                             }
                             return
                         } else {
