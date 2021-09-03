@@ -76,35 +76,38 @@ class LaunchLibraryApiClient: ObservableObject {
                             return
                     }
                 }
-            }
             
-            //MARK: - Handle Success
-            if let data = data {
-                if let decoded = try? decoder.decode(UpcomingLaunchApiResponse.self, from: data) {
-                    let launches = decoded.results
-                    
-                    //MARK: Successful resquest but no launches
-                    DispatchQueue.main.async {
-                        if launches.isEmpty {
-                            print("Success but no lanches returned")
+                if response.statusCode == 200 {
+                    //MARK: - Handle Success
+                    if let data = data {
+                        if let decoded = try? decoder.decode(UpcomingLaunchApiResponse.self, from: data) {
+                            let launches = decoded.results
+                            
+                            //MARK: Successful resquest but no launches
+                            DispatchQueue.main.async {
+                                if launches.isEmpty {
+                                    print("Success but no lanches returned")
+                                }
+                            }
+                            
+                            //MARK: Successful resquest with launches
+                            DispatchQueue.main.async {
+                                self.store(results: launches, in: self.context)
+                                self.fetchStatus = .idle
+                            }
+                            return
+                        } else {
+                            DispatchQueue.main.async {
+                                self.handleFetchError(.dataDecodeError, printDescription: "Unable to decode data returned from request")
+                            }
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.handleFetchError(.dataNilError, printDescription: "No data returned from request")
                         }
                     }
-                    
-                    //MARK: Successful resquest with launches
-                    DispatchQueue.main.async {
-                        self.store(results: launches, in: self.context)
-                        self.fetchStatus = .idle
-                    }
-                    return
-                } else {
-                    DispatchQueue.main.async {
-                        self.handleFetchError(.dataDecodeError, printDescription: "Unable to decode data returned from request")
-                    }
                 }
-            } else {
-                DispatchQueue.main.async {
-                    self.handleFetchError(.dataNilError, printDescription: "No data returned from request")
-                }
+                //TODO: No Response as HTTPURLResponse
             }
         }.resume()
         
@@ -122,6 +125,7 @@ class LaunchLibraryApiClient: ObservableObject {
             Launch.create(from: info, context: self.context)
             try? self.context.save()
         }
+        Launch.removeStale(from: self.context)
     }
     
 }

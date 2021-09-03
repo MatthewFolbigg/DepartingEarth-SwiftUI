@@ -85,6 +85,21 @@ extension Launch {
         PersistenceController.deleteAll(entityName: "Launch", from: context)
     }
     
+    static func removeStale(from context: NSManagedObjectContext) {
+        let ageOfStaleInSeconds: Double = 1800 //30 minutes
+        let request = requestForAll()
+        
+        if let launches = try? context.fetch(request) {
+            for launch in launches {
+                if launch.lastUpdated?.timeIntervalSinceNow ?? (ageOfStaleInSeconds * -1) <= (ageOfStaleInSeconds * -1) {
+                    context.delete(launch)
+                    print("Deleted: \(launch.name) \(launch.lastUpdated?.timeIntervalSinceNow ?? 0)")
+                }
+            }
+        }
+        try? context.save()
+    }
+    
     //MARK: - Request Methods
     enum SortOption: String {
         case name = "name_"
@@ -121,18 +136,6 @@ extension Launch {
         } else {
             return 0
         }
-    }
-    
-    static func checkIsStale(launches: [Launch]) -> Bool {
-        let ageOfStaleInSeconds: Double = 1800 //30 minutes
-        print("Checking for stale data")
-        for launch in launches {
-            if launch.lastUpdated?.timeIntervalSinceNow ?? ageOfStaleInSeconds <= ageOfStaleInSeconds {
-                print("Data Stale: \(launch.name) \(launch.lastUpdated?.timeIntervalSinceNow ?? 0)")
-                return true
-            }
-        }
-        return false
     }
         
 }

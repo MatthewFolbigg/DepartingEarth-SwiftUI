@@ -83,12 +83,7 @@ struct FilteredLaunchListView: View {
             fetchRequest: Launch.requestForAll(sortBy: .date, ascending: sortAscending, predicates: predicates),
             animation: .default)
         fetchRequest = request
-        
-        let launches = request.wrappedValue.map( {$0} )
-        if Launch.checkIsStale(launches: launches) {
-            LaunchLibraryApiClient.shared.fetchData(.upcomingLaunches)
-        }
-        
+                
     }
     
     func clearFilters() {

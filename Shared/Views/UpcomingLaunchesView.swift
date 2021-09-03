@@ -68,13 +68,6 @@ struct UpcomingLaunchesView: View {
     //MARK: Refreshing data
     func refreshLaunches(deletingFirst: Bool = false) {
         withAnimation {
-
-            
-            //TODO: This line casuse a crash:
-            //AttributeGraph precondition failure: invalid value type for attribute: 2186804
-            //Find another way to refresh data
-//            if deletingFirst { Launch.deleteAll(from: viewContext) }
-            
             launchLibraryClient.fetchData(.upcomingLaunches)
         }
     }
