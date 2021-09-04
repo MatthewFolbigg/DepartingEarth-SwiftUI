@@ -86,12 +86,28 @@ extension Launch {
     }
     
     static func removeStale(from context: NSManagedObjectContext) {
-        let ageOfStaleInSeconds: Double = 1800 //30 minutes
+        let ageOfStaleInSeconds: Double = 1800 //1800 seconds = 30 minutes
         let request = requestForAll()
         
         if let launches = try? context.fetch(request) {
             for launch in launches {
                 if launch.lastUpdated?.timeIntervalSinceNow ?? (ageOfStaleInSeconds * -1) <= (ageOfStaleInSeconds * -1) {
+                    context.delete(launch)
+                    print("Deleted: \(launch.name) \(launch.lastUpdated?.timeIntervalSinceNow ?? 0)")
+                }
+            }
+        }
+        try? context.save()
+    }
+    
+    static func removeOld(from context: NSManagedObjectContext) {
+        //TODO: If possible set this time to automatially align with the number of previous launches fetched from the API
+        let maximumTimeSinceLaunch: Double = 604800 // 604800 seconds = 7 Days
+        let request = requestForAll()
+        
+        if let launches = try? context.fetch(request) {
+            for launch in launches {
+                if launch.date.timeIntervalSinceNow <= (maximumTimeSinceLaunch * -1) {
                     context.delete(launch)
                     print("Deleted: \(launch.name) \(launch.lastUpdated?.timeIntervalSinceNow ?? 0)")
                 }

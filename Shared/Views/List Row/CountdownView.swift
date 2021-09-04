@@ -42,9 +42,7 @@ struct CountdownView: View {
             }
         }
         .onReceive(timer) { _ in
-            withAnimation {
                 countdown.updateComponents()
-            }
         }
     }
     

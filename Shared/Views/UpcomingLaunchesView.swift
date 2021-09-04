@@ -69,6 +69,7 @@ struct UpcomingLaunchesView: View {
     //MARK: Refreshing data
     func refreshLaunches(deletingFirst: Bool = false) {
         withAnimation {
+            launchLibraryClient.fetchData(.previousLaunches)
             launchLibraryClient.fetchData(.upcomingLaunches)
         }
     }

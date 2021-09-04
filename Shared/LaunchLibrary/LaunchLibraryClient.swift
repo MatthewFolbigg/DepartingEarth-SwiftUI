@@ -25,22 +25,36 @@ class LaunchLibraryApiClient: ObservableObject {
     }
     
     //MARK: - Endpoints
+    //TODO: refactor into a components system
     private static var baseUrl: String { developerMode ?
         "https://lldev.thespacedevs.com/2.2.0/" : "https://ll.thespacedevs.com/2.2.0/"
     }
     private static let inJson = "?format=json"
     private static let detailed = "?mode=detailed"
+    private static let includeSuborbital = "?include_suborbital=true"
+    private static let allLaunches = "launch/"
     private static let upcomingLaunches = "launch/upcoming/"
+    private static let previousLaunches = "launch/previous/"
+    private static let specificLaunch = "launch/"
     private static let agencies = "agencies/"
-    private static let first30 = "&limit=80&offset=0"
+    private static let first80 = "&limit=80&offset=0"
     
-    private static var upcomingLaunchesURL: String { baseUrl + upcomingLaunches + detailed + "&" + inJson + first30 }
+    private static var upcomingLaunchesURL: String { baseUrl + upcomingLaunches + detailed + "&" + inJson + first80 }
+    private static var previousLaunchesURL: String { baseUrl + previousLaunches + detailed + "&" + inJson + first80 }
+    private static var allLaunchesURL: String { baseUrl + allLaunches + detailed + "&" + includeSuborbital + "&" + inJson + first80} //currently capped at 100 per page
+    
     enum Endpoint {
+//        case allLaunches //currently capped at 100 per page
         case upcomingLaunches
+        case previousLaunches
+        case launchID(String)
         
         var url: URL {
             switch self {
             case .upcomingLaunches: return URL(string: upcomingLaunchesURL)!
+            case .previousLaunches: return URL(string: previousLaunchesURL)!
+//            case .allLaunches: return URL(string: allLaunchesURL)! //currently capped at 100 per page
+            case .launchID(let idString): return URL(string: baseUrl + specificLaunch + idString)!
             }
         }
     }
@@ -54,8 +68,9 @@ class LaunchLibraryApiClient: ObservableObject {
     }
 
     func fetchData(_ endpoint: Endpoint) {
-        //TODO: Update to be cancellable to prevent overlapping requests
+        //TODO: Update to be cancellable to prevent overlapping requests PER ENDPOINT
         let url = endpoint.url
+//        print(endpoint.url)
         let request = URLRequest(url: url)
         let decoder = JSONDecoder()
         
@@ -83,7 +98,7 @@ class LaunchLibraryApiClient: ObservableObject {
                     if let data = data {
                         if let decoded = try? decoder.decode(UpcomingLaunchApiResponse.self, from: data) {
                             let launches = decoded.results
-                            
+                            print(launches.count)
                             //MARK: Successful resquest but no launches
                             DispatchQueue.main.async {
                                 if launches.isEmpty {
@@ -125,9 +140,10 @@ class LaunchLibraryApiClient: ObservableObject {
     func store(results: [LaunchInfo], in context: NSManagedObjectContext) {
         for info in results {
             Launch.create(from: info, context: self.context)
-            try? self.context.save()
         }
+        try? self.context.save()
         Launch.removeStale(from: self.context)
+        Launch.removeOld(from: self.context)
     }
     
 }
