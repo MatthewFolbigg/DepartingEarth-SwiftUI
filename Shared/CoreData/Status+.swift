@@ -21,33 +21,37 @@ extension Status {
     //404 - Custom, local to App not from API - To provide a default value in the event of a nil status relationship
     
     //MARK:- Filtering
-    enum Filter: String {
+    enum Filter: String, CaseIterable {
         case departed = "Departed"
+        case failed = "Failed"
         case goForLaunch = "Go For Launch"
         case preparing = "Preparing"
         case unconfirmed = "Unconfirmed"
-        
-        static var allFilters: [Filter] { [.departed, .goForLaunch, .preparing, .unconfirmed] }
     }
     
-    static func predicateFor(filter: Filter) -> [NSPredicate] {
+    static func predicateFor(filter: Filter) -> NSCompoundPredicate {
         switch filter {
         case .departed:
-            return [
+            return NSCompoundPredicate(orPredicateWithSubpredicates: [
                 NSPredicate(format: "status_.statusID == %i", 3),
-                NSPredicate(format: "status_.statusID == %i", 4),
                 NSPredicate(format: "status_.statusID == %i", 6),
                 NSPredicate(format: "status_.statusID == %i", 7)
-            ]
+            ])
+        case .failed:
+            return NSCompoundPredicate(orPredicateWithSubpredicates: [
+                NSPredicate(format: "status_.statusID == %i", 4),
+                NSPredicate(format: "status_.statusID == %i", 7)
+            ])
         case .preparing:
-            return [
+            return NSCompoundPredicate(orPredicateWithSubpredicates: [
                 NSPredicate(format: "status_.statusID == %i", 8),
                 NSPredicate(format: "status_.statusID == %i", 5)
-            ]
-        case .goForLaunch: return [NSPredicate(format: "status_.statusID == %i", 1)]
-        case .unconfirmed: return [NSPredicate(format: "status_.statusID == %i", 2)]
+            ])
+        case .goForLaunch: return NSCompoundPredicate(orPredicateWithSubpredicates: [NSPredicate(format: "status_.statusID == %i", 1)])
+        case .unconfirmed: return NSCompoundPredicate(orPredicateWithSubpredicates: [NSPredicate(format: "status_.statusID == %i", 2)])
         }
     }
+    
     //MARK:-
     
     enum Situation: Int {
@@ -117,6 +121,7 @@ extension Status {
         }
     }
     
+    //MARK: Creation and Fetch Requests
     static func create(from info: LaunchStatus, context: NSManagedObjectContext) -> Status {
         let status = Status(context: context)
         status.statusID = Int16(info.id)

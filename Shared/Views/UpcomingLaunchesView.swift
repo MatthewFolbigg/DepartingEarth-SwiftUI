@@ -25,8 +25,7 @@ struct UpcomingLaunchesView: View {
     @State var providerFilter: String? = nil
     @FetchRequest var orbits: FetchedResults<Orbit>
     @State var orbitFilter: String? = nil
-//    @FetchRequest var statuses: FetchedResults<Status>
-    var statuses = Status.Filter.allFilters
+    var statuses = Status.Filter.allCases
     @State var statusFilter: String? = nil
     var isFiltered: Bool { providerFilter != nil || orbitFilter != nil || statusFilter != nil }
     func removeAllFilters() { providerFilter = nil; orbitFilter = nil; statusFilter = nil }
@@ -34,7 +33,6 @@ struct UpcomingLaunchesView: View {
     init() {
         _providers = FetchRequest(fetchRequest: Provider.requestForAll())
         _orbits = FetchRequest(fetchRequest: Orbit.requestForAll())
-//        _statuses = FetchRequest(fetchRequest: Status.requestForAll())
     }
     
     var body: some View {
