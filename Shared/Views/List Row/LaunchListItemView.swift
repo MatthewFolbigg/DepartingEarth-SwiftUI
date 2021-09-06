@@ -135,7 +135,7 @@ struct LaunchListItemView: View {
     var countdown: some View {
         CountdownView(
             countdown: launch.countdown,
-            stopped: launch.status.currentSituation.noCountdown,
+            stopped: !launch.status.currentSituation.activeCountdown,
             backgroundColor: .app.backgroundPrimary,//.opacity(0.5),
             textColor: .app.textPrimary
         )

@@ -53,7 +53,7 @@ struct LaunchDetailView: View {
     var countdown: some View {
         CountdownView(
             countdown: launch.countdown,
-            stopped: launch.status.currentSituation.noCountdown,
+            stopped: !launch.status.currentSituation.activeCountdown,
             backgroundColor: .app.backgroundPrimary,
             textColor: .app.textPrimary
         )

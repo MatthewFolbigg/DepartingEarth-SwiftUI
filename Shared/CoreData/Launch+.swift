@@ -86,6 +86,7 @@ extension Launch {
     }
     
     static func removeStale(from context: NSManagedObjectContext) {
+        //Removes data for future launches that have been cancelled/removed from the upcoming endpoint
         let ageOfStaleInSeconds: Double = 1800 //1800 seconds = 30 minutes
         let request = requestForAll()
         
@@ -101,6 +102,7 @@ extension Launch {
     }
     
     static func removeOld(from context: NSManagedObjectContext) {
+        //Removes data for past launches older than the maximumTimeSinceLaunch
         //TODO: If possible set this time to automatially align with the number of previous launches fetched from the API
         let maximumTimeSinceLaunch: Double = 604800 // 604800 seconds = 7 Days
         let request = requestForAll()

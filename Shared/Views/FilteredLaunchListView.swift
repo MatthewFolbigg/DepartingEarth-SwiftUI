@@ -72,7 +72,10 @@ struct FilteredLaunchListView: View {
         }
         
         if let statusFilter = statusFilter.wrappedValue {
-            predicates.append(NSPredicate(format: "status_.name == %@", statusFilter))
+//            predicates.append(NSPredicate(format: "status_.name == %@", statusFilter))
+            if let filter = Status.Filter(rawValue: statusFilter) {
+                predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: Status.predicateFor(filter: filter)))
+            }
         }
         
         if let orbitFilter = orbitFilter.wrappedValue {

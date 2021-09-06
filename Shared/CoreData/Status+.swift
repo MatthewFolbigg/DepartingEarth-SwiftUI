@@ -20,6 +20,36 @@ extension Status {
     // 8 - To Be Confirmed - Awaiting official confirmation, current date is known with some certainty.
     //404 - Custom, local to App not from API - To provide a default value in the event of a nil status relationship
     
+    //MARK:- Filtering
+    enum Filter: String {
+        case departed = "Departed"
+        case goForLaunch = "Go For Launch"
+        case preparing = "Preparing"
+        case unconfirmed = "Unconfirmed"
+        
+        static var allFilters: [Filter] { [.departed, .goForLaunch, .preparing, .unconfirmed] }
+    }
+    
+    static func predicateFor(filter: Filter) -> [NSPredicate] {
+        switch filter {
+        case .departed:
+            return [
+                NSPredicate(format: "status_.statusID == %i", 3),
+                NSPredicate(format: "status_.statusID == %i", 4),
+                NSPredicate(format: "status_.statusID == %i", 6),
+                NSPredicate(format: "status_.statusID == %i", 7)
+            ]
+        case .preparing:
+            return [
+                NSPredicate(format: "status_.statusID == %i", 8),
+                NSPredicate(format: "status_.statusID == %i", 5)
+            ]
+        case .goForLaunch: return [NSPredicate(format: "status_.statusID == %i", 1)]
+        case .unconfirmed: return [NSPredicate(format: "status_.statusID == %i", 2)]
+        }
+    }
+    //MARK:-
+    
     enum Situation: Int {
         case go = 1
         case dateUndetermined = 2
@@ -30,10 +60,10 @@ extension Status {
         case partialFailure = 7
         case dateUnconfirmed = 8
         
-        var noCountdown: Bool {
+        var activeCountdown: Bool {
             switch self {
-            case .go, .success, .inFlight, .partialFailure, .dateUnconfirmed: return false
-            case .failure, .hold, .dateUndetermined: return true
+            case .go, .success, .inFlight, .partialFailure, .dateUnconfirmed: return true
+            case .failure, .hold, .dateUndetermined: return false
             }
         }
         
@@ -60,19 +90,6 @@ extension Status {
             case .go, .success, .partialFailure, .failure : return "Confirmed"
             case .dateUnconfirmed : return "Expected"
             case .dateUndetermined: return "Estimated"
-            }
-        }
-        
-        var filterName: String {
-            switch self {
-            case .go : return "Launching"
-            case .success : return "Departed"
-            case .failure : return "Failed"
-            case .partialFailure : return "Partially Failed"
-            case .hold : return "Holding"
-            case .inFlight : return "In Flight"
-            case .dateUnconfirmed : return "Expected"
-            case .dateUndetermined: return "No Date"
             }
         }
     }
