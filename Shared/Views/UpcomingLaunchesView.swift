@@ -61,7 +61,7 @@ struct UpcomingLaunchesView: View {
                     ToolbarItem(placement: .automatic) { pinToolBarItem }
                 }
             }
-            if isDownloading { launchLibraryActivityIndicator }
+            if isDownloading { LaunchLibraryActivityIndicator() }
         }
     }
     
@@ -72,23 +72,7 @@ struct UpcomingLaunchesView: View {
             launchLibraryClient.fetchData(.upcomingLaunches)
         }
     }
-    
-    var launchLibraryActivityIndicator: some View {
-        VStack {
-            ProgressView()
-                .padding(.top)
-            Text("Getting Launches")
-                .padding(.vertical)
-        }
-        .frame(width: 200, height: 120, alignment: .center)
-        .foregroundColor(.secondary)
-        .background(
-            Color.app.backgroundPrimary
-                .opacity(0.9)
-        )
-        .clipShape(RoundedRectangle(cornerRadius: 20))
-    }
-        
+            
 }
 
 //MARK: ToolBar Items

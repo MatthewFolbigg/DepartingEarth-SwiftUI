@@ -44,10 +44,6 @@ struct FilteredLaunchListView: View {
     }
     
     var backgroundGradient: some View {
-//        LinearGradient(
-//            gradient: gradient,
-//            startPoint: .topLeading,
-//            endPoint: .bottomTrailing)
         let gradientColors: [Color] = [.app.backgroundPrimary, .app.backgroundPlain]
         let gradient = colorScheme == .light ? Gradient(colors: gradientColors.reversed()) : Gradient(colors: gradientColors)
         return RadialGradient(gradient: gradient, center: .topLeading, startRadius: 1, endRadius: 600)

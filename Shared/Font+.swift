@@ -15,7 +15,10 @@ extension Font {
         //let x = Font.system(<#T##style: Font.TextStyle##Font.TextStyle#>, design: design).weight(<#T##weight: Font.Weight##Font.Weight#>)
         
         private static let design: Font.Design = .default
-                
+        
+        //Main UI
+        let activityIndicator = Font.system(.headline, design: design).weight(.semibold)
+        
         //Countdowns
         let countdown = Font.system(.body, design: design).weight(.regular)
         
