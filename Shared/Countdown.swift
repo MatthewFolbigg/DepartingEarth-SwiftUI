@@ -11,7 +11,9 @@ class Countdown: ObservableObject {
     
     @Published var date: Date
     @Published var components: CountdownComponentStrings
-        
+    
+    var isMinus: Bool { return components.minus == "-" }
+    
     init(to date: Date) {
         self.date = date
         self.components = LaunchDateFormatter.countdownComponents(untill: date)

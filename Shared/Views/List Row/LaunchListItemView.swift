@@ -150,7 +150,7 @@ struct LaunchListItemView_Previews: PreviewProvider {
     static var previews: some View {
         let launch = PersistenceController.testData()
         List {
-            LaunchListItemView(launch: launch, isPinned: false).environmentObject(PinnedLaunches())
+            LaunchListItemView(launch: launch, isPinned: false).environmentObject(PinnedLaunches.shared)
             
         }
         .listStyle(PlainListStyle())

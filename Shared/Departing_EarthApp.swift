@@ -15,7 +15,7 @@ struct Departing_EarthApp: App {
     var body: some Scene {
         WindowGroup {
             UpcomingLaunchesView()
-                .environmentObject(PinnedLaunches())
+                .environmentObject(PinnedLaunches.shared)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

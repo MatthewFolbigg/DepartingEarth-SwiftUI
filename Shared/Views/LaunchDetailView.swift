@@ -121,7 +121,7 @@ struct LaunchDetailView_Previews: PreviewProvider {
     static var previews: some View {
         let launch = PersistenceController.testData()
         LaunchDetailView(launch: launch)
-            .environmentObject(PinnedLaunches())
+            .environmentObject(PinnedLaunches.shared)
             .previewDevice("iPhone 12")
     }
 }

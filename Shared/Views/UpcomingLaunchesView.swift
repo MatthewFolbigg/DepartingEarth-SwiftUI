@@ -68,7 +68,6 @@ struct UpcomingLaunchesView: View {
     //MARK: Refreshing data
     func refreshLaunches(deletingFirst: Bool = false) {
         withAnimation {
-            launchLibraryClient.fetchData(.previousLaunches)
             launchLibraryClient.fetchData(.upcomingLaunches)
         }
     }
@@ -94,6 +93,7 @@ extension UpcomingLaunchesView {
             action: { withAnimation { showPinned.toggle() } },
             label: { Label("Pinned", systemImage: showPinned ? "pin.circle.fill" : "pin.circle") }
         )
+        .disabled(showPinned == false && pinned.launchIDs.count == 0)
     }
 }
 
@@ -219,6 +219,6 @@ extension UpcomingLaunchesView {
 struct NEWUpcomingLaunchesView_Previews: PreviewProvider {
     static var previews: some View {
         UpcomingLaunchesView()
-            .environmentObject(PinnedLaunches())
+            .environmentObject(PinnedLaunches.shared)
     }
 }

@@ -70,7 +70,7 @@ class LaunchLibraryApiClient: ObservableObject {
     func fetchData(_ endpoint: Endpoint) {
         //TODO: Update to be cancellable to prevent overlapping requests PER ENDPOINT
         let url = endpoint.url
-//        print(endpoint.url)
+        print(endpoint.url)
         let request = URLRequest(url: url)
         let decoder = JSONDecoder()
         
@@ -98,7 +98,7 @@ class LaunchLibraryApiClient: ObservableObject {
                     if let data = data {
                         if let decoded = try? decoder.decode(UpcomingLaunchApiResponse.self, from: data) {
                             let launches = decoded.results
-                            print(launches.count)
+                            print("Launch Info returned: \(launches.count)")
                             //MARK: Successful resquest but no launches
                             DispatchQueue.main.async {
                                 if launches.isEmpty {
@@ -142,8 +142,12 @@ class LaunchLibraryApiClient: ObservableObject {
             Launch.create(from: info, context: self.context)
         }
         try? self.context.save()
-        Launch.removeStale(from: self.context)
-        Launch.removeOld(from: self.context)
+        
+        if results.count > 1 {
+            //Only tidy on batch updates
+            Launch.removeStale(from: self.context)
+            Launch.removeOld(from: self.context)
+        }
     }
     
 }

@@ -12,6 +12,8 @@ class PinnedLaunches: ObservableObject {
     
     @Published private(set) var model = CustomList(name: "PinnedLaunches")
     
+    static var shared = PinnedLaunches()
+    
     var launchIDs: [String] { model.launchIDs }
     
     func togglePin(for launch: Launch) {

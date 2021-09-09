@@ -85,16 +85,49 @@ extension Launch {
         PersistenceController.deleteAll(entityName: "Launch", from: context)
     }
     
+    //MARK: - Updates and managing data accuracy
+    func delete(from context: NSManagedObjectContext, excludingPinned: Bool) {
+        if PinnedLaunches.shared.isPinned(self) && excludingPinned {
+            PinnedLaunches.shared.togglePin(for: self)
+        }
+        context.delete(self)
+        print("Deleted: \(self.name) \(self.lastUpdated?.timeIntervalSinceNow ?? 0)")
+    }
+    
+    func downloadUpdate() {
+        if let updateID = self.launchID {
+            LaunchLibraryApiClient.shared.fetchData(.launchID(updateID))
+        }
+    }
+    
+    static func checkMismatchedStatus(for launch: Launch, in context: NSManagedObjectContext) {
+        // Used to update launches that are donwloaded pre-launch and then not updated post launch before they are removed from the upcoming launches endpoint
+
+        if (launch.hasLaunched && launch.countdown.isMinus) || (!launch.hasLaunched && !launch.countdown.isMinus) {
+            // Countdown or Status is incorrect and needs to be updated
+            print("A status/countdown mismatch was found: \(launch.launchID!)")
+            print("Downloading Update for: \(launch.name)")
+            launch.downloadUpdate()
+        }
+    }
+    
     static func removeStale(from context: NSManagedObjectContext) {
-        //Removes data for future launches that have been cancelled/removed from the upcoming endpoint
+        //Called after an LaunchLibrary update to remove data for future launches that have been cancelled/removed from the upcoming endpoint
         let ageOfStaleInSeconds: Double = 1800 //1800 seconds = 30 minutes
         let request = requestForAll()
         
         if let launches = try? context.fetch(request) {
             for launch in launches {
-                if launch.lastUpdated?.timeIntervalSinceNow ?? (ageOfStaleInSeconds * -1) <= (ageOfStaleInSeconds * -1) {
-                    context.delete(launch)
-                    print("Deleted: \(launch.name) \(launch.lastUpdated?.timeIntervalSinceNow ?? 0)")
+                
+                if PinnedLaunches.shared.isPinned(launch) {
+                    //Prevents the removal of a pinned launch but makes sure it has/will get a final status/countdown
+                    //TODO: this has the potential to break the API rate limit if many launches are pinned
+                    checkMismatchedStatus(for: launch, in: context)
+                } else {
+                    //Removes non pinned launches that havent been including in a recent LLAPI respone
+                    if launch.lastUpdated?.timeIntervalSinceNow ?? (ageOfStaleInSeconds * -1) <= (ageOfStaleInSeconds * -1) {
+                        launch.delete(from: context, excludingPinned: true)
+                    }
                 }
             }
         }
@@ -110,7 +143,7 @@ extension Launch {
         if let launches = try? context.fetch(request) {
             for launch in launches {
                 if launch.date.timeIntervalSinceNow <= (maximumTimeSinceLaunch * -1) {
-                    context.delete(launch)
+                    launch.delete(from: context, excludingPinned: true)
                     print("Deleted: \(launch.name) \(launch.lastUpdated?.timeIntervalSinceNow ?? 0)")
                 }
             }
@@ -149,7 +182,7 @@ extension Launch {
     //MARK: - Entity Info/Stats
     static func count(in context: NSManagedObjectContext) -> Int {
         if let count = try? context.count(for: NSFetchRequest(entityName: "Launch")) {
-            print("count: \(count)")
+            print("CoreData Launch count: \(count)")
             return count
         } else {
             return 0
