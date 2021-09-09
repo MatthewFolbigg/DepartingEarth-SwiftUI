@@ -17,7 +17,7 @@ extension Font {
         private static let design: Font.Design = .default
         
         //Main UI
-        let activityIndicator = Font.system(.headline, design: design).weight(.semibold)
+        let activityIndicator = Font.system(.title3, design: design).weight(.semibold)
         
         //Countdowns
         let countdown = Font.system(.body, design: design).weight(.semibold)

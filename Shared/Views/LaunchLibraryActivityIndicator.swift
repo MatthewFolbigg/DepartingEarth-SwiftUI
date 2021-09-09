@@ -18,7 +18,7 @@ struct LaunchLibraryActivityIndicator: View {
                 .font(.app.activityIndicator)
         }
         .frame(width: 250, height: 150, alignment: .center)
-        .foregroundColor(.secondary)
+        .foregroundColor(.app.textPrimary)
         .background(
             Color.app.backgroundPrimary
                 .opacity(0.9)
