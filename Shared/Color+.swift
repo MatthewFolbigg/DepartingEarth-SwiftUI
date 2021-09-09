@@ -15,14 +15,16 @@ extension Color {
         //Launch Status Colours
         let statusGreen = Color("StatusGreenLight")
         let statusGreenDark = Color("StatusGreenDark")
+        let statusRed = Color("StatusRedLight")
+        let statusRedDark = Color("StatusRedDark")
+        
         let statusYellow = Color("StatusYellow")
-        let statusRed = Color("StatusRed")
         let statusOrange = Color("StatusOrange")
         
         //Text Colours
         let textPrimary = Color("Primary Text")
         let textSecondary = Color("Secondary Text")
-        let textAccented = Color("App Accent")
+        let textAccented = Color("App Accented Text")
         
         //Accents
         let control = Color("Control Accent One")

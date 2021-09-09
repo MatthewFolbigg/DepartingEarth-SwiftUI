@@ -78,12 +78,13 @@ extension Status {
     }
     
     var gradient: Gradient {
+        //TODO: Confirm all colours
         switch self.currentSituation {
         case .go : return Gradient(colors: [.app.statusGreen, .app.statusGreenDark])
         case .success : return Gradient(colors: [.app.statusGreen, .app.statusGreenDark])
-        case .failure : return Gradient(colors: [.app.statusRed])
-        case .partialFailure : return Gradient(colors: [.app.statusRed, .blue])
-        case .hold : return Gradient(colors: [.yellow])
+        case .failure : return Gradient(colors: [.app.statusRed, .app.statusRedDark])
+        case .partialFailure : return Gradient(colors: [.app.statusRed, .app.statusGreen])
+        case .hold : return Gradient(colors: [.app.statusYellow, .app.statusGreen])
         case .inFlight : return Gradient(colors: [.app.statusGreen, .orange])
         case .dateUnconfirmed : return Gradient(colors: [.app.statusGreen, .app.statusGreenDark])
         case .dateUndetermined: return Gradient(colors: [.app.textAccented])
