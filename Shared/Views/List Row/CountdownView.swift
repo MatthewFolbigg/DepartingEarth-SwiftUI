@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CountdownView: View {
+    //TODO: Don't display a countdown when stopepd
     
     @ObservedObject var countdown: Countdown
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -27,8 +28,8 @@ struct CountdownView: View {
     
     struct drawing {
         static let componentSpacing: CGFloat = 6
-        static let textBorderV: CGFloat = 0
-        static let cornerRadius: CGFloat = 5
+        static let textBorderV: CGFloat = 3
+        static let cornerRadius: CGFloat = 4
     }
     
     var body: some View {

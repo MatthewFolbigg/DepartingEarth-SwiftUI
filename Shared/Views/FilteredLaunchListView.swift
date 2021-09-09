@@ -28,12 +28,12 @@ struct FilteredLaunchListView: View {
             List {
                 ForEach(launches, id: \.self.launchID) { launch in
                     ZStack {
-                        LaunchListItemView(launch: launch, isPinned: pinned.isPinned(launch))
+//                        LaunchListItemView(launch: launch)
+                        LaunchListItemViewV2(launch: launch)
                          NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }
                             .hidden()
                     }
-//                    .listRowBackground(Color.app.backgroundAccented)
-                    .listRowBackground(backgroundGradient)
+                    .listRowBackground(Color.app.backgroundPlain)
                 }
             }
             .background(Color.app.backgroundPlain).ignoresSafeArea()
@@ -43,11 +43,11 @@ struct FilteredLaunchListView: View {
         }
     }
     
-    var backgroundGradient: some View {
-        let gradientColors: [Color] = [.app.backgroundPrimary, .app.backgroundPlain]
-        let gradient = colorScheme == .light ? Gradient(colors: gradientColors.reversed()) : Gradient(colors: gradientColors)
-        return RadialGradient(gradient: gradient, center: .topLeading, startRadius: 1, endRadius: 600)
-    }
+//    var backgroundGradient: some View {
+//        let gradientColors: [Color] = [.app.backgroundPrimary, .app.backgroundPlain]
+//        let gradient = colorScheme == .light ? Gradient(colors: gradientColors.reversed()) : Gradient(colors: gradientColors)
+//        return RadialGradient(gradient: gradient, center: .topLeading, startRadius: 1, endRadius: 600)
+//    }
     
     init(pinnedIDs: [String] = [], showPinned: Binding<Bool> = .constant(false), providerFilter: Binding<String?> = .constant(nil), statusFilter: Binding<String?> = .constant(nil), orbitFilter: Binding<String?> = .constant(nil), sortAscending: Bool = true) {
         

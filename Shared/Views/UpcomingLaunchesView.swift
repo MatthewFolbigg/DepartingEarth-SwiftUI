@@ -25,8 +25,10 @@ struct UpcomingLaunchesView: View {
     @State var providerFilter: String? = nil
     @FetchRequest var orbits: FetchedResults<Orbit>
     @State var orbitFilter: String? = nil
+    
     var statuses = Status.Filter.allCases
     @State var statusFilter: String? = nil
+    
     var isFiltered: Bool { providerFilter != nil || orbitFilter != nil || statusFilter != nil }
     func removeAllFilters() { providerFilter = nil; orbitFilter = nil; statusFilter = nil }
         
@@ -53,7 +55,8 @@ struct UpcomingLaunchesView: View {
                 }
                     
                 //MARK: - Navigation and ToolBar
-                .navBarAppearance(forground: .app.textPrimary, background: .app.backgroundAccented, tint: .app.control, hasSeperator: false)
+//                .navBarAppearance(forground: .app.textPrimary, background: .app.backgroundPlain, tint: .app.control, hasSeperator: false)
+                .navBarAppearance(forground: .white, background: .app.backgroundAccented, tint: .app.control, hasSeperator: false)
                 .navigationTitle(showPinned ? "Tracking" : "Departing Earth")
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) { refreshToolBarItem }

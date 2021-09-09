@@ -35,7 +35,7 @@ struct GroupedSectionStyleModifier: ViewModifier {
 }
 
 extension View {
-    func groupedSectionStyle(forgroundColor: Color = .app.textPrimary, backgroundColor: Color = .app.backgroundPrimary, cornerRadius: CGFloat = 20, padding: CGFloat = 20) -> some View {
+    func groupedSectionStyle(forgroundColor: Color = .white, backgroundColor: Color = .app.backgroundAccented, cornerRadius: CGFloat = 20, padding: CGFloat = 20) -> some View {
         self.modifier(GroupedSectionStyleModifier(forgroundColor: forgroundColor, backgroundColor: backgroundColor, cornerRadius: cornerRadius, padding: padding))
     }
 }

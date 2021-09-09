@@ -24,7 +24,7 @@ struct LaunchListItemView: View {
         static let textMinimumScale: CGFloat = 0.8
     }
     
-    init(launch: Launch, isPinned: Bool) {
+    init(launch: Launch) {
         self.launch = launch
     }
         
@@ -107,7 +107,7 @@ struct LaunchListItemView: View {
     //MARK: - Status
     var status: some View {
         HStack(alignment: .firstTextBaseline, spacing: drawing.hItemSpacing) {
-            Label(launch.status.currentSituation.name, systemImage: launch.status.iconName)
+            Label(launch.status.name, systemImage: launch.status.iconName)
                 .tagStyle(color: .app.textSecondary)
 //                .font(.app.listItemRegular)
 //                .lineLimit(1)
@@ -135,7 +135,7 @@ struct LaunchListItemView: View {
     var countdown: some View {
         CountdownView(
             countdown: launch.countdown,
-            stopped: !launch.status.currentSituation.activeCountdown,
+            stopped: !launch.status.hasActiveCountdown,
             backgroundColor: .app.backgroundPrimary,//.opacity(0.5),
             textColor: .app.textPrimary
         )
@@ -150,7 +150,7 @@ struct LaunchListItemView_Previews: PreviewProvider {
     static var previews: some View {
         let launch = PersistenceController.testData()
         List {
-            LaunchListItemView(launch: launch, isPinned: false).environmentObject(PinnedLaunches.shared)
+            LaunchListItemView(launch: launch).environmentObject(PinnedLaunches.shared)
             
         }
         .listStyle(PlainListStyle())

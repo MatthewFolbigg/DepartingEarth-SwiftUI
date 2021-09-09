@@ -13,7 +13,8 @@ extension Color {
     
     struct AppTheme {
         //Launch Status Colours
-        let statusGreen = Color("StatusGreen")
+        let statusGreen = Color("StatusGreenLight")
+        let statusGreenDark = Color("StatusGreenDark")
         let statusYellow = Color("StatusYellow")
         let statusRed = Color("StatusRed")
         let statusOrange = Color("StatusOrange")
@@ -21,13 +22,14 @@ extension Color {
         //Text Colours
         let textPrimary = Color("Primary Text")
         let textSecondary = Color("Secondary Text")
+        let textAccented = Color("App Accent")
         
         //Accents
         let control = Color("Control Accent One")
         
         //Backgrounds
         let backgroundPlain = Color("Background Plain")
-        let backgroundAccented = Color("Background Accented")
+        let backgroundAccented = Color("App Accent")
         let backgroundPrimary = Color("Background Primary")
         
     }

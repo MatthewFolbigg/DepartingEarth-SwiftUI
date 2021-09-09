@@ -93,7 +93,7 @@
     <entity name="Status" representedClassName="Status" syncable="YES" codeGenerationType="class">
         <attribute name="abbreviation" optional="YES" attributeType="String"/>
         <attribute name="infoText" optional="YES" attributeType="String"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="name_" optional="YES" attributeType="String"/>
         <attribute name="statusID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="launches" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Launch" inverseName="status_" inverseEntity="Launch"/>
         <uniquenessConstraints>

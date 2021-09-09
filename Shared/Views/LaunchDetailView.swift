@@ -37,7 +37,7 @@ struct LaunchDetailView: View {
             }
             .padding(25)
         }
-        .background(Color.app.backgroundAccented.ignoresSafeArea())
+        .background(Color.app.backgroundPlain.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline) //TODO: Not available on MacOS
         .navigationTitle(launch.mission?.name ?? "Flight")
         .toolbar {
@@ -53,9 +53,9 @@ struct LaunchDetailView: View {
     var countdown: some View {
         CountdownView(
             countdown: launch.countdown,
-            stopped: !launch.status.currentSituation.activeCountdown,
-            backgroundColor: .app.backgroundPrimary,
-            textColor: .app.textPrimary
+            stopped: !launch.status.hasActiveCountdown,
+            backgroundColor: .app.backgroundAccented,
+            textColor: .white
         )
     }
     
@@ -67,7 +67,7 @@ struct LaunchDetailView: View {
                 Text("Status").font(.app.sectionTitle)
                 Spacer()
             }
-            Label(launch.status.currentSituation.name, systemImage: launch.status.iconName)
+            Label(launch.status.name, systemImage: launch.status.iconName)
             Label(launch.dateString(), systemImage: "calendar")
             Text(launch.status.infoText ?? "")
                 .font(.app.sectionCaption)

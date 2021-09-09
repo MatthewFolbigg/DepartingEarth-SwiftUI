@@ -83,7 +83,7 @@ struct PersistenceController {
             id: "testLaunchID",
             name: "A Big Rocket",
             launchStatus: LaunchStatus(
-                id: 2,
+                id: 1,
                 name: "To Be Determined",
                 abbrev: "TBD",
                 description: "Current date is a 'No Earlier Than' estimation based on unreliable or interpreted sources."),

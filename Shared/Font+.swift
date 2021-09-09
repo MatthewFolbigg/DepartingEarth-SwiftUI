@@ -20,7 +20,7 @@ extension Font {
         let activityIndicator = Font.system(.headline, design: design).weight(.semibold)
         
         //Countdowns
-        let countdown = Font.system(.body, design: design).weight(.regular)
+        let countdown = Font.system(.body, design: design).weight(.semibold)
         
         //Information Sections
         let sectionTitle = Font.system(.title2, design: design).weight(.medium)
@@ -32,6 +32,11 @@ extension Font {
         let listItemProminent   = Font.system(.headline, design: design).weight(.black)
         let listItemRegular     = Font.system(.subheadline, design: design).weight(.regular)
         let listItemLight       = Font.system(.subheadline, design: design).weight(.ultraLight)
+        
+        //row
+        let rowTitle = Font.system(.title, design: design).weight(.bold)
+        let rowSubtitle = Font.system(.title2, design: design).weight(.semibold)
+        let rowElement = Font.system(.headline, design: design).weight(.semibold)
         
     }
 }
