@@ -54,14 +54,24 @@ struct UpcomingLaunchesView: View {
                 }
                     
                 //MARK: - Navigation and ToolBar
-                    .navBarAppearance(forground: .app.textAccented, background: .app.backgroundPlain, tint: .app.control, hasSeperator: true)
-                .navigationTitle(showPinned ? "Tracking" : "Departing Earth")
+//                .navBarAppearance(forground: .app.textAccented, background: .app.backgroundPlain, tint: .app.control, hasSeperator: true)
+                .navigationBarTitleDisplayMode(.inline)
+//                .navigationTitle(showPinned ? "Tracking" : "Departing Earth")
                 .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        HStack() {
+                            Image(showPinned ? "nosecone.fill" : "nosecone.fill")
+                            Text(showPinned ? "Tracking" : "Departing Earth")
+                                .font(.system(size: 20, weight: .bold, design: .monospaced))
+                        }
+                        .foregroundColor(.app.textAccented)
+                    }
                     ToolbarItem(placement: .cancellationAction) { refreshToolBarItem }
                     ToolbarItem(placement: .navigationBarTrailing) { filterToolBarItem } //TODO: Position for MacOS
                     ToolbarItem(placement: .automatic) { pinToolBarItem }
                 }
             }
+            .accentColor(.app.control)
             if isDownloading { LaunchLibraryActivityIndicator() }
         }
     }

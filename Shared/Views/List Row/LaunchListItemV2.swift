@@ -28,6 +28,10 @@ struct LaunchListItemViewV2: View {
                     }
                 }
                 Spacer()
+                VStack() {
+                    countdownComponent
+                    Spacer()
+                }
             }
         }
         .padding(.vertical, 10)
@@ -64,6 +68,32 @@ struct LaunchListItemViewV2: View {
             .tagStyle(color: .gray)
     }
     
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    var countdownComponent: some View {
+        ZStack(alignment: .center) {
+            RoundedRectangle(cornerRadius: 10)
+                .frame(maxWidth: 80, maxHeight: 60)
+                .foregroundColor(.app.backgroundAccented)
+            VStack(alignment: .trailing) {
+                let countdownElements = firstNonZero(components: launch.countdown.componentInts)
+                Text("\(countdownElements.0 ? "-" : "+")\(String(countdownElements.1))")
+                Text(countdownElements.2)
+            }
+            .onReceive(timer) { _ in
+                launch.countdown.updateComponents()
+            }
+            .font(.system(size: 17, weight: .black, design: .monospaced))
+            .foregroundColor(.white)
+        }
+    }
+    
+    func firstNonZero(components: CountdownComponentInts) -> (Bool, Int, String) {
+        guard components.days == 0 else { return (components.minus, components.days, "Days") }
+        guard components.hours == 0 else { return (components.minus,components.hours, "Hours") }
+        guard components.minutes == 0 else { return (components.minus,components.minutes, "Mins") }
+        guard components.seconds == 0 else { return (components.minus,components.seconds, "Secs") }
+        return (true, 0, "Launch!")
+    }
     
 //    var countdown: some View {
 //        let countdown = Countdown(to: launch.date)
