@@ -43,7 +43,6 @@ struct UpcomingLaunchesView: View {
                 //MARK: - Main View
                 FilteredLaunchListView(pinnedIDs: pinned.launchIDs, showPinned: $showPinned, providerFilter: $providerFilter, statusFilter: $statusFilter, orbitFilter: $orbitFilter, sortAscending: sortOrderAscending)
                     .id(launchLibraryClient.lastSuccessfulFetch)
-                
                 //MARK: - On Appear
                 .onAppear {
                     if Launch.count(in: viewContext) == 0 {
@@ -55,8 +54,7 @@ struct UpcomingLaunchesView: View {
                 }
                     
                 //MARK: - Navigation and ToolBar
-//                .navBarAppearance(forground: .app.textPrimary, background: .app.backgroundPlain, tint: .app.control, hasSeperator: false)
-                .navBarAppearance(forground: .white, background: .app.backgroundAccented, tint: .app.control, hasSeperator: false)
+                    .navBarAppearance(forground: .app.textAccented, background: .app.backgroundPlain, tint: .app.control, hasSeperator: true)
                 .navigationTitle(showPinned ? "Tracking" : "Departing Earth")
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) { refreshToolBarItem }

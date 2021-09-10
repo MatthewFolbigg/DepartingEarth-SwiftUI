@@ -22,8 +22,8 @@ struct TagStyleModifier: ViewModifier {
             .foregroundColor(color)
             .colorMultiply(multiplyColor)
             .saturation(isDark ? 3 : 1)
-            .padding(4)
-            .padding(.trailing, 10)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 5)
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .foregroundColor(color)
@@ -35,7 +35,7 @@ struct TagStyleModifier: ViewModifier {
     
 }
 
-extension Label {
+extension View {
     func tagStyle(color: Color) -> some View {
         self.modifier(TagStyleModifier(color: color))
     }

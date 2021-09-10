@@ -25,23 +25,23 @@ extension Mission {
     var symbolForType: String {
         switch self.type {
         //Utility
-        case "Resupply": return "shippingbox.fill"
+        case "Resupply": return "shippingbox"
         //Deployment
         case "Communications": return "antenna.radiowaves.left.and.right"
-        case "Dedicated Rideshare": return "square.stack.3d.up.fill"
+        case "Dedicated Rideshare": return "square.stack.3d.up"
         //Science
-        case "Earth Science": return "cloud.drizzle.fill"
-        case "Planetary Science": return "binoculars.fill"
-        case "Heliophysics": return "sun.max.fill"
-        case "Astrophysics": return "sun.max.fill"
+        case "Earth Science": return "cloud.drizzle"
+        case "Planetary Science": return "binoculars"
+        case "Heliophysics": return "sun.max"
+        case "Astrophysics": return "sun.max"
         //Exploration
-        case "Human Exploration": return "person.2.fill"
+        case "Human Exploration": return "person.2"
         case "Robotic Exploration": return "cpu"
         //Other
-        case "Test Flight": return "paperplane.fill"
-        case "Suborbital": return "circle.bottomhalf.fill"
-        case "Government/Top Secret": return "key.fill"
-        default: return "circle.fill"
+        case "Test Flight": return "paperplane"
+        case "Suborbital": return "circle.bottomhalf"
+        case "Government/Top Secret": return "questionmark.folder"
+        default: return "circle"
         }
     }
     

@@ -24,31 +24,24 @@ struct FilteredLaunchListView: View {
     var isFiltered: Bool { providerFilter != nil || orbitFilter != nil || statusFilter != nil}
     
     var body: some View {
-        ZStack {
-            List {
-                ForEach(launches, id: \.self.launchID) { launch in
-                    ZStack {
-//                        LaunchListItemView(launch: launch)
-                        LaunchListItemViewV2(launch: launch)
-                         NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }
-                            .hidden()
-                    }
-                    .listRowBackground(Color.app.backgroundPlain)
+        List {
+            ForEach(launches, id: \.self.launchID) { launch in
+                ZStack {
+                    LaunchListItemViewV2(launch: launch)
+                    NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }
+                        .hidden()
                 }
             }
-            .background(Color.app.backgroundPlain).ignoresSafeArea()
+            .listRowBackground(Color.app.backgroundPlain)
+            .onAppear() {
+                UITableView.appearance().separatorStyle = .none
+            }
+            .listStyle(GroupedListStyle())
             
-            .listStyle(PlainListStyle())
             if launches.isEmpty { emptyListIndicator.zIndex(1).animation(.easeInOut) }
         }
     }
-    
-//    var backgroundGradient: some View {
-//        let gradientColors: [Color] = [.app.backgroundPrimary, .app.backgroundPlain]
-//        let gradient = colorScheme == .light ? Gradient(colors: gradientColors.reversed()) : Gradient(colors: gradientColors)
-//        return RadialGradient(gradient: gradient, center: .topLeading, startRadius: 1, endRadius: 600)
-//    }
-    
+        
     init(pinnedIDs: [String] = [], showPinned: Binding<Bool> = .constant(false), providerFilter: Binding<String?> = .constant(nil), statusFilter: Binding<String?> = .constant(nil), orbitFilter: Binding<String?> = .constant(nil), sortAscending: Bool = true) {
         
         UITableView.appearance().backgroundColor = .clear //TODO: Not available on MacOS

@@ -20,7 +20,7 @@ extension Font {
         let activityIndicator = Font.system(.title3, design: design).weight(.semibold)
         
         //Countdowns
-        let countdown = Font.system(.body, design: design).weight(.semibold)
+        let countdown = Font.system(.footnote, design: design).weight(.semibold)
         
         //Information Sections
         let sectionTitle = Font.system(.title2, design: design).weight(.medium)
@@ -34,9 +34,9 @@ extension Font {
         let listItemLight       = Font.system(.subheadline, design: design).weight(.ultraLight)
         
         //row
-        let rowTitle = Font.system(.title, design: design).weight(.bold)
-        let rowSubtitle = Font.system(.title2, design: design).weight(.semibold)
-        let rowElement = Font.system(.headline, design: design).weight(.semibold)
+        let rowTitle = Font.system(.title3, design: design).weight(.black)
+        let rowSubtitle = Font.system(.title3, design: design).weight(.semibold)
+        let rowElement = Font.system(.subheadline, design: design).weight(.regular)
         
     }
 }

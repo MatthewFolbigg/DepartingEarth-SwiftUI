@@ -16,25 +16,23 @@ struct LaunchListItemViewV2: View {
     var iconSize: CGFloat = 22
     
     var body: some View {
-        HStack(alignment: .top, spacing: 0) {
-            VStack(alignment: .leading, spacing: 0) {
-                providerName
-                rocketName
-                Spacer()
-                missionName
-                Spacer(minLength: 25)
-                countdown
-            }
-            Spacer()
-            VStack(alignment: .leading, spacing: 5) {
-                statusIcon
-                pinIcon
+        VStack {
+            HStack() {
+                VStack(alignment: .leading, spacing: 0) {
+                    providerName
+                    rocketName
+                    Spacer()
+                    VStack(alignment: .leading, spacing: 5) {
+                        missionName
+                        date
+                    }
+                }
                 Spacer()
             }
-            .padding(.top, 5)
         }
-        .padding(.vertical)
+        .padding(.vertical, 10)
     }
+    
     
     var providerName: some View {
         Text(launch.provider?.compactName ?? "")
@@ -54,19 +52,31 @@ struct LaunchListItemViewV2: View {
             .font(.app.rowElement)
             .foregroundColor(.app.textPrimary)
             .lineLimit(1)
+            .tagStyle(color: .gray)
     }
     
-    var countdown: some View {
-        let countdown = Countdown(to: launch.date)
-        return
-            CountdownView(
-            countdown: countdown,
-            stopped: !launch.status.hasActiveCountdown,
-            backgroundColor: .app.backgroundAccented,
-            textColor: .white
-        )
-            .aspectRatio(CGSize(width: 9, height: 1), contentMode: .fit)
+    var date: some View {
+        let calIcon = Image(systemName: "calendar")
+        return Text("\(calIcon) \(launch.dateString(compact: true))")
+            .font(.app.rowElement)
+            .foregroundColor(.app.textPrimary)
+            .lineLimit(1)
+            .tagStyle(color: .gray)
     }
+    
+    
+//    var countdown: some View {
+//        let countdown = Countdown(to: launch.date)
+//        return
+//            CountdownView(
+//            countdown: countdown,
+//            stopped: !launch.status.hasActiveCountdown,
+//            backgroundColor: .app.backgroundAccented,
+//            textColor: .white
+//        )
+//            .aspectRatio(CGSize(width: 9, height: 1), contentMode: .fit)
+//            .fixedSize(horizontal: true, vertical: false)
+//    }
     
     var statusIcon: some View {
         LinearGradient(
