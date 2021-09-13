@@ -21,10 +21,12 @@ struct LaunchDetailView: View {
             VStack(alignment: .leading, spacing: 15) {
                 HStack {
                     Spacer()
-                    countdown
-                        .aspectRatio(CGSize(width: 11, height: 1), contentMode: .fit)
-                        .scaleEffect(1.2)
-                    Spacer()
+                    if launch.status.hasActiveCountdown {
+                        countdown
+                            .aspectRatio(CGSize(width: 11, height: 1), contentMode: .fit)
+                            .scaleEffect(1.2)
+                        Spacer()
+                    }
                 }
                 statusSection
                 missionSection

@@ -31,6 +31,12 @@ struct LaunchListItemViewV2: View {
                 VStack() {
                     countdownComponent
                     Spacer()
+                    if pinned.isPinned(launch) {
+                        //TODO: This is a plcehold icon pinned
+                        Text("\(Image(systemName: "pin.fill")) Tracking")
+                            .font(.app.rowElement)
+                            .foregroundColor(.app.statusOrange)
+                    }
                 }
             }
         }
@@ -74,16 +80,23 @@ struct LaunchListItemViewV2: View {
             RoundedRectangle(cornerRadius: 10)
                 .frame(maxWidth: 80, maxHeight: 60)
                 .foregroundColor(.app.backgroundAccented)
-            VStack(alignment: .trailing) {
-                let countdownElements = firstNonZero(components: launch.countdown.componentInts)
-                Text("\(countdownElements.0 ? "-" : "+")\(String(countdownElements.1))")
-                Text(countdownElements.2)
+            
+            if launch.status.hasActiveCountdown {
+                VStack(alignment: .trailing) {
+                    let countdownElements = firstNonZero(components: launch.countdown.componentInts)
+                    Text("\(countdownElements.0 ? "-" : "+")\(String(countdownElements.1))")
+                    Text(countdownElements.2)
+                }
+                .onReceive(timer) { _ in
+                    launch.countdown.updateComponents()
+                }
+                .font(.system(size: 17, weight: .black, design: .monospaced))
+                .foregroundColor(.white)
+            } else {
+                Image(systemName: launch.status.iconName)
+                    .imageScale(.large)
+                    .foregroundColor(.white)
             }
-            .onReceive(timer) { _ in
-                launch.countdown.updateComponents()
-            }
-            .font(.system(size: 17, weight: .black, design: .monospaced))
-            .foregroundColor(.white)
         }
     }
     
@@ -95,18 +108,7 @@ struct LaunchListItemViewV2: View {
         return (true, 0, "Launch!")
     }
     
-//    var countdown: some View {
-//        let countdown = Countdown(to: launch.date)
-//        return
-//            CountdownView(
-//            countdown: countdown,
-//            stopped: !launch.status.hasActiveCountdown,
-//            backgroundColor: .app.backgroundAccented,
-//            textColor: .white
-//        )
-//            .aspectRatio(CGSize(width: 9, height: 1), contentMode: .fit)
-//            .fixedSize(horizontal: true, vertical: false)
-//    }
+
     
     var statusIcon: some View {
         LinearGradient(
@@ -121,22 +123,22 @@ struct LaunchListItemViewV2: View {
         )
     }
     
-    var pinIcon: some View {
-        Group {
-            if isPinned {
-                LinearGradient(
-                    gradient: Gradient(colors: [.app.textAccented.opacity(0.8), .app.textAccented]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .frame(width: iconSize, height: iconSize)
-                .mask(
-                    Image(systemName: "pin.circle.fill")
-                        .foregroundColor(.app.textAccented)
-                        .font(.system(size: iconSize)))
-            }
-        }
-    }
+//    var pinIcon: some View {
+//        Group {
+//            if isPinned {
+//                LinearGradient(
+//                    gradient: Gradient(colors: [.app.textAccented.opacity(0.8), .app.textAccented]),
+//                    startPoint: .topLeading,
+//                    endPoint: .bottomTrailing
+//                )
+//                .frame(width: iconSize, height: iconSize)
+//                .mask(
+//                    Image(systemName: "pin.circle.fill")
+//                        .foregroundColor(.app.textAccented)
+//                        .font(.system(size: iconSize)))
+//            }
+//        }
+//    }
     
 }
 
