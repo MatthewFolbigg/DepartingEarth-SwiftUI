@@ -14,6 +14,7 @@ struct LaunchListItemViewV2: View {
     
     var isPinned: Bool { pinned.isPinned(launch) }
     var iconSize: CGFloat = 22
+    var cornerRadius: CGFloat = 10
     
     var body: some View {
         VStack {
@@ -28,15 +29,12 @@ struct LaunchListItemViewV2: View {
                     }
                 }
                 Spacer()
-                VStack() {
+                VStack(alignment: .trailing, spacing: 2) {
                     countdownComponent
-                    Spacer()
                     if pinned.isPinned(launch) {
-                        //TODO: This is a plcehold icon pinned
-                        Text("\(Image(systemName: "pin.fill")) Tracking")
-                            .font(.app.rowElement)
-                            .foregroundColor(.app.statusOrange)
+                        trackingIcon
                     }
+                    Spacer()
                 }
             }
         }
@@ -77,29 +75,33 @@ struct LaunchListItemViewV2: View {
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     var countdownComponent: some View {
         ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: cornerRadius)
                 .frame(maxWidth: 80, maxHeight: 60)
                 .foregroundColor(.app.backgroundAccented)
             
             if launch.status.hasActiveCountdown {
-                VStack(alignment: .trailing) {
+                VStack(alignment: .center) {
                     let countdownElements = firstNonZero(components: launch.countdown.componentInts)
                     Text("\(countdownElements.0 ? "-" : "+")\(String(countdownElements.1))")
+                        .font(.system(size: 20, weight: .black, design: .monospaced))
                     Text(countdownElements.2)
+                        .font(.system(size: 12, weight: .semibold, design: .default))
                 }
                 .onReceive(timer) { _ in
                     launch.countdown.updateComponents()
                 }
-                .font(.system(size: 17, weight: .black, design: .monospaced))
                 .foregroundColor(.white)
             } else {
-                Image(systemName: launch.status.iconName)
-                    .imageScale(.large)
-                    .foregroundColor(.white)
+                VStack(alignment: .center) {
+                    Image(systemName: launch.status.iconName)
+                        .imageScale(.large)
+                }
+                .foregroundColor(.white)
             }
         }
     }
-    
+
+    //TODO: Refactor this to countdown
     func firstNonZero(components: CountdownComponentInts) -> (Bool, Int, String) {
         guard components.days == 0 else { return (components.minus, components.days, "Days") }
         guard components.hours == 0 else { return (components.minus,components.hours, "Hours") }
@@ -108,7 +110,16 @@ struct LaunchListItemViewV2: View {
         return (true, 0, "Launch!")
     }
     
-
+    var trackingIcon: some View {
+        ZStack(alignment: .center) {
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .foregroundColor(.app.statusOrange)
+            Text("Tracking")
+                .foregroundColor(.white)
+                .font(.system(size: 12, weight: .semibold, design: .default))
+        }
+        .frame(maxWidth: 80, maxHeight: 22)
+    }
     
     var statusIcon: some View {
         LinearGradient(
@@ -122,23 +133,6 @@ struct LaunchListItemViewV2: View {
                 .font(.system(size: iconSize))
         )
     }
-    
-//    var pinIcon: some View {
-//        Group {
-//            if isPinned {
-//                LinearGradient(
-//                    gradient: Gradient(colors: [.app.textAccented.opacity(0.8), .app.textAccented]),
-//                    startPoint: .topLeading,
-//                    endPoint: .bottomTrailing
-//                )
-//                .frame(width: iconSize, height: iconSize)
-//                .mask(
-//                    Image(systemName: "pin.circle.fill")
-//                        .foregroundColor(.app.textAccented)
-//                        .font(.system(size: iconSize)))
-//            }
-//        }
-//    }
     
 }
 

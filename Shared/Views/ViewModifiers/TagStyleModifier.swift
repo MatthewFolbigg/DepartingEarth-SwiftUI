@@ -10,6 +10,7 @@ import SwiftUI
 struct TagStyleModifier: ViewModifier {
     
     let color: Color
+    let cornerRadius: CGFloat
     
     @Environment(\.colorScheme) private var colorScheme
     var isDark: Bool { colorScheme == .dark }
@@ -25,7 +26,7 @@ struct TagStyleModifier: ViewModifier {
             .padding(.horizontal, 8)
             .padding(.vertical, 5)
             .background(
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .foregroundColor(color)
                     .saturation(backgroundSaturation)
                     .opacity(backgroundOpacity)
@@ -36,8 +37,8 @@ struct TagStyleModifier: ViewModifier {
 }
 
 extension View {
-    func tagStyle(color: Color) -> some View {
-        self.modifier(TagStyleModifier(color: color))
+    func tagStyle(color: Color, cornerRadius: CGFloat = 10) -> some View {
+        self.modifier(TagStyleModifier(color: color, cornerRadius: cornerRadius))
     }
 }
 
