@@ -12,15 +12,16 @@ struct LaunchLibraryActivityIndicator: View {
         
         VStack {
             ProgressView()
+                .progressViewStyle(CircularProgressViewStyle(tint: .white))
                 .padding(.top)
             Text("Updating Launches")
                 .padding(.vertical)
                 .font(.app.activityIndicator)
         }
         .frame(width: 250, height: 150, alignment: .center)
-        .foregroundColor(.app.textPrimary)
+        .foregroundColor(.white)
         .background(
-            Color.app.backgroundPrimary
+            Color.app.backgroundAccented
                 .opacity(0.9)
         )
         .clipShape(RoundedRectangle(cornerRadius: 10))

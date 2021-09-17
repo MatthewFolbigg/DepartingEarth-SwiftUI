@@ -44,31 +44,22 @@ struct UpcomingLaunchesView: View {
                 FilteredLaunchListView(pinnedIDs: pinned.launchIDs, showPinned: $showPinned, providerFilter: $providerFilter, statusFilter: $statusFilter, orbitFilter: $orbitFilter, sortAscending: sortOrderAscending)
                     .id(launchLibraryClient.lastSuccessfulFetch)
                 //MARK: - On Appear
-                .onAppear {
-                    if Launch.count(in: viewContext) == 0 {
-                        refreshLaunches(deletingFirst: true)
-                    }
-                }
+                .onAppear { onViewAppear() }
+                //MARK: - Alerts
                 .alert(item: $launchLibraryClient.fetchError) { fetchError in
                     fetchError.alert
                 }
-                    
                 //MARK: - Navigation and ToolBar
-//                .navBarAppearance(forground: .app.textAccented, background: .app.backgroundPlain, tint: .app.control, hasSeperator: true)
                 .navigationBarTitleDisplayMode(.inline)
-//                .navigationTitle(showPinned ? "Tracking" : "Departing Earth")
                 .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        HStack() {
-                            Image(showPinned ? "nosecone.fill" : "nosecone.fill")
-                            Text(showPinned ? "Tracking" : "Departing Earth")
-                                .font(.system(size: 20, weight: .bold, design: .monospaced))
-                        }
-                        .foregroundColor(.app.textAccented)
-                    }
+                    //Navigation ToolBar
+                    ToolbarItem(placement: .principal) { toolBarTitle }
                     ToolbarItem(placement: .cancellationAction) { refreshToolBarItem }
-                    ToolbarItem(placement: .navigationBarTrailing) { filterToolBarItem } //TODO: Position for MacOS
                     ToolbarItem(placement: .automatic) { pinToolBarItem }
+                    
+                    //Bottom ToolBar
+                    ToolbarItem(placement: .bottomBar) { filterToolBarItem }
+                    ToolbarItem(placement: .bottomBar) { Spacer() }
                 }
             }
             .accentColor(.app.control)
@@ -77,6 +68,12 @@ struct UpcomingLaunchesView: View {
     }
     
     //MARK: Refreshing data
+    func onViewAppear() {
+        if Launch.count(in: viewContext) == 0 {
+            refreshLaunches(deletingFirst: true)
+        }
+    }
+    
     func refreshLaunches(deletingFirst: Bool = false) {
         withAnimation {
             launchLibraryClient.fetchData(.upcomingLaunches)
@@ -87,6 +84,15 @@ struct UpcomingLaunchesView: View {
 
 //MARK: ToolBar Items
 extension UpcomingLaunchesView {
+    var toolBarTitle: some View {
+        HStack() {
+//                            Image(showPinned ? "nosecone.fill" : "nosecone.fill")
+            Text(showPinned ? "Tracking" : "Departing Earth")
+                .font(.system(size: 18, weight: .bold, design: .monospaced))
+        }
+        .foregroundColor(.app.textAccented)
+    }
+    
     var filterToolBarItem: some View {
         filterMenu
             .foregroundColor(.app.control)

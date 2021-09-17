@@ -37,6 +37,7 @@ extension Font {
         let rowTitle = Font.system(.title3, design: design).weight(.black)
         let rowSubtitle = Font.system(.title3, design: design).weight(.semibold)
         let rowElement = Font.system(.subheadline, design: design).weight(.regular)
+        let rowDetail = Font.system(.caption, design: design).weight(.semibold)
         
     }
 }

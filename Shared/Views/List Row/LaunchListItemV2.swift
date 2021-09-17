@@ -31,10 +31,8 @@ struct LaunchListItemViewV2: View {
                 Spacer()
                 VStack(alignment: .trailing, spacing: 2) {
                     countdownComponent
-                    if pinned.isPinned(launch) {
-                        trackingIcon
-                    }
                     Spacer()
+                    iconBar
                 }
             }
         }
@@ -74,31 +72,20 @@ struct LaunchListItemViewV2: View {
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     var countdownComponent: some View {
-        ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: cornerRadius)
-                .frame(maxWidth: 80, maxHeight: 60)
-                .foregroundColor(.app.backgroundAccented)
+        VStack(alignment: .trailing) {
             
-            if launch.status.hasActiveCountdown {
-                VStack(alignment: .center) {
-                    let countdownElements = firstNonZero(components: launch.countdown.componentInts)
-                    Text("\(countdownElements.0 ? "-" : "+")\(String(countdownElements.1))")
-                        .font(.system(size: 20, weight: .black, design: .monospaced))
-                    Text(countdownElements.2)
-                        .font(.system(size: 12, weight: .semibold, design: .default))
-                }
-                .onReceive(timer) { _ in
-                    launch.countdown.updateComponents()
-                }
-                .foregroundColor(.white)
-            } else {
-                VStack(alignment: .center) {
-                    Image(systemName: launch.status.iconName)
-                        .imageScale(.large)
-                }
-                .foregroundColor(.white)
-            }
+            let countdownElements = firstNonZero(components: launch.countdown.componentInts)
+            let number = "\(countdownElements.0 ? "-" : "+")\(String(countdownElements.1))"
+            
+            Text(launch.status.hasActiveCountdown ? number : "--")
+                .font(.system(size: 20, weight: .black, design: .monospaced))
+            Text(launch.status.hasActiveCountdown ? countdownElements.2 : "Pending")
+                .font(.system(size: 12, weight: .semibold, design: .default))
         }
+        .onReceive(timer) { _ in
+            launch.countdown.updateComponents()
+        }
+        .foregroundColor(.app.textAccented)
     }
 
     //TODO: Refactor this to countdown
@@ -110,28 +97,32 @@ struct LaunchListItemViewV2: View {
         return (true, 0, "Launch!")
     }
     
-    var trackingIcon: some View {
-        ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: cornerRadius)
-                .foregroundColor(.app.statusOrange)
-            Text("Tracking")
-                .foregroundColor(.white)
-                .font(.system(size: 12, weight: .semibold, design: .default))
+    var iconBar: some View {
+        VStack(alignment: .trailing, spacing: 4) {
+            trackingIcon
+            statusIcon
         }
-        .frame(maxWidth: 80, maxHeight: 22)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .foregroundColor(.clear)//.app.backgroundAccented)
+        )
+    }
+    
+    var trackingIcon: some View {
+        let icon = Image(systemName: "pin.circle.fill")
+        return Text(pinned.isPinned(launch) ? "\(icon) Tracked" : "")
+                .imageScale(.small)
+                .font(.app.rowDetail)
+                .foregroundColor(.app.tracked)
     }
     
     var statusIcon: some View {
-        LinearGradient(
-            gradient: launch.status.gradient,
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .frame(width: iconSize, height: iconSize)
-        .mask(
-            Image(systemName: launch.status.iconName)
-                .font(.system(size: iconSize))
-        )
+        let icon = Image(systemName: launch.status.iconName)
+        return Text("\(icon) \(launch.status.name)")
+            .imageScale(.small)
+            .font(.app.rowDetail)
+            .foregroundColor(launch.status.color)
+        
     }
     
 }

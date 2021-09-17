@@ -37,7 +37,7 @@ struct FilteredLaunchListView: View {
                 UITableView.appearance().separatorStyle = .none
             }
             .listStyle(GroupedListStyle())
-            if launches.isEmpty { emptyListIndicator.zIndex(1).animation(.easeInOut) }
+//            if launches.isEmpty { emptyListIndicator.animation(.easeInOut) }
         }
     }
         

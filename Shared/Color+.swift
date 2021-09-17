@@ -28,6 +28,7 @@ extension Color {
         
         //Accents
         let control = Color("Control Accent One")
+        let tracked = Color.orange //TODO: Placeholder Colour
         
         //Backgrounds
         let backgroundPlain = Color("Background Plain")

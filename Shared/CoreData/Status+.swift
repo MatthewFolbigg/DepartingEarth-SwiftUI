@@ -58,7 +58,7 @@ extension Status {
         switch self.currentSituation {
         case .go, .inFlight, .success: return Color.app.statusGreen
         case .hold: return Color.app.statusOrange
-        case .dateUndetermined: return Color.clear
+        case .dateUndetermined: return Color.gray
         case .dateUnconfirmed: return Color.app.statusYellow
         case .failure, .partialFailure: return Color.app.statusRed
         }

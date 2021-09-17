@@ -57,6 +57,7 @@ class LaunchLibraryApiClient: ObservableObject {
             case .launchID(let idString): return URL(string: baseUrl + specificLaunch + idString)!
             }
         }
+    
     }
     
     //MARK: - Data Request
@@ -96,7 +97,17 @@ class LaunchLibraryApiClient: ObservableObject {
                 if response.statusCode == 200 {
                     //MARK: - Handle Success
                     if let data = data {
-                        if let decoded = try? decoder.decode(UpcomingLaunchApiResponse.self, from: data) {
+                        
+                        if let decoded = try? decoder.decode(LaunchInfo.self, from: data) {
+                            //MARK: Single Launch
+                            DispatchQueue.main.async {
+                                self.store(results: [decoded], in: self.context)
+                                self.fetchStatus = .idle
+                                self.lastSuccessfulFetch = Date()
+                            }
+                            return
+                            
+                        } else if let decoded = try? decoder.decode(UpcomingLaunchApiResponse.self, from: data) {
                             let launches = decoded.results
                             print("Launch Info returned: \(launches.count)")
                             //MARK: Successful resquest but no launches
