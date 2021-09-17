@@ -30,6 +30,15 @@ struct UpcomingLaunchesView: View {
     @State var statusFilter: String? = nil
     
     var isFiltered: Bool { providerFilter != nil || orbitFilter != nil || statusFilter != nil }
+    var currentFilters: [String] {
+        var filters: [String] = []
+        if orbitFilter != nil { filters.append(orbitFilter ?? "") }
+        if statusFilter != nil { filters.append(statusFilter ?? "") }
+        if providerFilter != nil {
+            filters.append(Provider.providerFor(name: providerFilter!, context: viewContext)?.compactName ?? "")
+        }
+        return filters
+    }
     func removeAllFilters() { providerFilter = nil; orbitFilter = nil; statusFilter = nil }
         
     init() {
@@ -50,16 +59,18 @@ struct UpcomingLaunchesView: View {
                     fetchError.alert
                 }
                 //MARK: - Navigation and ToolBar
-                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarTitleDisplayMode(.inline) //TODO: Not available on MacOS
                 .toolbar {
                     //Navigation ToolBar
                     ToolbarItem(placement: .principal) { toolBarTitle }
-                    ToolbarItem(placement: .cancellationAction) { refreshToolBarItem }
-                    ToolbarItem(placement: .automatic) { pinToolBarItem }
+                    ToolbarItem(placement: .automatic) { refreshToolBarItem }
                     
                     //Bottom ToolBar
                     ToolbarItem(placement: .bottomBar) { filterToolBarItem }
                     ToolbarItem(placement: .bottomBar) { Spacer() }
+                    ToolbarItem(placement: .bottomBar) { currentFiltersToolBarItem }
+                    ToolbarItem(placement: .bottomBar) { Spacer() }
+                    ToolbarItem(placement: .bottomBar) { pinToolBarItem }
                 }
             }
             .accentColor(.app.control)
@@ -111,6 +122,20 @@ extension UpcomingLaunchesView {
             label: { Label("Pinned", systemImage: showPinned ? "pin.circle.fill" : "pin.circle") }
         )
         .disabled(showPinned == false && pinned.launchIDs.count == 0)
+    }
+    
+    var currentFiltersToolBarItem: some View {
+        HStack {
+            Text(isFiltered ? "Filtered: " : "")
+            VStack() {
+                ForEach(currentFilters, id: \.self) { filter in
+                    Text(filter)
+                }
+                .foregroundColor(.gray)
+            }
+            Spacer()
+        }
+        .font(.app.rowDetail)
     }
 }
 

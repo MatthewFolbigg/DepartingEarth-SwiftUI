@@ -33,10 +33,7 @@ struct FilteredLaunchListView: View {
                 }
             }
             .listRowBackground(Color.app.backgroundPlain)
-            .onAppear() {
-                UITableView.appearance().separatorStyle = .none
-            }
-            .listStyle(GroupedListStyle())
+            .listStyle(GroupedListStyle()) //TODO: Not available on MacOS
 //            if launches.isEmpty { emptyListIndicator.animation(.easeInOut) }
         }
     }
