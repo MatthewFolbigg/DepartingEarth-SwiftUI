@@ -59,7 +59,8 @@ struct UpcomingLaunchesView: View {
                     fetchError.alert
                 }
                 //MARK: - Navigation and ToolBar
-                .navigationBarTitleDisplayMode(.inline) //TODO: Not available on MacOS
+                .navigationBarTitleDisplayMode(.inline)
+                //TODO: Not available on MacOS
                 .toolbar {
                     //Navigation ToolBar
                     ToolbarItem(placement: .principal) { toolBarTitle }

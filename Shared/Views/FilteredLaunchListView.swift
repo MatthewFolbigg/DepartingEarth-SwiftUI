@@ -28,14 +28,13 @@ struct FilteredLaunchListView: View {
             ForEach(launches, id: \.self.launchID) { launch in
                 ZStack {
                     LaunchListItemViewV2(launch: launch)
-                    NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }
-                        .hidden()
+                    NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.opacity(0.0)
                 }
             }
             .listRowBackground(Color.app.backgroundPlain)
-            .listStyle(GroupedListStyle()) //TODO: Not available on MacOS
 //            if launches.isEmpty { emptyListIndicator.animation(.easeInOut) }
         }
+        .listStyle(PlainListStyle()) //TODO: Not available on MacOS
     }
         
     init(pinnedIDs: [String] = [], showPinned: Binding<Bool> = .constant(false), providerFilter: Binding<String?> = .constant(nil), statusFilter: Binding<String?> = .constant(nil), orbitFilter: Binding<String?> = .constant(nil), sortAscending: Bool = true) {
