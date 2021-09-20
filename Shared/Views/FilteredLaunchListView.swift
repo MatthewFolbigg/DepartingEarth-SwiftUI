@@ -27,7 +27,7 @@ struct FilteredLaunchListView: View {
         List {
             ForEach(launches, id: \.self.launchID) { launch in
                 ZStack {
-                    LaunchListItemViewV2(launch: launch)
+                    LaunchListItemView(launch: launch)
                     NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.opacity(0.0)
                 }
             }

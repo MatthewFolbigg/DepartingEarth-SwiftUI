@@ -1,8 +1,8 @@
 //
-//  LaunchListItemView.swift
+//  LaunchListItemV2.swift
 //  Departing Earth
 //
-//  Created by Matthew Folbigg on 03/08/2021.
+//  Created by Matthew Folbigg on 09/09/2021.
 //
 
 import SwiftUI
@@ -11,146 +11,128 @@ struct LaunchListItemView: View {
     
     @State var launch: Launch
     @EnvironmentObject var pinned: PinnedLaunches
+    
     var isPinned: Bool { pinned.isPinned(launch) }
+    var iconSize: CGFloat = 22
+    var cornerRadius: CGFloat = 10
     
-    struct drawing {
-        static let vSectionSpacing: CGFloat = 8
-        static let vItemSpacing: CGFloat = 4
-        static let hItemSpacing: CGFloat = 8
-        static let shadowRadius: CGFloat = 2
-        static let shadownColor: Color = .secondary
-        static let iconScale: Image.Scale = .medium
-        static let secondaryItemOpcatity: Double = 0.6
-        static let textMinimumScale: CGFloat = 0.8
-    }
-    
-    init(launch: Launch) {
-        self.launch = launch
-    }
-        
-    //MARK: - Body
     var body: some View {
-        HStack(alignment: .top) {
-            vStatusColorBar
-            VStack(alignment: .leading, spacing: drawing.vSectionSpacing) {
-                VStack(alignment: .leading, spacing: drawing.vItemSpacing) {
-                    HStack {
-                        provider
-                        Spacer()
-                        if isPinned { Image(systemName: "pin.circle").foregroundColor(.app.control) }
+        VStack {
+            HStack() {
+                VStack(alignment: .leading, spacing: 0) {
+                    providerName
+                    rocketName
+                    Spacer()
+                    VStack(alignment: .leading, spacing: 5) {
+                        missionName
+                        date
                     }
-                    rocket
                 }
-                HStack {
-                    VStack(alignment: .leading) {
-                        VStack(alignment: .leading, spacing: drawing.vItemSpacing) {
-                            if launch.mission != nil {
-                                mission
-                            }
-                            date
-                            status
-                        }
-                        countdown.padding(.top, 0)
-                    }
+                Spacer()
+                VStack(alignment: .trailing, spacing: 2) {
+                    countdownComponent
+                    Spacer()
+                    iconBar
                 }
             }
-            Spacer()
         }
+        .padding(.vertical, 10)
     }
     
-    //MARK: - Sections
-    var provider: some View {
+    
+    var providerName: some View {
         Text(launch.provider?.compactName ?? "")
-            .font(.app.listItemProminent)
-            .foregroundColor(.app.textSecondary)
-            .lineLimit(1)
-            .minimumScaleFactor(drawing.textMinimumScale)
+            .font(.app.rowTitle)
+            .foregroundColor(.app.textAccented)
     }
     
-    var rocket: some View {
+    var rocketName: some View {
         Text(launch.rocket?.name ?? "")
-            .font(.app.listItemProminent)
-            .foregroundColor(.app.textPrimary)
-            .lineLimit(1)
-            .minimumScaleFactor(drawing.textMinimumScale)
-    }
-        
-    //MARK: - Mission
-    var mission: some View {
-        Label(launch.mission?.name ?? "", systemImage: launch.mission?.symbolForType ?? "")
-            .imageScale(drawing.iconScale)
-            .font(.app.listItemRegular)
-            .lineLimit(1)
-            .minimumScaleFactor(drawing.textMinimumScale)
+            .font(.app.rowSubtitle)
             .foregroundColor(.app.textPrimary)
     }
     
-    //MARK: - Date
+    var missionName: some View {
+        let typeIcon = Image(systemName: launch.mission?.symbolForType ?? "questionmark.circle")
+        return Text("\(typeIcon) \(launch.mission?.name ?? "Unknown")")
+            .font(.app.rowElement)
+            .foregroundColor(.app.textPrimary)
+            .lineLimit(1)
+            .tagStyle(color: .gray)
+    }
+    
     var date: some View {
-        HStack(alignment: .firstTextBaseline, spacing: drawing.hItemSpacing) {
-            Label(launch.dateString(compact: true), systemImage: "calendar")
-                .font(.app.listItemRegular)
-                .lineLimit(1)
-                .minimumScaleFactor(drawing.textMinimumScale)
-                .layoutPriority(1)
-//            if situation == .dateUndetermined || situation == .dateUnconfirmed  {
-//                Text(launch.status.currentSituation.dateDescription)
-//                    .font(.app.listItemLight)
-//                    .lineLimit(1)
-//                    .minimumScaleFactor(drawing.textMinimumScale)
-//                    .layoutPriority(0)
-//            }
+        let calIcon = Image(systemName: "calendar")
+        return Text("\(calIcon) \(launch.dateString(compact: true))")
+            .font(.app.rowElement)
+            .foregroundColor(.app.textPrimary)
+            .lineLimit(1)
+            .tagStyle(color: .gray)
+    }
+    
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    var countdownComponent: some View {
+        VStack(alignment: .trailing) {
+            
+            let countdownElements = firstNonZero(components: launch.countdown.componentInts)
+            let number = "\(countdownElements.0 ? "-" : "+")\(String(countdownElements.1))"
+            
+            Text(launch.status.hasActiveCountdown ? number : "--")
+                .font(.system(size: 20, weight: .black, design: .monospaced))
+            Text(launch.status.hasActiveCountdown ? countdownElements.2 : "Pending")
+                .font(.system(size: 12, weight: .semibold, design: .default))
         }
-        .foregroundColor(.app.textPrimary)
-    }
-        
-    //MARK: - Status
-    var status: some View {
-        HStack(alignment: .firstTextBaseline, spacing: drawing.hItemSpacing) {
-            Label(launch.status.name, systemImage: launch.status.iconName)
-                .tagStyle(color: .app.textSecondary)
-//                .font(.app.listItemRegular)
-//                .lineLimit(1)
-                .minimumScaleFactor(drawing.textMinimumScale)
-                .layoutPriority(1)
+        .onReceive(timer) { _ in
+            launch.countdown.updateComponents()
         }
-        .foregroundColor(.app.textPrimary)
+        .foregroundColor(.app.textAccented)
+    }
+
+    //TODO: Refactor this to countdown
+    func firstNonZero(components: CountdownComponentInts) -> (Bool, Int, String) {
+        guard components.days == 0 else { return (components.minus, components.days, "Days") }
+        guard components.hours == 0 else { return (components.minus,components.hours, "Hours") }
+        guard components.minutes == 0 else { return (components.minus,components.minutes, "Mins") }
+        guard components.seconds == 0 else { return (components.minus,components.seconds, "Secs") }
+        return (true, 0, "Launch!")
     }
     
-    var vStatusColorBar: some View {
-        Rectangle()
-            .frame(maxWidth: 5)
-            .foregroundColor(launch.status.color == .clear ? .app.backgroundPrimary : launch.status.color)
-    }
-    
-    var hstatusColorBar: some View {
-        Rectangle()
-            .frame(maxHeight: 5)
-            .foregroundColor(launch.status.color == .clear ? .app.backgroundPrimary : launch.status.color)
-    }
-    
-    
-    
-    //MARK: Countdown
-    var countdown: some View {
-        CountdownView(
-            countdown: launch.countdown,
-            stopped: !launch.status.hasActiveCountdown,
-            backgroundColor: .app.backgroundPrimary,//.opacity(0.5),
-            textColor: .app.textPrimary
+    var iconBar: some View {
+        VStack(alignment: .trailing, spacing: 4) {
+            trackingIcon
+            statusIcon
+        }
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .foregroundColor(.clear)//.app.backgroundAccented)
         )
-        .aspectRatio(CGSize(width: 11, height: 1), contentMode: .fit)
     }
+    
+    var trackingIcon: some View {
+        let icon = Image(systemName: "pin.circle.fill")
+        return Text(pinned.isPinned(launch) ? "\(icon) Tracked" : "")
+                .imageScale(.small)
+                .font(.app.rowDetail)
+                .foregroundColor(.app.tracked)
+    }
+    
+    var statusIcon: some View {
+        let icon = Image(systemName: launch.status.iconName)
+        return Text("\(icon) \(launch.status.name)")
+            .imageScale(.small)
+            .font(.app.rowDetail)
+            .foregroundColor(launch.status.color)
+        
+    }
+    
 }
 
-
-
-//MARK: - Previews
-struct LaunchListItemView_Previews: PreviewProvider {
+struct LaunchListItemV2_Previews: PreviewProvider {
     static var previews: some View {
         let launch = PersistenceController.testData()
         List {
-            LaunchListItemView(launch: launch).environmentObject(PinnedLaunches.shared)
+            LaunchListItemView(launch: launch)
+            .environmentObject(PinnedLaunches.shared)
             
         }
         .listStyle(PlainListStyle())
@@ -158,4 +140,3 @@ struct LaunchListItemView_Previews: PreviewProvider {
 //        .preferredColorScheme(.dark)
     }
 }
-

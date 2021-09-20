@@ -61,11 +61,13 @@ struct UpcomingLaunchesView: View {
                 //MARK: - Navigation and ToolBar
                 .navigationBarTitleDisplayMode(.inline)
                 //TODO: Not available on MacOS
+                
                 .toolbar {
                     //Navigation ToolBar
                     ToolbarItem(placement: .principal) { toolBarTitle }
                     ToolbarItem(placement: .automatic) { refreshToolBarItem }
-                    
+                }
+                .toolbar {
                     //Bottom ToolBar
                     ToolbarItem(placement: .bottomBar) { filterToolBarItem }
                     ToolbarItem(placement: .bottomBar) { Spacer() }
@@ -174,9 +176,10 @@ extension UpcomingLaunchesView {
         )
     }
     
-    //MARK: Clear Filters Button
+    //MARK: Clear Filter Buttons
     var clearAllFiltersButton: some View {
         Button(
+            role: .destructive,
             action: {
                 withAnimation {
                     removeAllFilters()
@@ -184,6 +187,18 @@ extension UpcomingLaunchesView {
             },
             label: { Label("Clear Filters", systemImage: "xmark.circle") }
         )
+    }
+    
+    func clearPickerButton(name: String, filter: String?) -> some View {
+        Group {
+            if filter != nil {
+                let tag: String? = nil
+                Button(role: .destructive, action: {}) {
+                    Label("All \(name)", systemImage: "xmark.circle")
+                }
+                .tag(tag)
+            }
+        }
     }
     
     //MARK: Provider Filter
@@ -195,19 +210,18 @@ extension UpcomingLaunchesView {
                 systemImage: "person.2"
             ),
             content: {
-                if providerFilter != nil {
-                        let tag: String? = nil
-                        Label("All Providers", systemImage: "xmark.circle").tag(tag)
-                        Divider()
-                    }
-                    ForEach(providers, id: \.self) { provider in
-                        let tag: String? = provider.name ?? nil
-                        Text(provider.compactName).tag(tag)
-                    }
-               }
+                clearPickerButton(name: "Providers", filter: providerFilter)
+                Divider()
+                ForEach(providers, id: \.self) { provider in
+                    let tag: String? = provider.name ?? nil
+                    Text(provider.compactName).tag(tag)
+                }
+            }
         )
         .pickerStyle(MenuPickerStyle())
     }
+    
+    
     
     //MARK: Status Filter
     var statusPicker: some View {
@@ -218,10 +232,7 @@ extension UpcomingLaunchesView {
                 systemImage: "calendar"
             ),
             content: {
-                if statusFilter != nil {
-                    let tag: String? = nil
-                    Label("Any Status", systemImage: "xmark.circle").tag(tag)
-                }
+                clearPickerButton(name: "Statuses", filter: statusFilter)
                 Divider()
                 ForEach(statuses, id: \.self) { status in
                     let tag: String? = status.rawValue
@@ -241,10 +252,7 @@ extension UpcomingLaunchesView {
                 systemImage: "circle.dashed"
             ),
             content: {
-                if orbitFilter != nil {
-                    let tag: String? = nil
-                    Label("Any Orbit", systemImage: "xmark.circle").tag(tag)
-                }
+                clearPickerButton(name: "Orbits", filter: orbitFilter)
                 Divider()
                 ForEach(orbits, id: \.self) { orbit in
                     let tag: String? = orbit.name
