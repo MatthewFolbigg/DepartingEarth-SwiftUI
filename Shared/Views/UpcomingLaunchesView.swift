@@ -52,8 +52,11 @@ struct UpcomingLaunchesView: View {
                 //MARK: - Main View
                 FilteredLaunchListView(pinnedIDs: pinned.launchIDs, showPinned: $showPinned, providerFilter: $providerFilter, statusFilter: $statusFilter, orbitFilter: $orbitFilter, sortAscending: sortOrderAscending)
                     .id(launchLibraryClient.lastSuccessfulFetch)
+                    .refreshable {
+                        await launchLibraryClient.fetchDataAsync(.upcomingLaunches)
+                    }
                 //MARK: - On Appear
-                .onAppear { onViewAppear() }
+//                .onAppear { onViewAppear() }
                 //MARK: - Alerts
                 .alert(item: $launchLibraryClient.fetchError) { fetchError in
                     fetchError.alert
@@ -65,7 +68,7 @@ struct UpcomingLaunchesView: View {
                 .toolbar {
                     //Navigation ToolBar
                     ToolbarItem(placement: .principal) { toolBarTitle }
-                    ToolbarItem(placement: .automatic) { refreshToolBarItem }
+//                    ToolbarItem(placement: .automatic) { refreshToolBarItem }
                 }
                 .toolbar {
                     //Bottom ToolBar
@@ -79,20 +82,24 @@ struct UpcomingLaunchesView: View {
             .accentColor(.app.control)
             if isDownloading { LaunchLibraryActivityIndicator() }
         }
+        //MARK: Get launches task
+        .task {
+            await launchLibraryClient.fetchDataAsync(.upcomingLaunches)
+        }
     }
     
     //MARK: Refreshing data
     func onViewAppear() {
-        if Launch.count(in: viewContext) == 0 {
-            refreshLaunches(deletingFirst: true)
-        }
+//        if Launch.count(in: viewContext) == 0 {
+//            refreshLaunches(deletingFirst: true)
+//        }
     }
     
-    func refreshLaunches(deletingFirst: Bool = false) {
-        withAnimation {
-            launchLibraryClient.fetchData(.upcomingLaunches)
-        }
-    }
+//    func refreshLaunches(deletingFirst: Bool = false) {
+//        withAnimation {
+//            launchLibraryClient.fetchData(.upcomingLaunches)
+//        }
+//    }
             
 }
 
@@ -112,12 +119,12 @@ extension UpcomingLaunchesView {
             .foregroundColor(.app.control)
     }
     
-    var refreshToolBarItem: some View {
-        Button(
-            action: { refreshLaunches(deletingFirst: true) },
-            label: { Label("Refresh", systemImage: "arrow.clockwise.circle") }
-        )
-    }
+//    var refreshToolBarItem: some View {
+//        Button(
+//            action: { refreshLaunches(deletingFirst: true) },
+//            label: { Label("Refresh", systemImage: "arrow.clockwise.circle") }
+//        )
+//    }
     
     var pinToolBarItem: some View {
         Button(

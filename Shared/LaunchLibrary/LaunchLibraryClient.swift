@@ -67,6 +67,55 @@ class LaunchLibraryApiClient: ObservableObject {
         case idle
         case fetching
     }
+    
+    func fetchDataAsync(_ endpoint: Endpoint) async {
+        let url = endpoint.url
+        print(endpoint.url)
+        let request = URLRequest(url: url)
+        let decoder = JSONDecoder()
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            if let response = response as? HTTPURLResponse {
+                DispatchQueue.main.async {
+                    switch response.statusCode {
+                        case 429:
+                            self.handleFetchError(.apiRateLimit, printDescription: "Request Throttled, Too Many requests made.")
+                            return
+                        case 200:
+                            print("API Success")
+                            break
+                        default:
+                            self.handleFetchError(.apiUnknownError, printDescription: "Got a response but not a handled error code. Code: \(response.statusCode)")
+                            return
+                    }
+                }
+            }
+            
+            if let decoded = try? decoder.decode(LaunchInfo.self, from: data) {
+                DispatchQueue.main.async {
+                    self.store(results: [decoded], in: self.context)
+                    self.lastSuccessfulFetch = Date()
+                }
+            } else if let decoded = try? decoder.decode(UpcomingLaunchApiResponse.self, from: data) {
+                DispatchQueue.main.async {
+                    self.store(results: decoded.results, in: self.context)
+                    self.lastSuccessfulFetch = Date()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.handleFetchError(.dataDecodeError, printDescription: "Unable to decode data returned from request")
+                }
+            }
+            
+            
+            
+        } catch {
+            print("Falied to get data/response: \(error.localizedDescription)")
+        }
+        
+    }
 
     func fetchData(_ endpoint: Endpoint) {
         //TODO: Update to be cancellable to prevent overlapping requests PER ENDPOINT

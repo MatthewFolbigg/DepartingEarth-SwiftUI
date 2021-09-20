@@ -24,30 +24,33 @@ struct FilteredLaunchListView: View {
     var isFiltered: Bool { providerFilter != nil || orbitFilter != nil || statusFilter != nil}
     
     var body: some View {
+        ZStack {
         List {
             ForEach(launches, id: \.self.launchID) { launch in
                 ZStack {
-                    LaunchListItemView(launch: launch)
                     NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.opacity(0.0)
+                    LaunchListItemView(launch: launch)
                 }
+                .padding(.vertical, 10)
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     Button {
-                        pinned.togglePin(for: launch)
+                        withAnimation(.easeInOut) { pinned.togglePin(for: launch) }
                     } label: {
                         Image(systemName: "pin")
                     }
                     .tint(.app.tracked)
                 }
             }
-            .listRowBackground(Color.app.backgroundPlain)
-//            if launches.isEmpty { emptyListIndicator.animation(.easeInOut) }
+//            .listRowBackground(Color.clear)
         }
-        .listStyle(PlainListStyle()) //TODO: Not available on MacOS
+        .listStyle(.plain)
+        emptyListIndicator.animation(.easeInOut, value: launches.isEmpty)
+        }
     }
         
     init(pinnedIDs: [String] = [], showPinned: Binding<Bool> = .constant(false), providerFilter: Binding<String?> = .constant(nil), statusFilter: Binding<String?> = .constant(nil), orbitFilter: Binding<String?> = .constant(nil), sortAscending: Bool = true) {
         
-        UITableView.appearance().backgroundColor = .clear //TODO: Not available on MacOS
+//        UITableView.appearance().backgroundColor =  // Not available on MacOS
         
         _showingPinned = showPinned
         _providerFilter = providerFilter

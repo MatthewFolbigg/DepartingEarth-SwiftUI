@@ -36,7 +36,6 @@ struct LaunchListItemView: View {
                 }
             }
         }
-        .padding(.vertical, 10)
     }
     
     
