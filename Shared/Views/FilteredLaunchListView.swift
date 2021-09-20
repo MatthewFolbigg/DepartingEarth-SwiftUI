@@ -30,6 +30,14 @@ struct FilteredLaunchListView: View {
                     LaunchListItemView(launch: launch)
                     NavigationLink(destination: LaunchDetailView(launch: launch)) { EmptyView() }.opacity(0.0)
                 }
+                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                    Button {
+                        pinned.togglePin(for: launch)
+                    } label: {
+                        Image(systemName: "pin")
+                    }
+                    .tint(.app.tracked)
+                }
             }
             .listRowBackground(Color.app.backgroundPlain)
 //            if launches.isEmpty { emptyListIndicator.animation(.easeInOut) }
