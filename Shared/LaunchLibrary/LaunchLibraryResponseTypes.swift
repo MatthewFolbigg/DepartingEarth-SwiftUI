@@ -115,8 +115,8 @@ struct OrbitInfo: Codable {
 struct PadInfo: Codable {
     let id: Int
     let name: String
-    let latitude: String
-    let longitude: String
+    let latitude: String?
+    let longitude: String?
     let location: PadLocationInfo
 }
 

@@ -18,7 +18,7 @@ class LaunchLibraryApiClient: ObservableObject {
     @Published var lastSuccessfulFetch = Date() //Used as an ID for a launch list. Will refresh the list when changed to make sure all data is updated on currently displayed launches
     
     private var context: NSManagedObjectContext
-    private static var developerMode: Bool = false
+    private static var developerMode: Bool = true
     
     init(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
         self.context = context
@@ -108,7 +108,6 @@ class LaunchLibraryApiClient: ObservableObject {
                     self.handleFetchError(.dataDecodeError, printDescription: "Unable to decode data returned from request")
                 }
             }
-            
             
             
         } catch {
